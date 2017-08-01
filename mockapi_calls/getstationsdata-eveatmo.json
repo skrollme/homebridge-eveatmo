@@ -2,12 +2,12 @@
 	"body": {
 		"devices": [
 			{
-				"_id": "70:ee:50:04:59:04",
-				"cipher_id": "enc:16:X9FdsDpqTF9Zn9FL69/t7yK5Vp1eoGBs1zaqIqhUnDmLqBeNRBUUslG/YZFFGWSi",
+				"_id": "70:00:00:01:23:45",
+				"cipher_id": "enc:16:00",
 				"last_status_store": 1501492718,
 				"modules": [
 					{
-						"_id": "02:00:00:04:9d:7a",
+						"_id": "02:00:00:01:23:45",
 						"type": "NAModule1",
 						"last_message": 1501492713,
 						"last_seen": 1501492681,
@@ -25,7 +25,7 @@
 							"Temperature",
 							"Humidity"
 						],
-						"module_name": "Außen",
+						"module_name": "Outdoor",
 						"last_setup": 1414690030,
 						"battery_vp": 5778,
 						"battery_percent": 91,
@@ -33,7 +33,7 @@
 						"firmware": 43
 					},
 					{
-						"_id": "03:00:00:01:b6:f6",
+						"_id": "03:00:00:01:23:45",
 						"type": "NAModule4",
 						"last_message": 1501492713,
 						"last_seen": 1501492713,
@@ -53,7 +53,7 @@
 							"CO2",
 							"Humidity"
 						],
-						"module_name": "Schlafzimmer",
+						"module_name": "Bedroom",
 						"last_setup": 1423762145,
 						"battery_vp": 5846,
 						"battery_percent": 77,
@@ -61,7 +61,7 @@
 						"firmware": 43
 					},
 					{
-						"_id": "05:00:00:01:9e:e2",
+						"_id": "05:00:00:01:23:45",
 						"type": "NAModule3",
 						"last_message": 1501492713,
 						"last_seen": 1501492713,
@@ -74,7 +74,7 @@
 						"data_type": [
 							"Rain"
 						],
-						"module_name": "Niederschlag",
+						"module_name": "Rain",
 						"last_setup": 1454229650,
 						"battery_vp": 4948,
 						"battery_percent": 56,
@@ -84,12 +84,12 @@
 				],
 				"place": {
 					"altitude": 66,
-					"city": "Osnabrück",
+					"city": "Somewhere",
 					"country": "DE",
 					"timezone": "Europe/Berlin",
 					"location": [
-						8.02651,
-						52.27084
+						8.00000,
+						52.00000
 					]
 				},
 				"station_name": "eveatmo",
@@ -119,14 +119,14 @@
 				"co2_calibrating": false,
 				"date_setup": 1414690069,
 				"last_setup": 1414690069,
-				"module_name": "Wohnzimmer",
+				"module_name": "Livingroom",
 				"firmware": 119,
 				"last_upgrade": 1440029319,
 				"wifi_status": 25
 			}
 		],
 		"user": {
-			"mail": "netatmo@skroll.me",
+			"mail": "mail@example.com",
 			"administrative": {
 				"country": "DE",
 				"reg_locale": "de-DE",
