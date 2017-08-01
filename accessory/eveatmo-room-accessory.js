@@ -16,6 +16,7 @@ module.exports = function(pHomebridge) {
 		constructor(deviceData, netatmoDevice) {
 			var accessoryConfig = {
 				"id": deviceData._id,
+				"model": "Eve Room",
 				"netatmoType": deviceData.type,
 				"firmware": deviceData.firmware,
 				"name": deviceData._name || "Netatmo " + netatmoDevice.deviceType + " " + deviceData._id,
@@ -79,39 +80,8 @@ module.exports = function(pHomebridge) {
 			return deviceData[this.id];
 		}
 
-		getLowBatteryLevel() {
-			var levels = {
-				NAMain: 4560,
-				NAModule1: 4000,
-				NAModule2: 4360,
-				NAModule3: 4000,
-				NAModule4: 4560
-			};
-
-			if (levels[this.netatmoType]) {
-				return levels[this.netatmoType];
-			}
-			return 4560;
-		}
-
-		getFullBatteryLevel() {
-			var levels = {
-				NAMain: 5640,
-				NAModule1: 5500,
-				NAModule2: 5590,
-				NAModule3: 5500,
-				NAModule4: 5640
-			};
-
-			if (levels[this.netatmoType]) {
-				return levels[this.netatmoType];
-			}
-			return 5640;
-		}
-
 		mapAccessoryDataToWeatherData(accessoryData) {
 			var result = {};
-
 			var dashboardData = accessoryData.dashboard_data;
 			if (dashboardData) {
 				if (dashboardData.Temperature) {
@@ -184,30 +154,6 @@ module.exports = function(pHomebridge) {
 				);
 			}
 		}
-
-		/*isSupportedService(serviceType) {
-			var isConfigured = this.configuredServices.indexOf(serviceType) > -1;
-			if (!isConfigured) return false;
-
-			var serviceBasetype = serviceType.split('-')[0];
-
-			switch (serviceBasetype) {
-				case "temperature":
-					return this.dataTypes.indexOf("Temperature") > -1;
-				case "airquality":
-					return this.dataTypes.indexOf("CO2") > -1;
-				case "co2":
-					return this.dataTypes.indexOf("CO2") > -1;
-				case "battery":
-					return this.dataTypes.indexOf("Battery") > -1;
-				case "humidity":
-					return this.dataTypes.indexOf("Humidity") > -1;
-				case "airpressure":
-					return this.dataTypes.indexOf("Pressure") > -1;
-			}
-			return false;
-		}*/
-
 	}
 	return EveatmoRoomAccessory;
 };

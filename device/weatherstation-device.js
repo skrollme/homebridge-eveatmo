@@ -8,7 +8,7 @@ var EveatmoRoomAccessory;
 module.exports = function(pHomebridge) {
 	if (pHomebridge && !homebridge) {
 		homebridge = pHomebridge;
-		EveatmoRoomAccessory = require("../accessory/eveatmoroom-accessory")(homebridge);
+		EveatmoRoomAccessory = require("../accessory/eveatmo-room-accessory")(homebridge);
 	}
 
 	class WeatherstationDeviceType extends NetatmoDevice {
