@@ -42,7 +42,7 @@
 							"Temperature": 22.6,
 							"temp_trend": "stable",
 							"Humidity": 63,
-							"CO2": 442,
+							"CO2": 842,
 							"date_max_temp": 1501452215,
 							"date_min_temp": 1501476616,
 							"min_temp": 22.1,
@@ -98,7 +98,7 @@
 					"AbsolutePressure": 999.3,
 					"time_utc": 1501492704,
 					"Noise": 47,
-					"Temperature": 22.6,
+					"Temperature": 12.6,
 					"temp_trend": "stable",
 					"Humidity": 72,
 					"Pressure": 1007.1,
@@ -106,7 +106,7 @@
 					"CO2": 442,
 					"date_max_temp": 1501452253,
 					"date_min_temp": 1501471494,
-					"min_temp": 21,
+					"min_temp": 12,
 					"max_temp": 22.6
 				},
 				"data_type": [

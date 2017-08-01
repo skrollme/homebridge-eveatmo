@@ -14,15 +14,13 @@ module.exports = function(pHomebridge) {
 
 	class EveatmoRoomAccessory extends NetatmoAccessory {
 		constructor(deviceData, netatmoDevice) {
-			if (deviceData.battery_vp) {
-				dataTypes.push("Battery");
-			}
-
 			var accessoryConfig = {
 				"id": deviceData._id,
 				"netatmoType": deviceData.type,
 				"firmware": deviceData.firmware,
 				"name": deviceData._name || "Netatmo " + netatmoDevice.deviceType + " " + deviceData._id,
+				"hasBattery": (deviceData.battery_vp)?true:false,
+				"hasPressure": (deviceData.data_type.indexOf("Pressure") >= 0)?true:false,
 			};
 
 			super(homebridge, accessoryConfig, netatmoDevice);
@@ -41,15 +39,19 @@ module.exports = function(pHomebridge) {
 		buildServices(accessoryConfig) {
 			var serviceDir = path.dirname(__dirname) + '/service';
 			try {
-				var EveatmoRoomMainService = require(serviceDir + '/eveatmoroom-main')(homebridge);
-				var serviceMain = new EveatmoRoomMainService(this);
+				var EveatmoRoomMainService = require(serviceDir + '/eveatmo-room-main')(homebridge);
+				var serviceMain = new EveatmoRoomMainService(this, accessoryConfig.hasPressure);
 				this.addService(serviceMain);
 				
-				var EveatmoRoomSecondService = require(serviceDir + '/eveatmoroom-second')(homebridge);
+				var EveatmoRoomSecondService = require(serviceDir + '/eveatmo-room-second')(homebridge);
 				var serviceSecond = new EveatmoRoomSecondService(this);
 				this.addService(serviceSecond);
 				
-				// TODO Historyservice
+				if(accessoryConfig.hasBattery) {
+					var EveatmoBatteryService = require(serviceDir + '/eveatmo-battery')(homebridge);
+					var serviceBattery = new EveatmoBatteryService(this);
+					this.addService(serviceBattery);
+				}
 				
 			} catch (err) {
 				this.log.warn("Could not process service files for " + accessoryConfig.name);
@@ -77,7 +79,7 @@ module.exports = function(pHomebridge) {
 			return deviceData[this.id];
 		}
 
-		/*getLowBatteryLevel() {
+		getLowBatteryLevel() {
 			var levels = {
 				NAMain: 4560,
 				NAModule1: 4000,
@@ -105,7 +107,7 @@ module.exports = function(pHomebridge) {
 				return levels[this.netatmoType];
 			}
 			return 5640;
-		}*/
+		}
 
 		mapAccessoryDataToWeatherData(accessoryData) {
 			var result = {};
@@ -126,7 +128,7 @@ module.exports = function(pHomebridge) {
 				}
 			}
 
-			/*result.batteryPercent = accessoryData.battery_percent;
+			result.batteryPercent = accessoryData.battery_percent;
 			result.lowBattery = false;
 
 			if (accessoryData.battery_vp) {
@@ -141,7 +143,7 @@ module.exports = function(pHomebridge) {
 
 			if (!result.batteryPercent) {
 				result.batteryPercent = 100;
-			}*/
+			}
 
 			return result;
 		}
@@ -169,10 +171,10 @@ module.exports = function(pHomebridge) {
 				this.batteryPercent = weatherData.batteryPercent;
 				dataChanged = true;
 			}
-			/*if (weatherData.lowBattery && this.lowBattery != weatherData.lowBattery) {
+			if (weatherData.lowBattery && this.lowBattery != weatherData.lowBattery) {
 				this.lowBattery = weatherData.lowBattery;
 				dataChanged = true;
-			}*/
+			}
 
 			if (dataChanged) {
 				this.getServices().forEach(

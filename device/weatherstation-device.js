@@ -40,7 +40,9 @@ module.exports = function(pHomebridge) {
 		}
 
 		buildAccessory(deviceData) {
-			if(deviceData.type == 'NAMain') {
+			if(deviceData.type == 'NAMain') { // Basestation
+				return new EveatmoRoomAccessory(deviceData, this);
+			} else if(deviceData.type == 'NAModule4') { // Indoor
 				return new EveatmoRoomAccessory(deviceData, this);
 			}
 			return false;
