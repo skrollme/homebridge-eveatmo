@@ -3,12 +3,12 @@
 var NetatmoDevice = require("../lib/netatmo-device");
 
 var homebridge;
-var WeatherStationAccessory;
+var EveatmoRoomAccessory;
 
 module.exports = function(pHomebridge) {
 	if (pHomebridge && !homebridge) {
 		homebridge = pHomebridge;
-		WeatherStationAccessory = require("../accessory/weatherstation-accessory")(homebridge);
+		EveatmoRoomAccessory = require("../accessory/eveatmoroom-accessory")(homebridge);
 	}
 
 	class WeatherstationDeviceType extends NetatmoDevice {
@@ -39,9 +39,12 @@ module.exports = function(pHomebridge) {
 			}.bind(this));
 		}
 
-		/*buildAccessory(deviceData) {
-			return new WeatherStationAccessory(deviceData, this);
-		}*/
+		buildAccessory(deviceData) {
+			if(deviceData.type == 'NAMain') {
+				return new EveatmoRoomAccessory(deviceData, this);
+			}
+			return false;
+		}
 	}
 
 	return WeatherstationDeviceType;
