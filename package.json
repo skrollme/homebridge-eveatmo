@@ -1,0 +1,31 @@
+{
+	"name": "homebridge-eveatmo",
+	"version": "0.1.0",
+	"description": "Netatmo plugin for homebridge (https://github.com/nfarina/homebridge) which simulates Eve Weather/Room devices",
+	"license": "ISC",
+	"keywords": [
+		"homebridge-plugin"
+	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/skrollme/homebridge-eveatmo.git"
+	},
+	"engines": {
+		"node": ">=0.12.0",
+		"homebridge": ">=0.4.16"
+	},
+	"dependencies": {
+		"async": "^2.0.1",
+		"glob": "^7.0.5",
+		"netatmo": "^2.0.0",
+		"node-cache": "^3.0.0"
+	},
+	"devDependencies": {
+		"mocha": "",
+		"assert": "1.4.1",
+		"chalk": ""
+	},
+	"scripts": {
+		"test": "mocha"
+	}
+}

@@ -1,0 +1,144 @@
+{
+	"body": {
+		"devices": [
+			{
+				"_id": "70:ee:50:04:59:04",
+				"cipher_id": "enc:16:X9FdsDpqTF9Zn9FL69/t7yK5Vp1eoGBs1zaqIqhUnDmLqBeNRBUUslG/YZFFGWSi",
+				"last_status_store": 1501492718,
+				"modules": [
+					{
+						"_id": "02:00:00:04:9d:7a",
+						"type": "NAModule1",
+						"last_message": 1501492713,
+						"last_seen": 1501492681,
+						"dashboard_data": {
+							"time_utc": 1501492681,
+							"Temperature": 21.5,
+							"temp_trend": "up",
+							"Humidity": 76,
+							"date_max_temp": 1501492681,
+							"date_min_temp": 1501474790,
+							"min_temp": 15.8,
+							"max_temp": 21.5
+						},
+						"data_type": [
+							"Temperature",
+							"Humidity"
+						],
+						"module_name": "Außen",
+						"last_setup": 1414690030,
+						"battery_vp": 5778,
+						"battery_percent": 91,
+						"rf_status": 67,
+						"firmware": 43
+					},
+					{
+						"_id": "03:00:00:01:b6:f6",
+						"type": "NAModule4",
+						"last_message": 1501492713,
+						"last_seen": 1501492713,
+						"dashboard_data": {
+							"time_utc": 1501492662,
+							"Temperature": 22.6,
+							"temp_trend": "stable",
+							"Humidity": 63,
+							"CO2": 442,
+							"date_max_temp": 1501452215,
+							"date_min_temp": 1501476616,
+							"min_temp": 22.1,
+							"max_temp": 22.9
+						},
+						"data_type": [
+							"Temperature",
+							"CO2",
+							"Humidity"
+						],
+						"module_name": "Schlafzimmer",
+						"last_setup": 1423762145,
+						"battery_vp": 5846,
+						"battery_percent": 91,
+						"rf_status": 63,
+						"firmware": 43
+					},
+					{
+						"_id": "05:00:00:01:9e:e2",
+						"type": "NAModule3",
+						"last_message": 1501492713,
+						"last_seen": 1501492713,
+						"dashboard_data": {
+							"time_utc": 1501492700,
+							"Rain": 0,
+							"sum_rain_24": 0.8757016840417,
+							"sum_rain_1": 0
+						},
+						"data_type": [
+							"Rain"
+						],
+						"module_name": "Niederschlag",
+						"last_setup": 1454229650,
+						"battery_vp": 4948,
+						"battery_percent": 56,
+						"rf_status": 55,
+						"firmware": 8
+					}
+				],
+				"place": {
+					"altitude": 66,
+					"city": "Osnabrück",
+					"country": "DE",
+					"timezone": "Europe/Berlin",
+					"location": [
+						8.02651,
+						52.27084
+					]
+				},
+				"station_name": "eveatmo",
+				"type": "NAMain",
+				"dashboard_data": {
+					"AbsolutePressure": 999.3,
+					"time_utc": 1501492704,
+					"Noise": 47,
+					"Temperature": 22.6,
+					"temp_trend": "stable",
+					"Humidity": 72,
+					"Pressure": 1007.1,
+					"pressure_trend": "up",
+					"CO2": 442,
+					"date_max_temp": 1501452253,
+					"date_min_temp": 1501471494,
+					"min_temp": 21,
+					"max_temp": 22.6
+				},
+				"data_type": [
+					"Temperature",
+					"CO2",
+					"Humidity",
+					"Noise",
+					"Pressure"
+				],
+				"co2_calibrating": false,
+				"date_setup": 1414690069,
+				"last_setup": 1414690069,
+				"module_name": "Wohnzimmer",
+				"firmware": 119,
+				"last_upgrade": 1440029319,
+				"wifi_status": 25
+			}
+		],
+		"user": {
+			"mail": "netatmo@skroll.me",
+			"administrative": {
+				"country": "DE",
+				"reg_locale": "de-DE",
+				"lang": "de-DE",
+				"unit": 0,
+				"windunit": 0,
+				"pressureunit": 0,
+				"feel_like_algo": 0
+			}
+		}
+	},
+	"status": "ok",
+	"time_exec": 0.07361102104187,
+	"time_server": 1501492826
+}
