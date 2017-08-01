@@ -57,9 +57,9 @@ module.exports = function(pHomebridge) {
 		}
 	}
 
-	class EveatmoRoomSecondService extends homebridge.hap.Service {
+	class EveatmoHistoryService extends homebridge.hap.Service {
 		constructor(accessory) {
-			super(accessory.name + " Eve Room S2", 'E863F007-079E-48FF-8F27-9C2605A29F52'); // WEATHER
+			super(accessory.name + " Eve History Service", 'E863F007-079E-48FF-8F27-9C2605A29F52'); // WEATHER
 			this.accessory = accessory;
 
 			this.addCharacteristic(S2R1Characteristic)
@@ -118,5 +118,5 @@ module.exports = function(pHomebridge) {
 		}
 	}
 
-	return EveatmoRoomSecondService;
+	return EveatmoHistoryService;
 };

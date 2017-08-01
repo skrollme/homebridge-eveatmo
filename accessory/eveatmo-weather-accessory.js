@@ -12,11 +12,11 @@ module.exports = function(pHomebridge) {
 		Characteristic = homebridge.hap.Characteristic;
 	}
 
-	class EveatmoRoomAccessory extends NetatmoAccessory {
+	class EveatmoWeatherAccessory extends NetatmoAccessory {
 		constructor(deviceData, netatmoDevice) {
 			var accessoryConfig = {
 				"id": deviceData._id,
-				"model": "Eve Room",
+				"model": "Eve Weather",
 				"netatmoType": deviceData.type,
 				"firmware": deviceData.firmware,
 				"name": deviceData._name || "Netatmo " + netatmoDevice.deviceType + " " + deviceData._id,
@@ -28,10 +28,8 @@ module.exports = function(pHomebridge) {
 			this.buildServices(accessoryConfig);
 
 			this.currentTemperature = 11.1;
-			this.co2 = 500;
 			this.batteryPercent = 100;
 			this.lowBattery = false;
-			this.airPressure = 1000;
 			this.humidity = 50;
 
 			this.refreshData(function(err, data) {});
@@ -40,8 +38,8 @@ module.exports = function(pHomebridge) {
 		buildServices(accessoryConfig) {
 			var serviceDir = path.dirname(__dirname) + '/service';
 			try {
-				var EveatmoRoomMainService = require(serviceDir + '/eveatmo-room-main')(homebridge);
-				var serviceMain = new EveatmoRoomMainService(this, accessoryConfig.hasPressure);
+				var EveatmoWeatherMainService = require(serviceDir + '/eveatmo-weather-main')(homebridge);
+				var serviceMain = new EveatmoWeatherMainService(this, accessoryConfig.hasPressure);
 				this.addService(serviceMain);
 				
 				var EveatmoHistoryService = require(serviceDir + '/eveatmo-history')(homebridge);
@@ -87,12 +85,6 @@ module.exports = function(pHomebridge) {
 				if (dashboardData.Temperature) {
 					result.currentTemperature = dashboardData.Temperature;
 				}
-				if (dashboardData.CO2) {
-					result.co2 = dashboardData.CO2;
-				}
-				if (dashboardData.Pressure) {
-					result.airPressure = dashboardData.Pressure;
-				}
 				if (dashboardData.Humidity) {
 					result.humidity = dashboardData.Humidity;
 				}
@@ -125,14 +117,6 @@ module.exports = function(pHomebridge) {
 				this.currentTemperature = weatherData.currentTemperature;
 				dataChanged = true;
 			}
-			if (weatherData.co2 && this.co2 != weatherData.co2) {
-				this.co2 = weatherData.co2;
-				dataChanged = true;
-			}
-			if (weatherData.airPressure && this.airPressure != weatherData.airPressure) {
-				this.airPressure = weatherData.airPressure;
-				dataChanged = true;
-			}
 			if (weatherData.humidity && this.humidity != weatherData.humidity) {
 				this.humidity = weatherData.humidity;
 				dataChanged = true;
@@ -155,5 +139,5 @@ module.exports = function(pHomebridge) {
 			}
 		}
 	}
-	return EveatmoRoomAccessory;
+	return EveatmoWeatherAccessory;
 };

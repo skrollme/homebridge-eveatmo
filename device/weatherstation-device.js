@@ -9,6 +9,7 @@ module.exports = function(pHomebridge) {
 	if (pHomebridge && !homebridge) {
 		homebridge = pHomebridge;
 		EveatmoRoomAccessory = require("../accessory/eveatmo-room-accessory")(homebridge);
+		EveatmoWeatherAccessory = require("../accessory/eveatmo-weather-accessory")(homebridge);
 	}
 
 	class WeatherstationDeviceType extends NetatmoDevice {
@@ -44,6 +45,8 @@ module.exports = function(pHomebridge) {
 				return new EveatmoRoomAccessory(deviceData, this);
 			} else if(deviceData.type == 'NAModule4') { // Indoor
 				return new EveatmoRoomAccessory(deviceData, this);
+			} else if(deviceData.type == 'NAModule1') { // Indoor
+				return new EveatmoWeatherAccessory(deviceData, this);
 			}
 			return false;
 		}
