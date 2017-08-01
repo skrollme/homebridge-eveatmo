@@ -23,7 +23,7 @@ Also big thanks to @gomfunkel and @simont77 for [this gist](https://gist.github.
 
 ## what else
 
-Like this? Please buy me a beer ...
+Like this? Please buy me a beer :beers: ...
 
 [![Donate](https://img.shields.io/badge/Donate-PayPal-blue.svg)](https://www.paypal.me/skroll)
 
