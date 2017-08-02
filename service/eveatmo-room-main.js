@@ -66,8 +66,7 @@ module.exports = function(pHomebridge) {
 
 	class EveatmoRoomMainService extends homebridge.hap.Service {
 		constructor(accessory, hasPressure) {
-			super(accessory.name + " Eve Room S1", 'E863F002-079E-48FF-8F27-9C2605A29F52'); // ROOM
-			//super(accessory.name + " Eve Room S1", 'E863F001-079E-48FF-8F27-9C2605A29F52'); // WEATHER
+			super(accessory.name + " Room Main", 'E863F002-079E-48FF-8F27-9C2605A29F52'); // ROOM
 			this.accessory = accessory;
 
 			this.addCharacteristic(Characteristic.CurrentTemperature)
@@ -85,19 +84,19 @@ module.exports = function(pHomebridge) {
 				.on('get', this.getCurrentS1T1.bind(this))
 				.eventEnabled = true;
 
-			if (hasPressure) {
+			/*if (hasPressure) {
 				this.addCharacteristic(AtmosphericPressureCharacteristic)
 					.on('get', this.getAtmosphericPressure.bind(this))
 					.eventEnabled = true;
-			}
+			}*/
 
 			this.addCharacteristic(Characteristic.AirQuality)
 				.on('get', this.getAirQuality.bind(this))
 				.eventEnabled = true;
 				
-			this.addCharacteristic(Characteristic.CarbonDioxideLevel)
+			/*this.addCharacteristic(Characteristic.CarbonDioxideLevel)
 				.on('get', this.getCarbonDioxideLevel.bind(this))
-				.eventEnabled = true;
+				.eventEnabled = true;*/
 
 			this.addCharacteristic(S1T2Characteristic)
 				.on('get', this.getCurrentS1T2.bind(this))
@@ -146,16 +145,16 @@ module.exports = function(pHomebridge) {
 			this.getCharacteristic(S1T1Characteristic)
 				.updateValue(this.hexToBase64('01be00be 00f44fb8 0a000000'));
 
-			if (this.getCharacteristic(AtmosphericPressureCharacteristic)) {
+			/*if (this.getCharacteristic(AtmosphericPressureCharacteristic)) {
 				this.getCharacteristic(AtmosphericPressureCharacteristic)
 					.updateValue(this.hexToBase64(this.hPAtoHex(parseInt(this.accessory.airPressure * 10))));
-			}
+			}*/
 
 			this.getCharacteristic(Characteristic.AirQuality)
 				.updateValue(this.transformCO2ToAirQuality());
 				
-			this.getCharacteristic(Characteristic.CarbonDioxideLevel)
-				.updateValue(this.accessory.co2);
+			/*this.getCharacteristic(Characteristic.CarbonDioxideLevel)
+				.updateValue(this.accessory.co2);*/
 
 			this.getCharacteristic(S1T2Characteristic)
 				.updateValue(this.hexToBase64('00000000'));
@@ -182,11 +181,11 @@ module.exports = function(pHomebridge) {
 			}.bind(this));
 		}
 
-		getAtmosphericPressure(callback) {
+		/*getAtmosphericPressure(callback) {
 			this.accessory.refreshData(function(err, data) {
 				callback(err, this.hexToBase64(this.hPAtoHex(parseInt(this.accessory.airPressure * 10))));
 			}.bind(this));
-		}
+		}*/
 
 		getAirQuality(callback) {
 			this.accessory.refreshData(function(err, data) {
@@ -194,11 +193,11 @@ module.exports = function(pHomebridge) {
 			}.bind(this));
 		}
 		
-		getCarbonDioxideLevel(callback) {
+		/*getCarbonDioxideLevel(callback) {
 			this.accessory.refreshData(function(err, data) {
 				callback(err, this.accessory.co2);
 			}.bind(this));
-		}
+		}*/
 
 		getCurrentS1T2(callback) {
 			this.accessory.refreshData(function(err, data) {

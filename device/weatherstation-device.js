@@ -4,6 +4,7 @@ var NetatmoDevice = require("../lib/netatmo-device");
 
 var homebridge;
 var EveatmoRoomAccessory;
+var EveatmoWeatherAccessory;
 
 module.exports = function(pHomebridge) {
 	if (pHomebridge && !homebridge) {
