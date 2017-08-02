@@ -9,23 +9,6 @@ module.exports = function(pHomebridge) {
 		Characteristic = homebridge.hap.Characteristic;
 	}
 
-	class AtmosphericPressureCharacteristic extends Characteristic {
-		constructor(accessory) {
-			super('Atmospheric Pressure', 'E863F10F-079E-48FF-8F27-9C2605A29F52');
-			this.setProps({
-				format: Characteristic.Formats.DATA,
-				unit: "hPA",
-				minValue: 500,
-				maxValue: 2000,
-				minStep: 0.1,
-				perms: [
-					Characteristic.Perms.READ,
-					Characteristic.Perms.NOTIFY
-				]
-			});
-		}
-	}
-
 	class S1T1Characteristic extends Characteristic {
 		constructor(accessory) {
 			super('S1T1', 'E863F11E-079E-48FF-8F27-9C2605A29F52');
@@ -52,18 +35,6 @@ module.exports = function(pHomebridge) {
 		}
 	}
 
-	class S1T3Characteristic extends Characteristic {
-		constructor(accessory) {
-			super('S1T3', 'E863F11B-079E-48FF-8F27-9C2605A29F52');
-			this.setProps({
-				format: Characteristic.Formats.DATA,
-				perms: [
-					Characteristic.Perms.READ
-				]
-			});
-		}
-	}
-
 	class EveatmoRoomMainService extends homebridge.hap.Service {
 		constructor(accessory, hasPressure) {
 			super(accessory.name + " Room Main", 'E863F002-079E-48FF-8F27-9C2605A29F52'); // ROOM
@@ -71,24 +42,28 @@ module.exports = function(pHomebridge) {
 
 			this.addCharacteristic(Characteristic.CurrentTemperature)
 				.setProps({
-					minValue: -100
+					minValue: -100,
+					perms: [
+						Characteristic.Perms.READ,
+						Characteristic.Perms.HIDDEN
+					]
 				})
 				.on('get', this.getCurrentTemperature.bind(this))
 				.eventEnabled = true;
 
 			this.addCharacteristic(Characteristic.CurrentRelativeHumidity)
+				.setProps({
+					perms: [
+						Characteristic.Perms.READ,
+						Characteristic.Perms.HIDDEN
+					]
+				})
 				.on('get', this.getCurrentRelativeHumidity.bind(this))
 				.eventEnabled = true;
 
 			this.addCharacteristic(S1T1Characteristic)
 				.on('get', this.getCurrentS1T1.bind(this))
 				.eventEnabled = true;
-
-			/*if (hasPressure) {
-				this.addCharacteristic(AtmosphericPressureCharacteristic)
-					.on('get', this.getAtmosphericPressure.bind(this))
-					.eventEnabled = true;
-			}*/
 
 			this.addCharacteristic(Characteristic.AirQuality)
 				.on('get', this.getAirQuality.bind(this))
@@ -100,10 +75,6 @@ module.exports = function(pHomebridge) {
 
 			this.addCharacteristic(S1T2Characteristic)
 				.on('get', this.getCurrentS1T2.bind(this))
-				.eventEnabled = true;
-
-			this.addCharacteristic(S1T3Characteristic)
-				.on('get', this.getCurrentS1T3.bind(this))
 				.eventEnabled = true;
 
 			//this.addOptionalCharacteristic(Characteristic.Name);
@@ -145,11 +116,6 @@ module.exports = function(pHomebridge) {
 			this.getCharacteristic(S1T1Characteristic)
 				.updateValue(this.hexToBase64('01be00be 00f44fb8 0a000000'));
 
-			/*if (this.getCharacteristic(AtmosphericPressureCharacteristic)) {
-				this.getCharacteristic(AtmosphericPressureCharacteristic)
-					.updateValue(this.hexToBase64(this.hPAtoHex(parseInt(this.accessory.airPressure * 10))));
-			}*/
-
 			this.getCharacteristic(Characteristic.AirQuality)
 				.updateValue(this.transformCO2ToAirQuality());
 				
@@ -158,9 +124,6 @@ module.exports = function(pHomebridge) {
 
 			this.getCharacteristic(S1T2Characteristic)
 				.updateValue(this.hexToBase64('00000000'));
-
-			this.getCharacteristic(S1T3Characteristic)
-				.updateValue(this.hexToBase64('64'));
 		}
 
 		getCurrentTemperature(callback) {
@@ -181,12 +144,6 @@ module.exports = function(pHomebridge) {
 			}.bind(this));
 		}
 
-		/*getAtmosphericPressure(callback) {
-			this.accessory.refreshData(function(err, data) {
-				callback(err, this.hexToBase64(this.hPAtoHex(parseInt(this.accessory.airPressure * 10))));
-			}.bind(this));
-		}*/
-
 		getAirQuality(callback) {
 			this.accessory.refreshData(function(err, data) {
 				callback(err, this.transformCO2ToAirQuality());
@@ -202,12 +159,6 @@ module.exports = function(pHomebridge) {
 		getCurrentS1T2(callback) {
 			this.accessory.refreshData(function(err, data) {
 				callback(err, this.hexToBase64('00000000'));
-			}.bind(this));
-		}
-
-		getCurrentS1T3(callback) {
-			this.accessory.refreshData(function(err, data) {
-				callback(err, this.hexToBase64('64'));
 			}.bind(this));
 		}
 	}
