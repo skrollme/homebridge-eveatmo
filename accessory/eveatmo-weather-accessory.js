@@ -49,6 +49,14 @@ module.exports = function(pHomebridge) {
 		buildServices(accessoryConfig) {
 			var serviceDir = path.dirname(__dirname) + '/service';
 			try {
+				var TemperatureService = require(serviceDir + '/eveatmo-temperature')(homebridge);
+				var serviceTemperature = new TemperatureService(this);
+				this.addService(serviceTemperature);
+				
+				var HumidityService = require(serviceDir + '/eveatmo-humidity')(homebridge);
+				var serviceHumidity = new HumidityService(this);
+				this.addService(serviceHumidity);
+				
 				var EveatmoWeatherMainService = require(serviceDir + '/eveatmo-weather-main')(homebridge);
 				var serviceMain = new EveatmoWeatherMainService(this);
 				this.addService(serviceMain);
@@ -62,7 +70,6 @@ module.exports = function(pHomebridge) {
 					var serviceBattery = new EveatmoBatteryService(this);
 					this.addService(serviceBattery);
 				}
-				
 			} catch (err) {
 				this.log.warn("Could not process service files for " + accessoryConfig.name);
 				this.log.warn(err);
@@ -131,8 +138,6 @@ module.exports = function(pHomebridge) {
 
 		applyWeatherData(weatherData) {
 			var dataChanged = false;
-			
-			console.log(weatherData);
 
 			if (weatherData.currentTemperature && this.currentTemperature != weatherData.currentTemperature) {
 				this.currentTemperature = weatherData.currentTemperature;
