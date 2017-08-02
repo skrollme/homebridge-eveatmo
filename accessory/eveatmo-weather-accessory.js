@@ -4,6 +4,7 @@ var homebridge;
 var Characteristic;
 var NetatmoAccessory;
 var path = require('path');
+var mainDeviceId = false;
 
 module.exports = function(pHomebridge) {
 	if (pHomebridge && !homebridge) {
@@ -14,6 +15,16 @@ module.exports = function(pHomebridge) {
 
 	class EveatmoWeatherAccessory extends NetatmoAccessory {
 		constructor(deviceData, netatmoDevice) {
+			
+			for (var deviceId in netatmoDevice.deviceData) {
+				if (!netatmoDevice.deviceData.hasOwnProperty(deviceId)) continue;
+				var device = netatmoDevice.deviceData[deviceId];
+				
+				if(device.dashboard_data.Pressure) {
+					mainDeviceId = deviceId;
+				}
+			}
+			
 			var accessoryConfig = {
 				"id": deviceData._id,
 				"model": "Eve Weather",
@@ -21,7 +32,6 @@ module.exports = function(pHomebridge) {
 				"firmware": deviceData.firmware,
 				"name": deviceData._name || "Netatmo " + netatmoDevice.deviceType + " " + deviceData._id,
 				"hasBattery": (deviceData.battery_vp)?true:false,
-				"hasPressure": (deviceData.data_type.indexOf("Pressure") >= 0)?true:false,
 			};
 
 			super(homebridge, accessoryConfig, netatmoDevice);
@@ -31,6 +41,7 @@ module.exports = function(pHomebridge) {
 			this.batteryPercent = 100;
 			this.lowBattery = false;
 			this.humidity = 50;
+			this.pressure = 1000.0;
 
 			this.refreshData(function(err, data) {});
 		}
@@ -39,7 +50,7 @@ module.exports = function(pHomebridge) {
 			var serviceDir = path.dirname(__dirname) + '/service';
 			try {
 				var EveatmoWeatherMainService = require(serviceDir + '/eveatmo-weather-main')(homebridge);
-				var serviceMain = new EveatmoWeatherMainService(this, accessoryConfig.hasPressure);
+				var serviceMain = new EveatmoWeatherMainService(this);
 				this.addService(serviceMain);
 				
 				var EveatmoHistoryService = require(serviceDir + '/eveatmo-history')(homebridge);
@@ -71,6 +82,14 @@ module.exports = function(pHomebridge) {
 		notifyUpdate(deviceData) {
 			var accessoryData = this.extractAccessoryData(deviceData);
 			var weatherData = this.mapAccessoryDataToWeatherData(accessoryData);
+			
+			// transfer NAMain's pressure value to outdoor-module
+			if(mainDeviceId) {
+				if(deviceData[mainDeviceId]) {
+					weatherData["pressure"] = deviceData[mainDeviceId].dashboard_data.Pressure;
+				}
+			}
+			
 			this.applyWeatherData(weatherData);
 		}
 
@@ -112,6 +131,8 @@ module.exports = function(pHomebridge) {
 
 		applyWeatherData(weatherData) {
 			var dataChanged = false;
+			
+			console.log(weatherData);
 
 			if (weatherData.currentTemperature && this.currentTemperature != weatherData.currentTemperature) {
 				this.currentTemperature = weatherData.currentTemperature;
@@ -119,6 +140,10 @@ module.exports = function(pHomebridge) {
 			}
 			if (weatherData.humidity && this.humidity != weatherData.humidity) {
 				this.humidity = weatherData.humidity;
+				dataChanged = true;
+			}
+			if (weatherData.pressure && this.pressure != weatherData.pressure) {
+				this.pressure = weatherData.pressure;
 				dataChanged = true;
 			}
 			if (weatherData.batteryPercent && this.batteryPercent != weatherData.batteryPercent) {
