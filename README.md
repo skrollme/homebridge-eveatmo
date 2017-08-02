@@ -7,7 +7,7 @@ Whilst the original [homebridge-netatmo](https://github.com/planetk/homebridge-n
 ## hint
 **Because this is a work-in-progress project which is neither feature-complete nor fully testet this readme is more of a stub and this plugin is not listed at [https://www.npmjs.com](https://www.npmjs.com) so far. Use at your own risk.**
 
-##configuration
+## configuration
 Because this plugin's base was taken from [homebridge-netatmo](https://github.com/planetk/homebridge-netatmo) (see above) you can adapt its config. Just use the plattform-code "eveatmo":
 
 ```
