@@ -4,7 +4,6 @@ var homebridge;
 var Characteristic;
 var NetatmoAccessory;
 var path = require('path');
-var mainDeviceId = false;
 
 module.exports = function(pHomebridge) {
 	if (pHomebridge && !homebridge) {
@@ -13,35 +12,23 @@ module.exports = function(pHomebridge) {
 		Characteristic = homebridge.hap.Characteristic;
 	}
 
-	class EveatmoWeatherAccessory extends NetatmoAccessory {
+	class EveatmoRainAccessory extends NetatmoAccessory {
 		constructor(deviceData, netatmoDevice) {
-			
-			for (var deviceId in netatmoDevice.deviceData) {
-				if (!netatmoDevice.deviceData.hasOwnProperty(deviceId)) continue;
-				var device = netatmoDevice.deviceData[deviceId];
-				
-				if(device.dashboard_data.Pressure) {
-					mainDeviceId = deviceId;
-				}
-			}
-			
 			var accessoryConfig = {
 				"id": deviceData._id,
-				"model": "Eve Weather",
+				"model": "Eve Rain",
 				"netatmoType": deviceData.type,
 				"firmware": deviceData.firmware,
 				"name": deviceData._name || "Eveatmo " + netatmoDevice.deviceType + " " + deviceData._id,
-				"hasBattery": (deviceData.battery_vp)?true:false,
+				"hasBattery": (deviceData.battery_vp) ? true : false,
 			};
 
 			super(homebridge, accessoryConfig, netatmoDevice);
 			this.buildServices(accessoryConfig);
 
-			this.currentTemperature = 11.1;
-			this.batteryPercent = 100;
-			this.lowBattery = false;
-			this.humidity = 50;
-			this.pressure = 1000.0;
+			this.rainLevel = 0;
+			this.rainLevelSum1 = 0;
+			this.rainLevelSum24 = 0;
 
 			this.refreshData(function(err, data) {});
 		}
@@ -49,27 +36,17 @@ module.exports = function(pHomebridge) {
 		buildServices(accessoryConfig) {
 			var serviceDir = path.dirname(__dirname) + '/service';
 			try {
-				var TemperatureService = require(serviceDir + '/eveatmo-temperature')(homebridge);
-				var serviceTemperature = new TemperatureService(this);
-				this.addService(serviceTemperature);
-				
-				var HumidityService = require(serviceDir + '/eveatmo-humidity')(homebridge);
-				var serviceHumidity = new HumidityService(this);
-				this.addService(serviceHumidity);
-				
-				var EveatmoWeatherMainService = require(serviceDir + '/eveatmo-weather-main')(homebridge);
-				var serviceMain = new EveatmoWeatherMainService(this);
-				this.addService(serviceMain);
-				
-				var EveatmoHistoryService = require(serviceDir + '/eveatmo-history')(homebridge);
-				var serviceHistory = new EveatmoHistoryService(this);
-				this.addService(serviceHistory);
-				
-				if(accessoryConfig.hasBattery) {
+				var EveatmoRainService = require(serviceDir + '/eveatmo-rain')(homebridge);
+				var serviceRain = new EveatmoRainService(this);
+				serviceRain.isPrimaryService = true;
+				this.addService(serviceRain);
+
+				if (accessoryConfig.hasBattery) {
 					var EveatmoBatteryService = require(serviceDir + '/eveatmo-battery')(homebridge);
 					var serviceBattery = new EveatmoBatteryService(this);
 					this.addService(serviceBattery);
 				}
+
 			} catch (err) {
 				this.log.warn("Could not process service files for " + accessoryConfig.name);
 				this.log.warn(err);
@@ -89,14 +66,6 @@ module.exports = function(pHomebridge) {
 		notifyUpdate(deviceData) {
 			var accessoryData = this.extractAccessoryData(deviceData);
 			var weatherData = this.mapAccessoryDataToWeatherData(accessoryData);
-			
-			// transfer NAMain's pressure value to outdoor-module
-			if(mainDeviceId) {
-				if(deviceData[mainDeviceId]) {
-					weatherData["pressure"] = deviceData[mainDeviceId].dashboard_data.Pressure;
-				}
-			}
-			
 			this.applyWeatherData(weatherData);
 		}
 
@@ -108,11 +77,14 @@ module.exports = function(pHomebridge) {
 			var result = {};
 			var dashboardData = accessoryData.dashboard_data;
 			if (dashboardData) {
-				if (dashboardData.Temperature) {
-					result.currentTemperature = dashboardData.Temperature;
+				if (dashboardData.Rain) {
+					result.rainLevel = Math.round(dashboardData.Rain * 1000) / 1000;
 				}
-				if (dashboardData.Humidity) {
-					result.humidity = dashboardData.Humidity;
+				if (dashboardData.sum_rain_1) {
+					result.rainLevelSum1 = Math.round(dashboardData.sum_rain_1 * 1000) / 1000;
+				}
+				if (dashboardData.sum_rain_24) {
+					result.rainLevelSum24 = Math.round(dashboardData.sum_rain_24 * 1000) / 1000;
 				}
 			}
 
@@ -139,18 +111,19 @@ module.exports = function(pHomebridge) {
 		applyWeatherData(weatherData) {
 			var dataChanged = false;
 
-			if (weatherData.currentTemperature && this.currentTemperature != weatherData.currentTemperature) {
-				this.currentTemperature = weatherData.currentTemperature;
+			if (weatherData.rainLevel && this.rainLevel != weatherData.rainLevel) {
+				this.rainLevel = weatherData.rainLevel;
 				dataChanged = true;
 			}
-			if (weatherData.humidity && this.humidity != weatherData.humidity) {
-				this.humidity = weatherData.humidity;
+			if (weatherData.rainLevelSum1 && this.rainLevelSum1 != weatherData.rainLevelSum1) {
+				this.rainLevelSum1 = weatherData.rainLevelSum1;
 				dataChanged = true;
 			}
-			if (weatherData.pressure && this.pressure != weatherData.pressure) {
-				this.pressure = weatherData.pressure;
+			if (weatherData.rainLevelSum24 && this.rainLevelSum24 != weatherData.rainLevelSum24) {
+				this.rainLevelSum24 = weatherData.rainLevelSum24;
 				dataChanged = true;
 			}
+			
 			if (weatherData.batteryPercent && this.batteryPercent != weatherData.batteryPercent) {
 				this.batteryPercent = weatherData.batteryPercent;
 				dataChanged = true;
@@ -169,5 +142,5 @@ module.exports = function(pHomebridge) {
 			}
 		}
 	}
-	return EveatmoWeatherAccessory;
+	return EveatmoRainAccessory;
 };

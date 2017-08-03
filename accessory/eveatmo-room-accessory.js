@@ -19,7 +19,7 @@ module.exports = function(pHomebridge) {
 				"model": "Eve Room",
 				"netatmoType": deviceData.type,
 				"firmware": deviceData.firmware,
-				"name": deviceData._name || "Netatmo " + netatmoDevice.deviceType + " " + deviceData._id,
+				"name": deviceData._name || "Eveatmo " + netatmoDevice.deviceType + " " + deviceData._id,
 				"hasBattery": (deviceData.battery_vp)?true:false,
 				"hasPressure": (deviceData.data_type.indexOf("Pressure") >= 0)?true:false,
 			};
