@@ -39,8 +39,9 @@ Because this plugin's base was taken from [homebridge-netatmo](https://github.co
 
 
 ## todos
-- maybe refactoring to split characterstics into separate services (better functionality in Apple's default home.app)
-- trying to integrate rain-sensor and wind-sensor
+- <del>maybe refactoring to split characterstics into separate services (better functionality in Apple's default home.app)</del>
+- trying to integrate <del>rain-sensor and</del> wind-sensor
+- adding CO2 [ppm] or maybe just "CO2 detected" to indoor devices
 - researching/testing/implementing Eve's history-functionality (see: [https://gist.github.com/0ff/668f4b7753c80ad7b60b](https://gist.github.com/0ff/668f4b7753c80ad7b60b))
 - testing
 	- overall functionality
