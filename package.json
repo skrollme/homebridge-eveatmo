@@ -4,7 +4,9 @@
 	"description": "Homebridge plugin which adds a Netatmo weatherstation as HomeKit device and tries to act like Elgato Eve Room/Weather",
 	"license": "ISC",
 	"keywords": [
-		"homebridge-plugin"
+		"homebridge-plugin",
+		"homebridge",
+		"netatmo"
 	],
 	"repository": {
 		"type": "git",
