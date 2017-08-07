@@ -108,12 +108,10 @@ module.exports = function(pHomebridge) {
 		}
 		
 		setCurrentS2W1(val, callback) {
-			console.log("S2W1: "+val);
 			callback(null,val);
 		}
 		
 		setCurrentS2W2(val, callback) {
-			console.log("S2W2: "+val);
 			callback(null,val);
 		}
 	}

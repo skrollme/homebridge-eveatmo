@@ -5,7 +5,7 @@ This is a [homebridge](https://github.com/nfarina/homebridge) plugin which lets 
 Whilst the original [homebridge-netatmo](https://github.com/planetk/homebridge-netatmo)-plugin goes a mostly HomeKit-standard approach (predefined services, characteristics, ...), this plugin tries to mimic the Elgato Eve devices (currently *Room* and *Weather*) as close as possible. 
 
 ## hint
-**Because this is a work-in-progress project which is neither feature-complete nor fully testet this readme is more of a stub and this plugin is not listed at [https://www.npmjs.com](https://www.npmjs.com) so far. Use at your own risk.**
+**Because this is a work-in-progress project which is neither feature-complete nor fully testet this readme is more of a stub. Use at your own risk.**
 
 ## configuration
 Because this plugin's base was taken from [homebridge-netatmo](https://github.com/planetk/homebridge-netatmo) (see above) you can adapt its config. Just use the plattform-code "eveatmo":
