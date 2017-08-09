@@ -15,7 +15,7 @@ Because this plugin's base was taken from [homebridge-netatmo](https://github.co
         {
             "platform": "eveatmo",
             "name": "eveatmo platform",
-            "ttl": 10,
+            "ttl": 15,
             "auth": {
     	        "client_id": "XXXXX Create at https://dev.netatmo.com/",
                 "client_secret": "XXXXX Create at https://dev.netatmo.com/",
@@ -37,11 +37,28 @@ Because this plugin's base was taken from [homebridge-netatmo](https://github.co
 ### notes
 - Do not reduce *ttl* further until you are testing/debugging. I recommend to use the mockup-api in this cases if you don't want to get soft-banned at the netatmo-API.
 
+## history
+
+### 0.2.3
+- Refactoring/Renaming (could break exisiting setups, so remove and re-add as new devices).
+- Switched room-device's main service to AirQualitySensor and added CO2-Characteristic. This should default Home.app let recognize it as supported sensor
+
+### 0.2.2
+- Removed some homebridge-logspammer (sorry)
+
+### 0.2.1
+- Added rain-accessory (if present at netatmo station)
+
+### 0.2.0
+- Added temperature/humidity sensors as separate services to be recognized by default home.app
+
+### 0.1.0
+- Initial working state which was adapted (copied) from homebridge-netatmo
 
 ## todos
 - <del>maybe refactoring to split characterstics into separate services (better functionality in Apple's default home.app)</del>
 - trying to integrate <del>rain-sensor and</del> wind-sensor
-- adding CO2 [ppm] or maybe just "CO2 detected" to indoor devices
+- <del>adding CO2 [ppm] or maybe just "CO2 detected" to indoor devices</del>
 - researching/testing/implementing Eve's history-functionality (see: [https://gist.github.com/0ff/668f4b7753c80ad7b60b](https://gist.github.com/0ff/668f4b7753c80ad7b60b))
 - testing
 	- overall functionality
@@ -51,7 +68,7 @@ Because this plugin's base was taken from [homebridge-netatmo](https://github.co
 
 This plugin's basic structure and most of its basic code is a fork (ok, lets say "copy") of [homebridge-netatmo](https://github.com/planetk/homebridge-netatmo). So big thanks to @planetk and all the other contributors of this project. 
 
-Also big thanks to @gomfunkel and @simont77 for [this gist](https://gist.github.com/gomfunkel/b1a046d729757120907c) and its fork, @KhaosT for [this gist](https://gist.github.com/KhaosT/e365acfd589ce840a403), @mplewis for [this gist](https://gist.github.com/mplewis/def678dc4b6e63a86905) and @0ff for [this (almost) working Eve Weather imitating homebridge-plugin](https://gist.github.com/0ff/668f4b7753c80ad7b60b)
+Also big thanks to @gomfunkel and @simont77 for [this gist](https://gist.github.com/gomfunkel/b1a046d729757120907c) and its [fork](https://gist.github.com/simont77/3f4d4330fa55b83f8ca96388d9004e7d), @KhaosT for [this gist](https://gist.github.com/KhaosT/e365acfd589ce840a403), @mplewis for [this gist](https://gist.github.com/mplewis/def678dc4b6e63a86905) and @0ff for [this (almost) working Eve Weather imitating homebridge-plugin](https://gist.github.com/0ff/668f4b7753c80ad7b60b) and once again special thanks to @simont77 for his endurance in digging deeper in Eve's custom characteristics and its protocols.
 
 ## what else
 
