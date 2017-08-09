@@ -48,9 +48,9 @@ module.exports = function(pHomebridge) {
 				var serviceHumidity = new HumidityService(this);
 				this.addService(serviceHumidity);
 				
-				var EveatmoRoomMainService = require(serviceDir + '/eveatmo-room-main')(homebridge);
-				var serviceMain = new EveatmoRoomMainService(this, accessoryConfig.hasPressure);
-				this.addService(serviceMain);
+				var EveatmoRoomAirqualityService = require(serviceDir + '/eveatmo-room-airquality')(homebridge);
+				var serviceAirquality = new EveatmoRoomAirqualityService(this, accessoryConfig.hasPressure);
+				this.addService(serviceAirquality);
 				
 				var EveatmoHistoryService = require(serviceDir + '/eveatmo-history')(homebridge);
 				var serviceHistory = new EveatmoHistoryService(this);

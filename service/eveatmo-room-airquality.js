@@ -35,49 +35,26 @@ module.exports = function(pHomebridge) {
 		}
 	}
 
-	class EveatmoRoomMainService extends homebridge.hap.Service {
+	class EveatmoRoomAirqualityService extends homebridge.hap.Service.AirQualitySensor {
 		constructor(accessory, hasPressure) {
-			super(accessory.name + " Room Main", 'E863F002-079E-48FF-8F27-9C2605A29F52'); // ROOM
+			super(accessory.name + " Room Main"); // ROOM
 			this.accessory = accessory;
-
-			this.addCharacteristic(Characteristic.CurrentTemperature)
-				.setProps({
-					minValue: -100,
-					perms: [
-						Characteristic.Perms.READ,
-						Characteristic.Perms.HIDDEN
-					]
-				})
-				.on('get', this.getCurrentTemperature.bind(this))
-				.eventEnabled = true;
-
-			this.addCharacteristic(Characteristic.CurrentRelativeHumidity)
-				.setProps({
-					perms: [
-						Characteristic.Perms.READ,
-						Characteristic.Perms.HIDDEN
-					]
-				})
-				.on('get', this.getCurrentRelativeHumidity.bind(this))
-				.eventEnabled = true;
 
 			this.addCharacteristic(S1T1Characteristic)
 				.on('get', this.getCurrentS1T1.bind(this))
 				.eventEnabled = true;
 
-			this.addCharacteristic(Characteristic.AirQuality)
+			this.getCharacteristic(Characteristic.AirQuality)
 				.on('get', this.getAirQuality.bind(this))
 				.eventEnabled = true;
 				
-			/*this.addCharacteristic(Characteristic.CarbonDioxideLevel)
+			this.getCharacteristic(Characteristic.CarbonDioxideLevel)
 				.on('get', this.getCarbonDioxideLevel.bind(this))
-				.eventEnabled = true;*/
+				.eventEnabled = true;
 
 			this.addCharacteristic(S1T2Characteristic)
 				.on('get', this.getCurrentS1T2.bind(this))
 				.eventEnabled = true;
-
-			//this.addOptionalCharacteristic(Characteristic.Name);
 		}
 
 		hexToBase64(val) {
@@ -107,11 +84,6 @@ module.exports = function(pHomebridge) {
 		}
 
 		updateCharacteristics() {
-			this.getCharacteristic(Characteristic.CurrentTemperature)
-				.updateValue(this.accessory.currentTemperature);
-
-			this.getCharacteristic(Characteristic.CurrentRelativeHumidity)
-				.updateValue(this.accessory.humidity);
 
 			this.getCharacteristic(S1T1Characteristic)
 				.updateValue(this.hexToBase64('01be00be 00f44fb8 0a000000'));
@@ -119,23 +91,11 @@ module.exports = function(pHomebridge) {
 			this.getCharacteristic(Characteristic.AirQuality)
 				.updateValue(this.transformCO2ToAirQuality());
 				
-			/*this.getCharacteristic(Characteristic.CarbonDioxideLevel)
-				.updateValue(this.accessory.co2);*/
+			this.getCharacteristic(Characteristic.CarbonDioxideLevel)
+				.updateValue(this.accessory.co2);
 
 			this.getCharacteristic(S1T2Characteristic)
 				.updateValue(this.hexToBase64('00000000'));
-		}
-
-		getCurrentTemperature(callback) {
-			this.accessory.refreshData(function(err, data) {
-				callback(err, this.accessory.currentTemperature);
-			}.bind(this));
-		}
-
-		getCurrentRelativeHumidity(callback) {
-			this.accessory.refreshData(function(err, data) {
-				callback(err, this.accessory.humidity);
-			}.bind(this));
 		}
 
 		getCurrentS1T1(callback) {
@@ -150,11 +110,11 @@ module.exports = function(pHomebridge) {
 			}.bind(this));
 		}
 		
-		/*getCarbonDioxideLevel(callback) {
+		getCarbonDioxideLevel(callback) {
 			this.accessory.refreshData(function(err, data) {
 				callback(err, this.accessory.co2);
 			}.bind(this));
-		}*/
+		}
 
 		getCurrentS1T2(callback) {
 			this.accessory.refreshData(function(err, data) {
@@ -163,5 +123,5 @@ module.exports = function(pHomebridge) {
 		}
 	}
 
-	return EveatmoRoomMainService;
+	return EveatmoRoomAirqualityService;
 };

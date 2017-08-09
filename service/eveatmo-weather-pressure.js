@@ -52,7 +52,7 @@ module.exports = function(pHomebridge) {
 		}
 	}
 
-	class EveatmoWeatherMainService extends homebridge.hap.Service {
+	class EveatmoWeatherPressureService extends homebridge.hap.Service {
 		constructor(accessory) {
 			super(accessory.name + " Weather Main", 'E863F001-079E-48FF-8F27-9C2605A29F52'); // WEATHER
 			this.accessory = accessory;
@@ -152,5 +152,5 @@ module.exports = function(pHomebridge) {
 		}
 	}
 
-	return EveatmoWeatherMainService;
+	return EveatmoWeatherPressureService;
 };
