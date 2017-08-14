@@ -39,6 +39,9 @@ Because this plugin's base was taken from [homebridge-netatmo](https://github.co
 
 ## history
 
+### 0.2.4
+- Removed specific retun-value from custom-characteristic, which seems to trigger firmware-update notice in EVE.app
+
 ### 0.2.3
 - Refactoring/Renaming (could break exisiting setups, so remove and re-add as new devices).
 - Switched room-device's main service to AirQualitySensor and added CO2-Characteristic. This should default Home.app let recognize it as supported sensor
