@@ -115,7 +115,7 @@ module.exports = function(pHomebridge) {
 				.updateValue(this.hexToBase64(this.hPAtoHex(parseInt(this.accessory.pressure * 10))));
 
 			this.getCharacteristic(S1T1Characteristic)
-				.updateValue(this.hexToBase64('01be00be 00f44fb8 0a000000'));
+				.updateValue(this.hexToBase64(''));
 
 			this.getCharacteristic(S1T2Characteristic)
 				.updateValue(this.hexToBase64('00000000'));
@@ -141,7 +141,7 @@ module.exports = function(pHomebridge) {
 
 		getCurrentS1T1(callback) {
 			this.accessory.refreshData(function(err, data) {
-				callback(err, this.hexToBase64('01be00be 00f44fb8 0a000000'));
+				callback(err, this.hexToBase64(''));
 			}.bind(this));
 		}
 

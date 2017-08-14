@@ -86,7 +86,7 @@ module.exports = function(pHomebridge) {
 		updateCharacteristics() {
 
 			this.getCharacteristic(S1T1Characteristic)
-				.updateValue(this.hexToBase64('01be00be 00f44fb8 0a000000'));
+				.updateValue(this.hexToBase64(''));
 
 			this.getCharacteristic(Characteristic.AirQuality)
 				.updateValue(this.transformCO2ToAirQuality());
@@ -100,7 +100,7 @@ module.exports = function(pHomebridge) {
 
 		getCurrentS1T1(callback) {
 			this.accessory.refreshData(function(err, data) {
-				callback(err, this.hexToBase64('01be00be 00f44fb8 0a000000'));
+				callback(err, this.hexToBase64(''));
 			}.bind(this));
 		}
 
