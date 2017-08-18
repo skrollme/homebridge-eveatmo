@@ -38,16 +38,15 @@ module.exports = function(pHomebridge) {
 					}.bind(this));
 					this.cache.set(this.deviceType, deviceMap);
 					this.cache.set(this.deviceType+"_l2", deviceMap, this.ttl+60);
+                    this.l2cache = false;
+                    this.deviceData = deviceMap;
 
-					/*if (this.accessories) {
+					//notify other accessories of update because the could have been served by (older) L2 cache
+					if (this.accessories) {
 						this.accessories.forEach(function(accessory) {
-							accessory.notifyUpdate(data);
+							accessory.notifyUpdate(this.deviceData);
 						}.bind(this));
-					}*/
-
-					this.l2cache = false;
-					console.log("L2 off");
-					this.deviceData = deviceMap;
+					}
 				}
 				callback(err, this.deviceData);
 			}.bind(this));
