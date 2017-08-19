@@ -39,8 +39,11 @@ Because this plugin's base was taken from [homebridge-netatmo](https://github.co
 
 ## history
 
+### 0.2.5
+- Added L2-Caching to prevent multiple calls to netatmo-API on multi-accessory-refresh
+
 ### 0.2.4
-- Removed specific retun-value from custom-characteristic, which seems to trigger firmware-update notice in EVE.app
+- Removed specific return-value from custom-characteristic, which seems to trigger firmware-update notice in EVE.app
 
 ### 0.2.3
 - Refactoring/Renaming (could break exisiting setups, so remove and re-add as new devices).
@@ -60,12 +63,9 @@ Because this plugin's base was taken from [homebridge-netatmo](https://github.co
 
 ## todos
 - <del>maybe refactoring to split characterstics into separate services (better functionality in Apple's default home.app)</del>
-- trying to integrate <del>rain-sensor and</del> wind-sensor
+- reintegrate <del>rain-sensor and</del> wind-sensor and thermostat
 - <del>adding CO2 [ppm] or maybe just "CO2 detected" to indoor devices</del>
 - researching/testing/implementing Eve's history-functionality (see: [https://gist.github.com/0ff/668f4b7753c80ad7b60b](https://gist.github.com/0ff/668f4b7753c80ad7b60b))
-- testing
-	- overall functionality
-	- multiple weatherstations
 
 ## thanks
 

@@ -37,7 +37,16 @@ module.exports = function(pHomebridge) {
 						}
 					}.bind(this));
 					this.cache.set(this.deviceType, deviceMap);
-					this.deviceData = deviceMap;
+					this.cache.set(this.deviceType+"_l2", deviceMap, this.ttl+60);
+                    this.l2cache = false;
+                    this.deviceData = deviceMap;
+
+					//notify other accessories of update because the could have been served by (older) L2 cache
+					if (this.accessories) {
+						this.accessories.forEach(function(accessory) {
+							accessory.notifyUpdate(this.deviceData);
+						}.bind(this));
+					}
 				}
 				callback(err, this.deviceData);
 			}.bind(this));
