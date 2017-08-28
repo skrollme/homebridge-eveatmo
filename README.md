@@ -39,7 +39,7 @@ Because this plugin's base was taken from [homebridge-netatmo](https://github.co
 
 ## history
 
-### 0.2.6
+### 0.2.6 & 0.2.7
 - Removed L2 caching because it did not work as expected. Instead the polling interval was reduced to 5min and the default cache ttl was set to match the intervall >> less force-refreshes (which cause duplicate apicalls)
 
 ### 0.2.5
