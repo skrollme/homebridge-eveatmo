@@ -16,6 +16,7 @@ Because this plugin's base was taken from [homebridge-netatmo](https://github.co
             "platform": "eveatmo",
             "name": "eveatmo platform",
             "ttl": 15,
+            "extra_co2_sensor": false,
             "auth": {
     	        "client_id": "XXXXX Create at https://dev.netatmo.com/",
                 "client_secret": "XXXXX Create at https://dev.netatmo.com/",
@@ -38,6 +39,9 @@ Because this plugin's base was taken from [homebridge-netatmo](https://github.co
 - Do not reduce *ttl* further until you are testing/debugging. I recommend to use the mockup-api in this cases if you don't want to get soft-banned at the netatmo-API.
 
 ## history
+
+### 0.2.9
+- Resolved [Issue #5](https://github.com/skrollme/homebridge-eveatmo/issues/5): Added configswitch (see config sample above) which adds an additional default-homekit _Carbon Dioxide Sensor_ for notifications
 
 ### 0.2.6 & 0.2.7 & 0.2.8
 - Removed L2 caching because it did not work as expected. Instead the polling interval was reduced to 5min and the default cache ttl was set to match the intervall >> less force-refreshes (which cause duplicate apicalls)
