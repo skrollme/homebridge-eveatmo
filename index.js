@@ -1,6 +1,5 @@
 'use strict';
 var homebridge;
-var NetatmoWeatherStationAccessory;
 var async = require('async');
 
 module.exports = function(pHomebridge) {
@@ -16,6 +15,8 @@ class EveatmoPlatform {
 		this.log = log;
 		this.config = config || {};
 		this.foundAccessories = [];
+
+        this.config.extra_co2_sensor = typeof config.extra_co2_sensor !== 'undefined' ? Boolean(config.extra_co2_sensor) : false;
 
 		// If this log message is not seen, most likely the config.js is not found.
 		this.log.debug('Creating EveatmoPlatform');
