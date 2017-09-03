@@ -36,7 +36,7 @@ module.exports = function(pHomebridge) {
 	}
 
 	class EveatmoRoomAirqualityService extends homebridge.hap.Service.AirQualitySensor {
-		constructor(accessory, hasPressure) {
+		constructor(accessory, hasPressure, hideCo2) {
 			super(accessory.name + " Room Main"); // ROOM
 			this.accessory = accessory;
 
@@ -51,6 +51,15 @@ module.exports = function(pHomebridge) {
 			this.getCharacteristic(Characteristic.CarbonDioxideLevel)
 				.on('get', this.getCarbonDioxideLevel.bind(this))
 				.eventEnabled = true;
+
+			if(hideCo2) {
+                this.getCharacteristic(Characteristic.CarbonDioxideLevel).setProps({
+                    perms: [
+                        Characteristic.Perms.READ,
+                        Characteristic.Perms.HIDDEN
+                    ]
+                })
+			}
 
 			this.addCharacteristic(S1T2Characteristic)
 				.on('get', this.getCurrentS1T2.bind(this))
