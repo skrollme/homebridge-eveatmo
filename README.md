@@ -40,6 +40,9 @@ Because this plugin's base was taken from [homebridge-netatmo](https://github.co
 
 ## history
 
+### 0.2.10
+- Resolved [Issue #7](https://github.com/skrollme/homebridge-eveatmo/issues/7): Marked Eve's custom characteristics as hidden + some defaults for refreshtimings / ttl
+
 ### 0.2.9
 - Resolved [Issue #5](https://github.com/skrollme/homebridge-eveatmo/issues/5): Added configswitch (see config sample above) which adds an additional default-homekit _Carbon Dioxide Sensor_ for notifications
 

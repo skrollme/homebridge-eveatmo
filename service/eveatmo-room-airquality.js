@@ -16,7 +16,8 @@ module.exports = function(pHomebridge) {
 				format: Characteristic.Formats.DATA,
 				perms: [
 					Characteristic.Perms.READ,
-					Characteristic.Perms.WRITE
+					Characteristic.Perms.WRITE,
+					Characteristic.Perms.HIDDEN
 				]
 			});
 		}
@@ -29,7 +30,8 @@ module.exports = function(pHomebridge) {
 				format: Characteristic.Formats.DATA,
 				perms: [
 					Characteristic.Perms.READ,
-					Characteristic.Perms.WRITE
+					Characteristic.Perms.WRITE,
+                    Characteristic.Perms.HIDDEN
 				]
 			});
 		}
