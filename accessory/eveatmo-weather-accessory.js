@@ -62,7 +62,7 @@ module.exports = function(pHomebridge) {
 				this.addService(servicePressure);
 				
 				var EveatmoHistoryService = require(serviceDir + '/eveatmo-history')(homebridge);
-				var serviceHistory = new EveatmoHistoryService(this);
+				var serviceHistory = new EveatmoHistoryService(this, 'weather');
 				this.addService(serviceHistory);
 				
 				if(accessoryConfig.hasBattery) {
