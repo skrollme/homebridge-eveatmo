@@ -15,7 +15,8 @@ module.exports = function(pHomebridge) {
 			this.setProps({
 				format: Characteristic.Formats.DATA,
 				perms: [
-					Characteristic.Perms.READ
+					Characteristic.Perms.READ,
+                    Characteristic.Perms.HIDDEN
 				]
 			});
 		}
@@ -27,7 +28,8 @@ module.exports = function(pHomebridge) {
 			this.setProps({
 				format: Characteristic.Formats.DATA,
 				perms: [
-					Characteristic.Perms.READ
+					Characteristic.Perms.READ,
+                    Characteristic.Perms.HIDDEN
 				]
 			});
 		}
@@ -39,7 +41,8 @@ module.exports = function(pHomebridge) {
 			this.setProps({
 				format: Characteristic.Formats.DATA,
 				perms: [
-					Characteristic.Perms.WRITE
+					Characteristic.Perms.WRITE,
+                    Characteristic.Perms.HIDDEN
 				]
 			});
 		}
@@ -51,7 +54,8 @@ module.exports = function(pHomebridge) {
 			this.setProps({
 				format: Characteristic.Formats.DATA,
 				perms: [
-					Characteristic.Perms.WRITE
+					Characteristic.Perms.WRITE,
+                    Characteristic.Perms.HIDDEN
 				]
 			});
 		}
