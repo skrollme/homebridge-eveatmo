@@ -106,84 +106,176 @@ module.exports = function(pHomebridge) {
 			super(accessory.name + " History", 'E863F007-079E-48FF-8F27-9C2605A29F52'); // WEATHER
 			this.accessory = accessory;
 
+            var entry2address = function(val) {
+                var temp = val % this.memorySize;
+                return temp;
+            }.bind(this);
+
+            this.log = accessory.log;
+
             switch (accessoryType)
             {
-                case "weather":
+                case 'weather':
                     this.accessoryType116 = "03";
                     this.accessoryType117 = "07";
                     break;
-                case "energy":
-                    this.accessoryType116 = "07";
-                    this.accessoryType117 = "1f";
-                    break;
-                case "room":
+                case 'room':
                     this.accessoryType116 = "04";
                     this.accessoryType117 = "0f";
                     break;
             }
 
-            this.accessoryType=accessoryType;
-            this.nextAvailableEntry = 1;
+            this.accessoryType = accessoryType;
+            this.firstEntry = 0;
+            this.lastEntry = 0;
             this.history = [];
-            this.maxHistory = 50; //4032; //4 weeks
-            this.usedMemory = 1;
+            this.memorySize = 60;
+            this.usedMemory=0;
             this.currentEntry = 1;
             this.transfer=false;
             this.setTime=true;
             this.refTime=0;
-            this.emptyingHistory=false;
+            this.memoryAddress=0;
+            this.dataStream='';
+            
+            this.addCharacteristic(S2R1Characteristic);
 
-			this.addCharacteristic(S2R1Characteristic)
-				.on('get', this.getCurrentS2R1.bind(this));
-				
-			this.addCharacteristic(S2R2Characteristic)
-				.on('get', this.getCurrentS2R2.bind(this));
-				
-			this.addCharacteristic(S2W1Characteristic)
+            this.addCharacteristic(S2R2Characteristic)
+                .on('get', (callback) => {
+                
+                    this.log('On S2R2');
+                    if ((this.currentEntry<this.lastEntry) && (this.transfer==true))
+                    {
+                        this.log('On S2R2 in');
+                        this.memoryAddress = entry2address (this.currentEntry);
+
+                        if ((this.history[this.memoryAddress].temp==0 &&
+                                this.history[this.memoryAddress].pressure==0 &&
+                                this.history[this.memoryAddress].humidity==0) || (this.history[this.memoryAddress].power==0xFFFF) || (this.setTime==true))
+                        {
+                            this.log("Data "+ this.accessoryType + ": 15" + numToHex(swap16(this.currentEntry),4) + "0000 0000 0000 81" + numToHex(swap32(this.refTime),8) +"0000 0000 00 0000");
+                            callback(null,hexToBase64('15' + numToHex(swap16(this.currentEntry),4) +' 0000 0000 0000 81' + numToHex(swap32(this.refTime),8) + '0000 0000 00 0000'));
+                            this.setTime=false;
+                            this.currentEntry++;
+                        }
+                        else
+                        {
+                            for (var i=0;i<11;i++)
+                            {
+                                switch (this.accessoryType)
+                                {
+                                    case "weather":
+                                        this.log(this.accessoryType + " Entry: " + this.currentEntry + ", Address: " + this.memoryAddress);
+                                        this.dataStream = this.dataStream + " 10 " + numToHex(swap16(this.currentEntry),4) + " 0000 "
+                                            + numToHex(swap32(this.history[this.memoryAddress].time-this.refTime-978307200),8)
+                                            + this.accessoryType117
+                                            + numToHex(swap16(this.history[this.memoryAddress].temp*100),4)
+                                            + numToHex(swap16(this.history[this.memoryAddress].humidity*100),4)
+                                            + numToHex(swap16(this.history[this.memoryAddress].pressure*10),4);
+                                        break;
+                                }
+                                this.currentEntry++;
+                                this.memoryAddress = entry2address (this.currentEntry);
+                                if (this.currentEntry==this.lastEntry)
+                                {
+                                    break;
+                                }
+                            }
+                            this.log("Data " + this.accessoryType + ": " + this.dataStream);
+                            callback(null,hexToBase64(this.dataStream));
+                            this.dataStream='';
+                        }
+                    }
+                else
+                    {
+                        this.transfer=false;
+                        callback(null,hexToBase64('00'));
+                    }
+                }
+            );
+
+            this.addCharacteristic(S2W1Characteristic)
 				.on('set', this.setCurrentS2W1.bind(this));
-				
+
 			this.addCharacteristic(S2W2Characteristic)
 				.on('set', this.setCurrentS2W2.bind(this));
 		}
 
+        sendHistory(address){
+            var hexAddress= address.toString('16');
+            if (address!=0)
+                this.currentEntry = address;
+            else
+                this.currentEntry = 1;
+            this.transfer=true;
+        }
+        
+        //in order to be consistent with Eve, entry address start from 1
+        addEntry(entry){
+
+            var entry2address = function(val) {
+                return val % this.memorySize;
+            }.bind(this);   
+
+            if (this.usedMemory<this.memorySize)
+            {
+                this.usedMemory++;
+                this.firstEntry=0;
+                this.lastEntry=this.usedMemory;
+            } 
+            else
+            {
+                this.firstEntry++;
+                this.lastEntry = this.firstEntry+this.usedMemory;
+            }
+            
+            if (this.refTime==0)
+                {
+                    this.refTime=entry.time-978307200;
+                    switch (this.accessoryType)
+                        {
+                            case "weather":
+                                this.history[this.lastEntry]= {time: entry.time, temp:0, pressure:0, humidity:0};
+                                break;
+                        }
+                    this.lastEntry++;
+                    this.usedMemory++;
+                }
+            
+            this.history[entry2address(this.lastEntry)] = (entry);
+
+            this.getCharacteristic(S2R1Characteristic)
+                .setValue(hexToBase64(numToHex(swap32(entry.time-this.refTime-978307200),8) + '00000000' + numToHex(swap32(this.refTime),8) + '0401020202' + this.accessoryType116 +'020f03' + numToHex(swap16(this.usedMemory),4) + numToHex(swap16(this.memorySize),4) + numToHex(swap32(this.firstEntry),8) + '000000000101'));
+            this.log("First entry " + this.accessoryType + ": " + this.firstEntry.toString(16));
+            this.log("Last entry " + this.accessoryType + ": " + this.lastEntry.toString(16));
+            this.log("Used memory " + this.accessoryType + ": " + this.usedMemory.toString(16));
+            this.log("116 " + this.accessoryType + ": " + numToHex(swap32(entry.time-this.refTime-978307200),8) + '00000000' + numToHex(swap32(this.refTime),8) + '0401020202' + this.accessoryType116 +'020f03 ' + numToHex(swap16(this.usedMemory),4) + numToHex(swap16(this.memorySize),4) + numToHex(swap32(this.firstEntry),8) + '000000000101');
+
+        }
+
 		updateCharacteristics() {
-			this.getCharacteristic(S2R1Characteristic)
-				.updateValue(hexToBase64('01010000 FF000000 3C0F0000 03010202 0203021D 00F50F00 00000000 000000'));
-			this.getCharacteristic(S2R1Characteristic)
-				.updateValue(hexToBase64('1500 0000  0000 0000  0081 7870  F51E 0000  0000 0000  00'));
-		}
-		
-		getCurrentS2R1(callback) {
-			this.accessory.refreshData(function(err, data) {
-				callback(err, hexToBase64('01010000 FF000000 3C0F0000 03010202 0203021D 00F50F00 00000000 000000'));
-			}.bind(this));
-		}
-		
-		getCurrentS2R2(callback) {
-			this.accessory.refreshData(function(err, data) {
-				callback(err, hexToBase64('1500 0000  0000 0000  0081 7870  F51E 0000  0000 0000  00'));
-			}.bind(this));
+
 		}
 		
 		setCurrentS2W1(val, callback) {
 			callback(null,val);
-            this.log.debug("Data request " + this.accessoryType + ": "+ base64ToHex(val));
+            this.log("Data request " + this.accessoryType + ": "+ base64ToHex(val));
             var valHex = base64ToHex(val);
             var substring = valHex.substring(4,12);
             var valInt = parseInt(substring,16);
             var address = swap32(valInt);
             var hexAddress= address.toString('16');
 
-            this.log.debug("Address requested " + this.accessoryType + ": "+ hexAddress);
-            if (this.transfer==false && this.accessoryType == 'weather')
+            this.log("Address requested " + this.accessoryType + ": "+ hexAddress);
+            //if (this.transfer==false)
             {
-            	this.log.debug("Do send");
-                //this.sendHistory(address);
+                //this.transfer=true;
+                this.sendHistory(address);
             }
 		}
 		
 		setCurrentS2W2(val, callback) {
-            this.log.debug("Clock adjust: "+ base64ToHex(val));
+            this.log("Clock adjust: "+ base64ToHex(val));
 			callback(null,val);
 		}
 	}

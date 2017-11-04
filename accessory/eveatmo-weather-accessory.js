@@ -4,6 +4,7 @@ var homebridge;
 var Characteristic;
 var NetatmoAccessory;
 var path = require('path');
+var moment = require('moment');
 var mainDeviceId = false;
 
 module.exports = function(pHomebridge) {
@@ -43,6 +44,8 @@ module.exports = function(pHomebridge) {
 			this.humidity = 50;
 			this.pressure = 1000.0;
 
+			this.serviceHistory = false;
+
 			this.refreshData(function(err, data) {});
 		}
 
@@ -62,9 +65,11 @@ module.exports = function(pHomebridge) {
 				this.addService(servicePressure);
 				
 				var EveatmoHistoryService = require(serviceDir + '/eveatmo-history')(homebridge);
-				var serviceHistory = new EveatmoHistoryService(this, 'weather');
-				this.addService(serviceHistory);
+				this.serviceHistory = new EveatmoHistoryService(this, 'weather');
+				this.addService(this.serviceHistory);
 				
+				
+
 				if(accessoryConfig.hasBattery) {
 					var EveatmoBatteryService = require(serviceDir + '/eveatmo-battery')(homebridge);
 					var serviceBattery = new EveatmoBatteryService(this);
@@ -80,6 +85,8 @@ module.exports = function(pHomebridge) {
 		refreshData(callback) {
 			this.device.refreshDeviceData(function(err, deviceData) {
 				if (!err) {
+					console.log("add entry");
+					this.serviceHistory.addEntry({time: moment().unix(), temp:10.7, pressure:1001, humidity:90});
 					this.notifyUpdate(deviceData);
 				}
 				callback(err, deviceData);
