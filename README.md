@@ -8,14 +8,13 @@ Whilst the original [homebridge-netatmo](https://github.com/planetk/homebridge-n
 **Because this is a work-in-progress project which is neither feature-complete nor fully testet this readme is more of a stub. Use at your own risk.**
 
 ## configuration
-Because this plugin's base was taken from [homebridge-netatmo](https://github.com/planetk/homebridge-netatmo) (see above) you can adapt its config. Just use the plattform-code "eveatmo":
+Because this plugin's base was taken from [homebridge-netatmo](https://github.com/planetk/homebridge-netatmo) (see above) you can adapt its config. Just use the plattform-code "eveatmo" and remove "ttl" and/or the other "refresh_" properties for the beginning.
 
 ```
 "platforms": [
         {
             "platform": "eveatmo",
             "name": "eveatmo platform",
-            "ttl": 15,
             "extra_co2_sensor": false,
             "auth": {
     	        "client_id": "XXXXX Create at https://dev.netatmo.com/",
