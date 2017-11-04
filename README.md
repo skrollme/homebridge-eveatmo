@@ -40,6 +40,9 @@ Because this plugin's base was taken from [homebridge-netatmo](https://github.co
 
 ## history
 
+### 0.2.12
+- Simplified and fixed backround-refreshing from API. "refresh_check_rate" was removed, internal polling is handled by "refresh_run_rate" (default 20s) and "ttl" (540s = 9min). Also fixed a bug which caused way too frequent api-calls which could lead to softbans (and an unresponsive homebridge).
+
 ### 0.2.10 & 0.2.11
 - Resolved [Issue #7](https://github.com/skrollme/homebridge-eveatmo/issues/7): Marked Eve's custom characteristics as hidden + some defaults for refreshtimings / ttl
 

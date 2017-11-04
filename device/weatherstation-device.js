@@ -36,6 +36,7 @@ module.exports = function(pHomebridge) {
 							}.bind(this));
 						}
 					}.bind(this));
+                    this.log.debug("Setting cache with key: "+this.deviceType);
 					this.cache.set(this.deviceType, deviceMap);
                     this.deviceData = deviceMap;
 
