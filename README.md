@@ -91,3 +91,5 @@ Like this? Please buy me a beer :beers: ...
 
 [![Donate](https://img.shields.io/badge/Donate-PayPal-blue.svg)](https://www.paypal.me/skroll)
 
+Thanks go to: @DJay79
+
