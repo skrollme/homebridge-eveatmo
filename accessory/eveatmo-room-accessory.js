@@ -4,12 +4,14 @@ var homebridge;
 var Characteristic;
 var NetatmoAccessory;
 var path = require('path');
+var FakeGatoHistoryService;
 
 module.exports = function(pHomebridge) {
 	if (pHomebridge && !homebridge) {
 		homebridge = pHomebridge;
 		NetatmoAccessory = require("../lib/netatmo-accessory")(homebridge);
 		Characteristic = homebridge.hap.Characteristic;
+        FakeGatoHistoryService = require('fakegato-history')(homebridge);
 	}
 
 	class EveatmoRoomAccessory extends NetatmoAccessory {
@@ -57,16 +59,14 @@ module.exports = function(pHomebridge) {
                     var serviceCo2 = new EveatmoRoomCo2Service(this);
                     this.addService(serviceCo2);
                 }
-
-				var EveatmoHistoryService = require(serviceDir + '/eveatmo-history')(homebridge);
-				var serviceHistory = new EveatmoHistoryService(this);
-				this.addService(serviceHistory);
 				
 				if(accessoryConfig.hasBattery) {
 					var EveatmoBatteryService = require(serviceDir + '/eveatmo-battery')(homebridge);
 					var serviceBattery = new EveatmoBatteryService(this);
 					this.addService(serviceBattery);
 				}
+
+                this.historyService = new FakeGatoHistoryService("room", this, {size: 4032, storage:'fs'});
 				
 			} catch (err) {
 				this.log.warn("Could not process service files for " + accessoryConfig.name);
@@ -87,6 +87,14 @@ module.exports = function(pHomebridge) {
 		notifyUpdate(deviceData) {
 			var accessoryData = this.extractAccessoryData(deviceData);
 			var weatherData = this.mapAccessoryDataToWeatherData(accessoryData);
+
+            this.historyService.addEntry({
+                time: new Date().getTime() / 1000,
+                temp: weatherData["currentTemperature"],
+                humidity: weatherData["humidity"],
+                ppm: weatherData["co2"]
+            });
+
 			this.applyWeatherData(weatherData);
 		}
 
