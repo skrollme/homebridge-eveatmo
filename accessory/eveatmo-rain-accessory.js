@@ -60,7 +60,7 @@ module.exports = function(pHomebridge) {
 					this.notifyUpdate(deviceData);
 				}
 				callback(err, deviceData);
-			}.bind(this));
+			}.bind(this),false);
 		}
 
 		notifyUpdate(deviceData) {

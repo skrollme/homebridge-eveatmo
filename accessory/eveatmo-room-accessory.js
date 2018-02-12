@@ -66,7 +66,7 @@ module.exports = function(pHomebridge) {
 					this.addService(serviceBattery);
 				}
 
-                this.historyService = new FakeGatoHistoryService("room", this, {size: 4032, storage:'fs'});
+                this.historyService = new FakeGatoHistoryService("room", this, {size: 4032, storage:'fs', disableTimer: true});
 				
 			} catch (err) {
 				this.log.warn("Could not process service files for " + accessoryConfig.name);
@@ -81,7 +81,7 @@ module.exports = function(pHomebridge) {
 					this.notifyUpdate(deviceData);
 				}
 				callback(err, deviceData);
-			}.bind(this));
+			}.bind(this),false);
 		}
 
 		notifyUpdate(deviceData) {
