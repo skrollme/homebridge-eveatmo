@@ -51,7 +51,7 @@ module.exports = function(pHomebridge) {
 				this.addService(serviceHumidity);
 				
 				var EveatmoRoomAirqualityService = require(serviceDir + '/eveatmo-room-airquality')(homebridge);
-                var serviceAirquality = new EveatmoRoomAirqualityService(this, accessoryConfig.hasPressure, this.config.extra_co2_sensor);
+                var serviceAirquality = new EveatmoRoomAirqualityService(this);
                 this.addService(serviceAirquality);
 
                 if(this.config.extra_co2_sensor) {
@@ -75,15 +75,6 @@ module.exports = function(pHomebridge) {
 			}
 		}
 
-		refreshData(callback) {
-			this.device.refreshDeviceData(function(err, deviceData) {
-				if (!err) {
-					this.notifyUpdate(deviceData);
-				}
-				callback(err, deviceData);
-			}.bind(this),false);
-		}
-
 		notifyUpdate(deviceData) {
 			var accessoryData = this.extractAccessoryData(deviceData);
 			var weatherData = this.mapAccessoryDataToWeatherData(accessoryData);
@@ -96,10 +87,6 @@ module.exports = function(pHomebridge) {
             });
 
 			this.applyWeatherData(weatherData);
-		}
-
-		extractAccessoryData(deviceData) {
-			return deviceData[this.id];
 		}
 
 		mapAccessoryDataToWeatherData(accessoryData) {

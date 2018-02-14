@@ -78,15 +78,6 @@ module.exports = function(pHomebridge) {
 			}
 		}
 
-		refreshData(callback) {
-			this.device.refreshDeviceData(function(err, deviceData) {
-				if (!err) {
-					this.notifyUpdate(deviceData);
-				}
-				callback(err, deviceData);
-			}.bind(this),false);
-		}
-
 		notifyUpdate(deviceData) {
 			var accessoryData = this.extractAccessoryData(deviceData);
 			var weatherData = this.mapAccessoryDataToWeatherData(accessoryData);
@@ -106,10 +97,6 @@ module.exports = function(pHomebridge) {
             });
 			
 			this.applyWeatherData(weatherData);
-		}
-
-		extractAccessoryData(deviceData) {
-			return deviceData[this.id];
 		}
 
 		mapAccessoryDataToWeatherData(accessoryData) {
