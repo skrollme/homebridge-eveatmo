@@ -35,9 +35,13 @@ Because this plugin's base was taken from [homebridge-netatmo](https://github.co
 4. After successfully submitting the form the overview page of your app should show client id and secret.
 
 ### notes
-- Do not reduce *ttl* further until you are testing/debugging. I recommend to use the mockup-api in this cases if you don't want to get soft-banned at the netatmo-API.
+- Do not reduce *ttl* further unless you are testing/debugging or know what you are doing. I recommend to use the mockup-api in this cases if you don't want to get soft-banned by the netatmo-API.
 
 ## history
+
+### 0.3.0
+- First working version with support for the history of Eve.app
+- Simplified polling which now defaults to a 9 minute interval. Polling/caching still needs some more finetuning. Please let me know if you see to many "Loading new data from API..." log-entries.
 
 ### 0.2.12
 - Simplified and fixed backround-refreshing from API. "refresh_check_rate" was removed, internal polling is handled by "refresh_run_rate" (default 20s) and "ttl" (540s = 9min). Also fixed a bug which caused way too frequent api-calls which could lead to softbans (and an unresponsive homebridge).
