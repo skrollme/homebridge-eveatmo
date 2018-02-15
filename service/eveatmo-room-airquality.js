@@ -9,76 +9,46 @@ module.exports = function(pHomebridge) {
 		Characteristic = homebridge.hap.Characteristic;
 	}
 
-	class S1T1Characteristic extends Characteristic {
-		constructor(accessory) {
-			super('S1T1', 'E863F11E-079E-48FF-8F27-9C2605A29F52');
-			this.setProps({
-				format: Characteristic.Formats.DATA,
-				perms: [
-					Characteristic.Perms.READ,
-					Characteristic.Perms.WRITE,
-					Characteristic.Perms.HIDDEN
-				]
-			});
-		}
-	}
-
-	class S1T2Characteristic extends Characteristic {
-		constructor(accessory) {
-			super('S1T2', 'E863F112-079E-48FF-8F27-9C2605A29F52');
-			this.setProps({
-				format: Characteristic.Formats.DATA,
-				perms: [
-					Characteristic.Perms.READ,
-					Characteristic.Perms.WRITE,
+    class AQExtra1Characteristic extends Characteristic {
+        constructor(accessory) {
+            super('AQX1', 'E863F10B-079E-48FF-8F27-9C2605A29F52');
+            this.setProps({
+                format: Characteristic.Formats.UINT16,
+                perms: [
+                    Characteristic.Perms.READ,
                     Characteristic.Perms.HIDDEN
-				]
-			});
-		}
-	}
+                ]
+            });
+        }
+    }
 
-	class EveatmoRoomAirqualityService extends homebridge.hap.Service.AirQualitySensor {
-		constructor(accessory, hasPressure, hideCo2) {
+    class AQExtra2Characteristic extends Characteristic {
+        constructor(accessory) {
+            super('AQX2', 'E863F132-079E-48FF-8F27-9C2605A29F52');
+            this.setProps({
+                format: Characteristic.Formats.DATA,
+                perms: [
+                    Characteristic.Perms.READ,
+                    Characteristic.Perms.HIDDEN
+                ]
+            });
+        }
+    }
+    
+    class EveatmoRoomAirqualityService extends homebridge.hap.Service.AirQualitySensor {
+		constructor(accessory) {
 			super(accessory.name + " Room Main"); // ROOM
 			this.accessory = accessory;
-
-			this.addCharacteristic(S1T1Characteristic)
-				.on('get', this.getCurrentS1T1.bind(this))
-				.eventEnabled = true;
 
 			this.getCharacteristic(Characteristic.AirQuality)
 				.on('get', this.getAirQuality.bind(this))
 				.eventEnabled = true;
-				
-			this.getCharacteristic(Characteristic.CarbonDioxideLevel)
-				.on('get', this.getCarbonDioxideLevel.bind(this))
-				.eventEnabled = true;
 
-			if(hideCo2) {
-                this.getCharacteristic(Characteristic.CarbonDioxideLevel).setProps({
-                    perms: [
-                        Characteristic.Perms.READ,
-                        Characteristic.Perms.HIDDEN
-                    ]
-                })
-			}
+            this.addCharacteristic(AQExtra1Characteristic)
+                .on('get', this.getAQExtra1.bind(this));
 
-			this.addCharacteristic(S1T2Characteristic)
-				.on('get', this.getCurrentS1T2.bind(this))
-				.eventEnabled = true;
-		}
-
-		hexToBase64(val) {
-			return new Buffer(('' + val).replace(/[^0-9A-F]/ig, ''), 'hex').toString('base64');
-		}
-
-		swap16(val) {
-			return ((val & 0xFF) << 8) |
-				((val >> 8) & 0xFF);
-		}
-
-		hPAtoHex(val) {
-			return this.swap16(Math.round(val)).toString(16);
+            this.addCharacteristic(AQExtra2Characteristic)
+                .on('get', this.getAQExtra2.bind(this));
 		}
 
 		transformCO2ToAirQuality() {
@@ -95,24 +65,11 @@ module.exports = function(pHomebridge) {
 		}
 
 		updateCharacteristics() {
-
-			this.getCharacteristic(S1T1Characteristic)
-				.updateValue(this.hexToBase64(''));
-
 			this.getCharacteristic(Characteristic.AirQuality)
 				.updateValue(this.transformCO2ToAirQuality());
 				
 			this.getCharacteristic(Characteristic.CarbonDioxideLevel)
 				.updateValue(this.accessory.co2);
-
-			this.getCharacteristic(S1T2Characteristic)
-				.updateValue(this.hexToBase64('00000000'));
-		}
-
-		getCurrentS1T1(callback) {
-			this.accessory.refreshData(function(err, data) {
-				callback(err, this.hexToBase64(''));
-			}.bind(this));
 		}
 
 		getAirQuality(callback) {
@@ -120,18 +77,18 @@ module.exports = function(pHomebridge) {
 				callback(err, this.transformCO2ToAirQuality());
 			}.bind(this));
 		}
-		
-		getCarbonDioxideLevel(callback) {
-			this.accessory.refreshData(function(err, data) {
-				callback(err, this.accessory.co2);
-			}.bind(this));
-		}
 
-		getCurrentS1T2(callback) {
-			this.accessory.refreshData(function(err, data) {
-				callback(err, this.hexToBase64('00000000'));
-			}.bind(this));
-		}
+        getAQExtra1(callback) {
+            this.accessory.refreshData(function(err, data) {
+                callback(err, this.accessory.co2);
+            }.bind(this));
+        }
+
+        getAQExtra2(callback) {
+            this.accessory.refreshData(function(err, data) {
+                callback(err, '');
+            }.bind(this));
+        }
 	}
 
 	return EveatmoRoomAirqualityService;
