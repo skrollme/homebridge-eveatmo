@@ -39,8 +39,7 @@ module.exports = function(pHomebridge) {
                     this.log.debug("Setting cache with key: "+this.deviceType);
 					this.cache.set(this.deviceType, deviceMap);
                     this.deviceData = deviceMap;
-
-					//notify other accessories of update because the could have been served by (older) L2 cache
+					
 					if (this.accessories) {
 						this.accessories.forEach(function(accessory) {
 							accessory.notifyUpdate(this.deviceData);
