@@ -20,6 +20,7 @@ Because this plugin's base was taken from [homebridge-netatmo](https://github.co
             "platform": "eveatmo",
             "name": "eveatmo platform",
             "extra_co2_sensor": false,
+            "ttl": 540,
             "auth": {
     	        "client_id": "XXXXX Create at https://dev.netatmo.com/",
                 "client_secret": "XXXXX Create at https://dev.netatmo.com/",
@@ -38,8 +39,7 @@ Because this plugin's base was taken from [homebridge-netatmo](https://github.co
 3. On the following page, enter a name for your app. Any name can be chosen. All other fields of the form (like callback url, etc.) can be left blank.
 4. After successfully submitting the form the overview page of your app should show client id and secret.
 
-### notes
-- Do not reduce *ttl* further unless you are testing/debugging or know what you are doing. I recommend to use the mockup-api in this cases if you don't want to get soft-banned by the netatmo-API.
+:warning: Be aware that low(er) values for _ttl_ could lead to soft-bans on the Netatmo API. :warning:
 
 ## history
 
