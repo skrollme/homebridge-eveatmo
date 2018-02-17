@@ -67,9 +67,12 @@ module.exports = function(pHomebridge) {
 		updateCharacteristics() {
 			this.getCharacteristic(Characteristic.AirQuality)
 				.updateValue(this.transformCO2ToAirQuality());
-				
-			this.getCharacteristic(Characteristic.CarbonDioxideLevel)
-				.updateValue(this.accessory.co2);
+
+            this.getCharacteristic(AQExtra1Characteristic)
+                .updateValue(this.accessory.co2);
+
+            this.getCharacteristic(AQExtra2Characteristic)
+                .updateValue('');
 		}
 
 		getAirQuality(callback) {
