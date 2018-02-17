@@ -32,14 +32,16 @@ Because this plugin's base was taken from [homebridge-netatmo](https://github.co
 
 ```
 
+- **extra_co2_sensor:** Adds an extra CO2 sensor which is available via Apple's stock Home.app, too.
+- **ttl:** Seconds between two Netatmo API polls. Lower is not neccessarily better! The weatherstation itself collects one value per 5minutes, so going below 300s makes no sense
+- **auth:** Credentials for the Netatmo API
+
 ### retrieve client id and secret
 
 1. Register at http://dev.netatmo.com as a developer
 2. After successful registration create your own app by using the menu entry "CREATE AN APP"
 3. On the following page, enter a name for your app. Any name can be chosen. All other fields of the form (like callback url, etc.) can be left blank.
 4. After successfully submitting the form the overview page of your app should show client id and secret.
-
-:warning: Be aware that low(er) values for _ttl_ could lead to soft-bans on the Netatmo API. :warning:
 
 ## history
 
