@@ -39,6 +39,9 @@ Because this plugin's base was taken from [homebridge-netatmo](https://github.co
 
 ## history
 
+### 0.3.1
+- Added missing update for custom AirQuality CO2 Characteristic
+
 ### 0.3.0
 - First working version with support for the history of Eve.app
 - Simplified polling which now defaults to a 9 minute interval. Polling/caching still needs some more finetuning. Please let me know if you see to many "Loading new data from API..." log-entries.
