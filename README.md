@@ -39,8 +39,11 @@ Because this plugin's base was taken from [homebridge-netatmo](https://github.co
 
 ## history
 
+### 0.3.2
+- Added a lower limit (300s) to prevent "overpolling" the Netatmo API
+
 ### 0.3.1
-- Added missing update for custom AirQuality CO2 Characteristic
+- Added missing update for custom AirQuality CO2 Characteristic, which also should deal with a duplicate CO2 display. If you still see multiple CO2-Sensors per device check your config for "extra_co2_sensor" and consider disabling this. This switch main purpose is to add an extra characteristic for the stock Home.app.
 
 ### 0.3.0
 - First working version with support for the history of Eve.app
