@@ -14,20 +14,11 @@ module.exports = function(pHomebridge) {
 			super(accessory.name + " Humidity");
 			this.accessory = accessory;
 
-			this.getCharacteristic(Characteristic.CurrentRelativeHumidity)
-				.on('get', this.getCurrentRelativeHumidity.bind(this))
-				.eventEnabled = true;
+			this.getCharacteristic(Characteristic.CurrentRelativeHumidity);
 		}
 
 		updateCharacteristics() {
-			this.getCharacteristic(Characteristic.CurrentRelativeHumidity)
-				.updateValue(this.accessory.humidity);
-		}
-
-		getCurrentRelativeHumidity(callback) {
-			this.accessory.refreshData(function(err, data) {
-				callback(err, this.accessory.humidity);
-			}.bind(this));
+			this.setCharacteristic(Characteristic.CurrentRelativeHumidity, this.accessory.humidity);
 		}
 	}
 

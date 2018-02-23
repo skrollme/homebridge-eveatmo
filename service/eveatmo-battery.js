@@ -20,49 +20,28 @@ module.exports = function(pHomebridge) {
 						Characteristic.Perms.READ,
 						Characteristic.Perms.HIDDEN
 					]
-				})
-				.on('get', this.getBatteryLevel.bind(this))
-				.eventEnabled = true;
+				});
+
 			this.getCharacteristic(Characteristic.StatusLowBattery)
 				.setProps({
 					perms: [
 						Characteristic.Perms.READ,
 						Characteristic.Perms.HIDDEN
 					]
-				})
-				.on('get', this.getStatusLowBattery.bind(this))
-				.eventEnabled = true;
+				});
+
 			this.getCharacteristic(Characteristic.ChargingState)
 				.setProps({
 					perms: [
 						Characteristic.Perms.READ,
 						Characteristic.Perms.HIDDEN
 					]
-				})
-				.on('get', this.getChargingState.bind(this));
-		}
-
-		getBatteryLevel(callback) {
-			this.accessory.refreshData(function(err, data) {
-				callback(err, this.accessory.batteryPercent);
-			}.bind(this));
-		}
-
-		getStatusLowBattery(callback) {
-			this.accessory.refreshData(function(err, data) {
-				callback(err, this.accessory.lowBattery ? Characteristic.StatusLowBattery.BATTERY_LEVEL_LOW : Characteristic.StatusLowBattery.BATTERY_LEVEL_NORMAL);
-			}.bind(this));
-		}
-
-		getChargingState(callback) {
-			callback(null, Characteristic.ChargingState.NOT_CHARGING);
+				});
 		}
 
 		updateCharacteristics() {
-			this.getCharacteristic(Characteristic.BatteryLevel)
-				.updateValue(this.accessory.batteryPercent);
-			this.getCharacteristic(Characteristic.StatusLowBattery)
-				.updateValue(this.accessory.lowBattery ? Characteristic.StatusLowBattery.BATTERY_LEVEL_LOW : Characteristic.StatusLowBattery.BATTERY_LEVEL_NORMAL);
+			this.setCharacteristic(Characteristic.BatteryLevel, this.accessory.batteryPercent);
+			this.setCharacteristic(Characteristic.StatusLowBattery, this.accessory.lowBattery ? Characteristic.StatusLowBattery.BATTERY_LEVEL_LOW : Characteristic.StatusLowBattery.BATTERY_LEVEL_NORMAL);
 		}
 	}
 

@@ -18,19 +18,11 @@ module.exports = function(pHomebridge) {
 				.setProps({
 					minValue: -100
 				})
-				.on('get', this.getCurrentTemperature.bind(this))
 				.eventEnabled = true;
 		}
 
 		updateCharacteristics() {
-			this.getCharacteristic(Characteristic.CurrentTemperature)
-				.updateValue(this.accessory.currentTemperature);
-		}
-
-		getCurrentTemperature(callback) {
-			this.accessory.refreshData(function(err, data) {
-				callback(err, this.accessory.currentTemperature);
-			}.bind(this));
+			this.setCharacteristic(Characteristic.CurrentTemperature, this.accessory.currentTemperature);
 		}
 	}
 

@@ -66,9 +66,7 @@ module.exports = function(pHomebridge) {
 						Characteristic.Perms.READ,
 						Characteristic.Perms.HIDDEN
 					]
-				})
-				.on('get', this.getCurrentTemperature.bind(this))
-				.eventEnabled = true;
+				});
 
 			this.addCharacteristic(Characteristic.CurrentRelativeHumidity)
 				.setProps({
@@ -76,21 +74,11 @@ module.exports = function(pHomebridge) {
 						Characteristic.Perms.READ,
 						Characteristic.Perms.HIDDEN
 					]
-				})
-				.on('get', this.getCurrentRelativeHumidity.bind(this))
-				.eventEnabled = true;
+				});
 
-			this.addCharacteristic(AtmosphericPressureCharacteristic)
-				.on('get', this.getAtmosphericPressure.bind(this))
-				.eventEnabled = true;
-
-			this.addCharacteristic(S1T1Characteristic)
-				.on('get', this.getCurrentS1T1.bind(this))
-				.eventEnabled = true;
-
-			this.addCharacteristic(S1T2Characteristic)
-				.on('get', this.getCurrentS1T2.bind(this))
-				.eventEnabled = true;
+			this.addCharacteristic(AtmosphericPressureCharacteristic);
+			this.addCharacteristic(S1T1Characteristic);
+			this.addCharacteristic(S1T2Characteristic);
 		}
 
 		hexToBase64(val) {
@@ -98,8 +86,7 @@ module.exports = function(pHomebridge) {
 		}
 
 		swap16(val) {
-			return ((val & 0xFF) << 8) |
-				((val >> 8) & 0xFF);
+			return ((val & 0xFF) << 8) | ((val >> 8) & 0xFF);
 		}
 
 		hPAtoHex(val) {
@@ -107,50 +94,11 @@ module.exports = function(pHomebridge) {
 		}
 
 		updateCharacteristics() {
-			this.getCharacteristic(Characteristic.CurrentTemperature)
-				.updateValue(this.accessory.currentTemperature);
-
-			this.getCharacteristic(Characteristic.CurrentRelativeHumidity)
-				.updateValue(this.accessory.humidity);
-				
-			this.getCharacteristic(AtmosphericPressureCharacteristic)
-				.updateValue(this.hexToBase64(this.hPAtoHex(parseInt(this.accessory.pressure * 10))));
-
-			this.getCharacteristic(S1T1Characteristic)
-				.updateValue(this.hexToBase64(''));
-
-			this.getCharacteristic(S1T2Characteristic)
-				.updateValue(this.hexToBase64('00000000'));
-		}
-
-		getCurrentTemperature(callback) {
-			this.accessory.refreshData(function(err, data) {
-				callback(err, this.accessory.currentTemperature);
-			}.bind(this));
-		}
-
-		getCurrentRelativeHumidity(callback) {
-			this.accessory.refreshData(function(err, data) {
-				callback(err, this.accessory.humidity);
-			}.bind(this));
-		}
-		
-		getAtmosphericPressure(callback) {
-			this.accessory.refreshData(function(err, data) {
-				callback(err, this.hexToBase64(this.hPAtoHex(parseInt(this.accessory.pressure * 10))));
-			}.bind(this));
-		}
-
-		getCurrentS1T1(callback) {
-			this.accessory.refreshData(function(err, data) {
-				callback(err, this.hexToBase64(''));
-			}.bind(this));
-		}
-
-		getCurrentS1T2(callback) {
-			this.accessory.refreshData(function(err, data) {
-				callback(err, this.hexToBase64('00000000'));
-			}.bind(this));
+			this.setCharacteristic(Characteristic.CurrentTemperature, this.accessory.currentTemperature);
+			this.setCharacteristic(Characteristic.CurrentRelativeHumidity, this.accessory.humidity);
+			this.setCharacteristic(AtmosphericPressureCharacteristic, this.hexToBase64(this.hPAtoHex(parseInt(this.accessory.pressure * 10))));
+			this.setCharacteristic(S1T1Characteristic, this.hexToBase64(''));
+			this.setCharacteristic(S1T2Characteristic, this.hexToBase64('00000000'));
 		}
 	}
 

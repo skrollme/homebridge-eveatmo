@@ -40,15 +40,9 @@ module.exports = function(pHomebridge) {
 			super(accessory.name + " Room Main"); // ROOM
 			this.accessory = accessory;
 
-			this.getCharacteristic(Characteristic.AirQuality)
-				.on('get', this.getAirQuality.bind(this))
-				.eventEnabled = true;
-
-            this.addCharacteristic(AQExtra1Characteristic)
-                .on('get', this.getAQExtra1.bind(this));
-
-            this.addCharacteristic(AQExtra2Characteristic)
-                .on('get', this.getAQExtra2.bind(this));
+			this.getCharacteristic(Characteristic.AirQuality);
+            this.addCharacteristic(AQExtra1Characteristic);
+            this.addCharacteristic(AQExtra2Characteristic);
 		}
 
 		transformCO2ToAirQuality() {
@@ -65,33 +59,10 @@ module.exports = function(pHomebridge) {
 		}
 
 		updateCharacteristics() {
-			this.getCharacteristic(Characteristic.AirQuality)
-				.updateValue(this.transformCO2ToAirQuality());
-
-            this.getCharacteristic(AQExtra1Characteristic)
-                .updateValue(this.accessory.co2);
-
-            this.getCharacteristic(AQExtra2Characteristic)
-                .updateValue('');
+			this.setCharacteristic(Characteristic.AirQuality, this.transformCO2ToAirQuality());
+            this.setCharacteristic(AQExtra1Characteristic, this.accessory.co2);
+            this.setCharacteristic(AQExtra2Characteristic, '');
 		}
-
-		getAirQuality(callback) {
-			this.accessory.refreshData(function(err, data) {
-				callback(err, this.transformCO2ToAirQuality());
-			}.bind(this));
-		}
-
-        getAQExtra1(callback) {
-            this.accessory.refreshData(function(err, data) {
-                callback(err, this.accessory.co2);
-            }.bind(this));
-        }
-
-        getAQExtra2(callback) {
-            this.accessory.refreshData(function(err, data) {
-                callback(err, '');
-            }.bind(this));
-        }
 	}
 
 	return EveatmoRoomAirqualityService;

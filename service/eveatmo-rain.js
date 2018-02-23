@@ -73,42 +73,15 @@ module.exports = function(pHomebridge) {
 			super(accessory.name, RAIN_LEVEL_STYPE_ID);
 			this.accessory = accessory;
 
-			this.addCharacteristic(RainLevelCharacteristic)
-				.on('get', this.getRainLevel.bind(this))
-				.eventEnabled = true;
-			this.addCharacteristic(RainLevelSum1Characteristic)
-				.on('get', this.getRainLevelSum1.bind(this))
-				.eventEnabled = true;
-			this.addCharacteristic(RainLevelSum24Characteristic)
-				.on('get', this.getRainLevelSum24.bind(this))
-				.eventEnabled = true;
+			this.addCharacteristic(RainLevelCharacteristic);
+			this.addCharacteristic(RainLevelSum1Characteristic);
+			this.addCharacteristic(RainLevelSum24Characteristic);
 		}
 
 		updateCharacteristics() {
-			this.getCharacteristic(RainLevelCharacteristic)
-				.updateValue(this.accessory.rainLevel);
-			this.getCharacteristic(RainLevelSum1Characteristic)
-				.updateValue(this.accessory.rainLevelSum1);
-			this.getCharacteristic(RainLevelSum24Characteristic)
-				.updateValue(this.accessory.rainLevelSum24);
-		}
-
-		getRainLevel(callback) {
-			this.accessory.refreshData(function(err, data) {
-				callback(err, this.accessory.rainLevel);
-			}.bind(this));
-		}
-
-		getRainLevelSum1(callback) {
-			this.accessory.refreshData(function(err, data) {
-				callback(err, this.accessory.rainLevelSum1);
-			}.bind(this));
-		}
-
-		getRainLevelSum24(callback) {
-			this.accessory.refreshData(function(err, data) {
-				callback(err, this.accessory.rainLevelSum24);
-			}.bind(this));
+			this.setCharacteristic(RainLevelCharacteristic, this.accessory.rainLevel);
+			this.setCharacteristic(RainLevelSum1Characteristic, this.accessory.rainLevelSum1);
+			this.setCharacteristic(RainLevelSum24Characteristic, this.accessory.rainLevelSum24);
 		}
 	}
 

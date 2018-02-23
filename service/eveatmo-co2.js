@@ -14,34 +14,15 @@ module.exports = function(pHomebridge) {
             super(accessory.name + " Carbon Dioxide");
             this.accessory = accessory;
 
-            this.getCharacteristic(Characteristic.CarbonDioxideDetected)
-                .on('get', this.getCarbonDioxideDetected.bind(this))
-                .eventEnabled = true;
+            this.getCharacteristic(Characteristic.CarbonDioxideDetected);
 
             var co2LevelCharacteristic = this.getCharacteristic(Characteristic.CarbonDioxideLevel) ||
                 this.addCharacteristic(Characteristic.CarbonDioxideLevel);
-
-            co2LevelCharacteristic.on('get', this.getCarbonDioxideLevel.bind(this))
-                .eventEnabled = true;
         }
 
         updateCharacteristics() {
-            this.getCharacteristic(Characteristic.CarbonDioxideDetected)
-                .updateValue(this.transformCO2ToCarbonDioxideDetected());
-            this.getCharacteristic(Characteristic.CarbonDioxideLevel)
-                .updateValue(this.accessory.co2);
-        }
-
-        getCarbonDioxideDetected(callback) {
-            this.accessory.refreshData(function(err,data) {
-                callback(err, this.transformCO2ToCarbonDioxideDetected());
-            }.bind(this));
-        }
-
-        getCarbonDioxideLevel(callback) {
-            this.accessory.refreshData(function(err,data) {
-                callback(err, this.accessory.co2);
-            }.bind(this));
+            this.setCharacteristic(Characteristic.CarbonDioxideDetected, this.transformCO2ToCarbonDioxideDetected());
+            this.setCharacteristic(Characteristic.CarbonDioxideLevel, this.accessory.co2);
         }
 
         transformCO2ToCarbonDioxideDetected() {
