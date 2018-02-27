@@ -45,6 +45,9 @@ Because this plugin's base was taken from [homebridge-netatmo](https://github.co
 
 ## history
 
+### 0.3.3
+- Increased history storage 
+
 ### 0.3.2
 - Added a lower limit (300s) to prevent "overpolling" the Netatmo API
 
