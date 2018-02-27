@@ -22,5 +22,9 @@
 		"glob": "^7.0.5",
 		"netatmo": "^2.0.0",
 		"node-cache": "^3.0.0"
-	}
+	},
+	"bugs": {
+		"url": "https://github.com/skrollme/homebridge-eveatmo/issues"
+	},
+	"homepage": "https://github.com/skrollme/homebridge-eveatmo#readme"
 }
