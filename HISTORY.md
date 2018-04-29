@@ -1,5 +1,8 @@
 ## version history
 
+### 0.3.4
+- updated libraries
+
 ### 0.3.3
 - Increased history storage 
 
