@@ -17,10 +17,10 @@
 		"homebridge": ">=0.4.16"
 	},
 	"dependencies": {
-		"async": "^2.0.1",
-		"fakegato-history": "^0.4.0",
+		"async": "^2.6.0",
+		"fakegato-history": "^0.5.0",
 		"glob": "^7.0.5",
-		"netatmo": "^2.0.0",
+		"netatmo": "^2.2.0",
 		"node-cache": "^3.0.0"
 	},
 	"bugs": {
