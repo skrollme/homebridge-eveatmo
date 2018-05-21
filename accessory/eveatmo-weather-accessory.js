@@ -112,21 +112,10 @@ module.exports = function(pHomebridge) {
 			}
 
 			result.batteryPercent = accessoryData.battery_percent;
-			result.lowBattery = false;
-
-			if (accessoryData.battery_vp) {
-				if (!result.batteryPercent) {
-					var minBatteryLevel = this.getLowBatteryLevel();
-					result.batteryPercent = Math.min(Math.round(Math.max(accessoryData.battery_vp - minBatteryLevel, 0) / (this.getFullBatteryLevel() - minBatteryLevel) * 100), 100);
-				}
-				if (accessoryData.battery_vp < this.getLowBatteryLevel()) {
-					result.lowBattery = true;
-				}
-			}
-
 			if (!result.batteryPercent) {
 				result.batteryPercent = 100;
 			}
+            result.lowBattery = (result.batteryPercent <= 20) ? true : false;
 
 			return result;
 		}
