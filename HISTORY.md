@@ -1,5 +1,8 @@
 ## version history
 
+### 0.3.5
+- updated "low-battery"-handling and switched to different service-uuid for _Rain1H_ and _Rain24H_
+
 ### 0.3.4
 - updated libraries
 

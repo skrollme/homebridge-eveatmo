@@ -26,7 +26,6 @@ module.exports = function(pHomebridge) {
 			super(homebridge, accessoryConfig, netatmoDevice);
 			this.buildServices(accessoryConfig);
 
-			this.rainLevel = 0;
 			this.rainLevelSum1 = 0;
 			this.rainLevelSum24 = 0;
 
@@ -64,9 +63,6 @@ module.exports = function(pHomebridge) {
 			var result = {};
 			var dashboardData = accessoryData.dashboard_data;
 			if (dashboardData) {
-				if (dashboardData.Rain) {
-					result.rainLevel = Math.round(dashboardData.Rain * 1000) / 1000;
-				}
 				if (dashboardData.sum_rain_1) {
 					result.rainLevelSum1 = Math.round(dashboardData.sum_rain_1 * 1000) / 1000;
 				}
@@ -76,21 +72,10 @@ module.exports = function(pHomebridge) {
 			}
 
 			result.batteryPercent = accessoryData.battery_percent;
-			result.lowBattery = false;
-
-			if (accessoryData.battery_vp) {
-				if (!result.batteryPercent) {
-					var minBatteryLevel = this.getLowBatteryLevel();
-					result.batteryPercent = Math.min(Math.round(Math.max(accessoryData.battery_vp - minBatteryLevel, 0) / (this.getFullBatteryLevel() - minBatteryLevel) * 100), 100);
-				}
-				if (accessoryData.battery_vp < this.getLowBatteryLevel()) {
-					result.lowBattery = true;
-				}
-			}
-
 			if (!result.batteryPercent) {
 				result.batteryPercent = 100;
 			}
+            result.lowBattery = (result.batteryPercent <= 20) ? true : false;
 
 			return result;
 		}
@@ -98,10 +83,6 @@ module.exports = function(pHomebridge) {
 		applyWeatherData(weatherData) {
 			var dataChanged = false;
 
-			if (weatherData.rainLevel && this.rainLevel != weatherData.rainLevel) {
-				this.rainLevel = weatherData.rainLevel;
-				dataChanged = true;
-			}
 			if (weatherData.rainLevelSum1 && this.rainLevelSum1 != weatherData.rainLevelSum1) {
 				this.rainLevelSum1 = weatherData.rainLevelSum1;
 				dataChanged = true;

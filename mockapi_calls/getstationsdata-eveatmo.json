@@ -68,8 +68,8 @@
 						"dashboard_data": {
 							"time_utc": 1501492700,
 							"Rain": 0,
-							"sum_rain_24": 0.8757016840417,
-							"sum_rain_1": 0.445
+							"sum_rain_24": 5,
+							"sum_rain_1": 2.5
 						},
 						"data_type": [
 							"Rain"
@@ -77,7 +77,7 @@
 						"module_name": "Rain",
 						"last_setup": 1454229650,
 						"battery_vp": 4948,
-						"battery_percent": 56,
+						"battery_percent": 21,
 						"rf_status": 55,
 						"firmware": 8
 					}
