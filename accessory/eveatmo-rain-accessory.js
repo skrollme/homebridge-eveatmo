@@ -63,10 +63,10 @@ module.exports = function(pHomebridge) {
 			var result = {};
 			var dashboardData = accessoryData.dashboard_data;
 			if (dashboardData) {
-				if (dashboardData.sum_rain_1) {
+				if (dashboardData.hasOwnProperty("sum_rain_1")) {
 					result.rainLevelSum1 = Math.round(dashboardData.sum_rain_1 * 1000) / 1000;
 				}
-				if (dashboardData.sum_rain_24) {
+				if (dashboardData.hasOwnProperty("sum_rain_24")) {
 					result.rainLevelSum24 = Math.round(dashboardData.sum_rain_24 * 1000) / 1000;
 				}
 			}

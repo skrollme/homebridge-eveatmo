@@ -93,7 +93,7 @@ module.exports = function(pHomebridge) {
 			var result = {};
 			var dashboardData = accessoryData.dashboard_data;
 			if (dashboardData) {
-				if (dashboardData.Temperature) {
+				if (dashboardData.hasOwnProperty("Temperature")) {
 					result.currentTemperature = dashboardData.Temperature;
 				}
 				if (dashboardData.CO2) {
