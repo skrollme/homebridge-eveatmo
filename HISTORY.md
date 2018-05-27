@@ -1,5 +1,9 @@
 ## version history
 
+### 0.3.6
+- fixed bug were zero-measurement-values were not applied to characteristics (https://github.com/skrollme/homebridge-eveatmo/issues/15)
+- switched to default history length and timer-handling
+
 ### 0.3.5
 - updated "low-battery"-handling and switched to different service-uuid for _Rain1H_ and _Rain24H_
 
