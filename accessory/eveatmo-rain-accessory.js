@@ -83,11 +83,11 @@ module.exports = function(pHomebridge) {
 		applyWeatherData(weatherData) {
 			var dataChanged = false;
 
-			if (weatherData.rainLevelSum1 && this.rainLevelSum1 != weatherData.rainLevelSum1) {
+			if (weatherData.hasOwnProperty("rainLevelSum1") && this.rainLevelSum1 != weatherData.rainLevelSum1) {
 				this.rainLevelSum1 = weatherData.rainLevelSum1;
 				dataChanged = true;
 			}
-			if (weatherData.rainLevelSum24 && this.rainLevelSum24 != weatherData.rainLevelSum24) {
+			if (weatherData.hasOwnProperty("rainLevelSum24") && this.rainLevelSum24 != weatherData.rainLevelSum24) {
 				this.rainLevelSum24 = weatherData.rainLevelSum24;
 				dataChanged = true;
 			}

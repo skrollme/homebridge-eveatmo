@@ -123,7 +123,7 @@ module.exports = function(pHomebridge) {
 		applyWeatherData(weatherData) {
 			var dataChanged = false;
 
-			if (weatherData.currentTemperature && this.currentTemperature != weatherData.currentTemperature) {
+			if (weatherData.hasOwnProperty("currentTemperature") && this.currentTemperature != weatherData.currentTemperature) {
 				this.currentTemperature = weatherData.currentTemperature;
 				dataChanged = true;
 			}
