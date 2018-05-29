@@ -66,7 +66,7 @@ module.exports = function(pHomebridge) {
 					this.addService(serviceBattery);
 				}
 
-                this.historyService = new FakeGatoHistoryService("room", this, {size: 40320, storage:'fs', disableTimer: true});
+                this.historyService = new FakeGatoHistoryService("room", this, {storage:'fs'});
 				
 			} catch (err) {
 				this.log.warn("Could not process service files for " + accessoryConfig.name);
@@ -93,7 +93,7 @@ module.exports = function(pHomebridge) {
 			var result = {};
 			var dashboardData = accessoryData.dashboard_data;
 			if (dashboardData) {
-				if (dashboardData.Temperature) {
+				if (dashboardData.hasOwnProperty("Temperature")) {
 					result.currentTemperature = dashboardData.Temperature;
 				}
 				if (dashboardData.CO2) {
@@ -119,7 +119,7 @@ module.exports = function(pHomebridge) {
 		applyWeatherData(weatherData) {
 			var dataChanged = false;
 
-			if (weatherData.currentTemperature && this.currentTemperature != weatherData.currentTemperature) {
+			if (weatherData.hasOwnProperty("currentTemperature") && this.currentTemperature != weatherData.currentTemperature) {
 				this.currentTemperature = weatherData.currentTemperature;
 				dataChanged = true;
 			}

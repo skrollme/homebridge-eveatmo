@@ -63,10 +63,10 @@ module.exports = function(pHomebridge) {
 			var result = {};
 			var dashboardData = accessoryData.dashboard_data;
 			if (dashboardData) {
-				if (dashboardData.sum_rain_1) {
+				if (dashboardData.hasOwnProperty("sum_rain_1")) {
 					result.rainLevelSum1 = Math.round(dashboardData.sum_rain_1 * 1000) / 1000;
 				}
-				if (dashboardData.sum_rain_24) {
+				if (dashboardData.hasOwnProperty("sum_rain_24")) {
 					result.rainLevelSum24 = Math.round(dashboardData.sum_rain_24 * 1000) / 1000;
 				}
 			}
@@ -83,11 +83,11 @@ module.exports = function(pHomebridge) {
 		applyWeatherData(weatherData) {
 			var dataChanged = false;
 
-			if (weatherData.rainLevelSum1 && this.rainLevelSum1 != weatherData.rainLevelSum1) {
+			if (weatherData.hasOwnProperty("rainLevelSum1") && this.rainLevelSum1 != weatherData.rainLevelSum1) {
 				this.rainLevelSum1 = weatherData.rainLevelSum1;
 				dataChanged = true;
 			}
-			if (weatherData.rainLevelSum24 && this.rainLevelSum24 != weatherData.rainLevelSum24) {
+			if (weatherData.hasOwnProperty("rainLevelSum24") && this.rainLevelSum24 != weatherData.rainLevelSum24) {
 				this.rainLevelSum24 = weatherData.rainLevelSum24;
 				dataChanged = true;
 			}
