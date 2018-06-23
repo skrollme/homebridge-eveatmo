@@ -1,5 +1,8 @@
 ## version history
 
+### 0.3.7
+- changed polling mechanism to prevent deadlocks on netatmo API errors 
+
 ### 0.3.6
 - fixed bug were zero-measurement-values were not applied to characteristics (https://github.com/skrollme/homebridge-eveatmo/issues/15)
 - switched to default history length and timer-handling
