@@ -79,9 +79,6 @@ module.exports = function(pHomebridge) {
 			var accessoryData = this.extractAccessoryData(deviceData);
 			var weatherData = this.mapAccessoryDataToWeatherData(accessoryData);
 
-			// necessary for eve?!
-            weatherData["co2"] = Math.max(400,weatherData["co2"]);
-
             this.historyService.addEntry({
                 time: new Date().getTime() / 1000,
                 temp: weatherData["currentTemperature"],
