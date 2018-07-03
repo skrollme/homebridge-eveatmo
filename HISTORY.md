@@ -1,5 +1,8 @@
 ## version history
 
+### 0.4.0
+- added wind-sensor (still testing)
+
 ### 0.3.7
 - changed polling mechanism to prevent deadlocks on netatmo API errors 
 
