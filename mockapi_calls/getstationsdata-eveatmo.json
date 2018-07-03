@@ -33,6 +33,97 @@
 						"firmware": 43
 					},
 					{
+						"_id": "10:00:00:00:00:05",
+						"type": "NAModule2",
+						"last_message": 1469639523,
+						"last_seen": 1469639502,
+						"dashboard_data": {
+							"WindAngle": 188,
+							"WindStrength": 6,
+							"GustAngle": 143,
+							"GustStrength": 15,
+							"time_utc": 1469905065
+						},
+						"WindHistoric": [
+							{
+								"WindStrength": "6",
+								"WindAngle": 200,
+								"time_utc": 1469901739
+							},
+							{
+								"WindStrength": "6",
+								"WindAngle": 217,
+								"time_utc": 1469902040
+							},
+							{
+								"WindStrength": "6",
+								"WindAngle": 200,
+								"time_utc": 1469902342
+							},
+							{
+								"WindStrength": "4",
+								"WindAngle": 178,
+								"time_utc": 1469902643
+							},
+							{
+								"WindStrength": "7",
+								"WindAngle": 197,
+								"time_utc": 1469902944
+							},
+							{
+								"WindStrength": "9",
+								"WindAngle": 182,
+								"time_utc": 1469903245
+							},
+							{
+								"WindStrength": "10",
+								"WindAngle": 191,
+								"time_utc": 1469903546
+							},
+							{
+								"WindStrength": "8",
+								"WindAngle": 193,
+								"time_utc": 1469903848
+							},
+							{
+								"WindStrength": "6",
+								"WindAngle": 194,
+								"time_utc": 1469904155
+							},
+							{
+								"WindStrength": "7",
+								"WindAngle": 213,
+								"time_utc": 1469904457
+							},
+							{
+								"WindStrength": "6",
+								"WindAngle": 192,
+								"time_utc": 1469904764
+							},
+							{
+								"WindStrength": "6",
+								"WindAngle": 188,
+								"time_utc": 1469905065
+							}
+						],
+						"date_max_wind_str": 1469903245,
+						"date_max_temp": 1469851393,
+						"date_min_temp": 1469881855,
+						"min_temp": -0.8,
+						"max_temp": 0,
+						"max_wind_angle": 225,
+						"max_wind_str": 22,
+						"data_type": [
+							"Wind"
+						],
+						"module_name": "Wind Gauge",
+						"last_setup": 1464467149,
+						"battery_vp": 5940,
+						"battery_percent": 97,
+						"rf_status": 75,
+						"firmware": 17
+					},
+					{
 						"_id": "03:00:00:01:23:45",
 						"type": "NAModule4",
 						"last_message": 1501492713,
