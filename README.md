@@ -49,9 +49,9 @@ see [HISTORY.md](https://github.com/skrollme/homebridge-eveatmo/blob/master/HIST
 
 ## ToDos
 - <del>maybe refactoring to split characterstics into separate services (better functionality in Apple's default home.app)</del>
-- reintegrate <del>rain-sensor and</del> wind-sensor and thermostat
+- reintegrate <del>rain-sensor, wind-sensor and</del> thermostat
 - <del>adding CO2 [ppm] or maybe just "CO2 detected" to indoor devices</del>
-- researching/testing/implementing Eve's history-functionality (see: [https://gist.github.com/0ff/668f4b7753c80ad7b60b](https://gist.github.com/0ff/668f4b7753c80ad7b60b))
+- <del>researching/testing/implementing Eve's history-functionality (see: [https://gist.github.com/0ff/668f4b7753c80ad7b60b](https://gist.github.com/0ff/668f4b7753c80ad7b60b))</del>
 
 ## Thanks
 
