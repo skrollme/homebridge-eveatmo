@@ -1,5 +1,9 @@
 ## version history
 
+### 0.4.1
+- setting min value for co2 for investigating history gaps
+- anti-crash-fix for netatmo's current API problems
+
 ### 0.4.0
 - added wind-sensor (still testing)
 

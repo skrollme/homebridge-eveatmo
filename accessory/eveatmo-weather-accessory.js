@@ -22,7 +22,7 @@ module.exports = function(pHomebridge) {
 				if (!netatmoDevice.deviceData.hasOwnProperty(deviceId)) continue;
 				var device = netatmoDevice.deviceData[deviceId];
 				
-				if(device.dashboard_data.Pressure) {
+				if(device.dashboard_data && device.dashboard_data.Pressure) {
 					mainDeviceId = deviceId;
 				}
 			}
