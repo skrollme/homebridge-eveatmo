@@ -79,6 +79,9 @@ module.exports = function(pHomebridge) {
 			var accessoryData = this.extractAccessoryData(deviceData);
 			var weatherData = this.mapAccessoryDataToWeatherData(accessoryData);
 
+            // testing, because it seems, that low co2 values cause gaps in history
+            weatherData["co2"] = Math.max(450,weatherData["co2"]);
+
             this.historyService.addEntry({
                 time: new Date().getTime() / 1000,
                 temp: weatherData["currentTemperature"],
