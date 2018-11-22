@@ -43,6 +43,10 @@ Because this plugin's base was taken from [homebridge-netatmo](https://github.co
 3. On the following page, enter a name for your app. Any name can be chosen. All other fields of the form (like callback url, etc.) can be left blank.
 4. After successfully submitting the form the overview page of your app should show client id and secret.
 
+## Siri-Voicecommands
+
+A donator suggest to add some documentation on how to question Siri for the measurements this plugin collects. I think this is a good idea and I will add this here soon.
+
 ## History
 
 see [HISTORY.md](https://github.com/skrollme/homebridge-eveatmo/blob/master/HISTORY.md)
