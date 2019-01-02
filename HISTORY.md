@@ -1,5 +1,8 @@
 ## version history
 
+### 0.4.2
+- hopefully fixed a problem which caused the low-battery warning to persist even after replacing the module's battery (Issue #21)
+
 ### 0.4.1
 - setting min value for co2 for investigating history gaps
 - anti-crash-fix for netatmo's current API problems
