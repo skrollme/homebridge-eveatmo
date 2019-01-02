@@ -142,7 +142,7 @@ module.exports = function(pHomebridge) {
 				this.batteryPercent = weatherData.batteryPercent;
 				dataChanged = true;
 			}
-			if (weatherData.lowBattery && this.lowBattery != weatherData.lowBattery) {
+			if (this.lowBattery != weatherData.lowBattery) {
 				this.lowBattery = weatherData.lowBattery;
 				dataChanged = true;
 			}
