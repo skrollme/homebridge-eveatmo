@@ -6,10 +6,7 @@
 
 This is a [homebridge](https://github.com/nfarina/homebridge) plugin which lets you integrate your non-HomeKit Netatmo Weatherstation into HomeKit.
 
-Whilst the original [homebridge-netatmo](https://github.com/planetk/homebridge-netatmo)-plugin goes a mostly HomeKit-standard approach (predefined services, characteristics, ...), this plugin tries to mimic the Elgato Eve devices (currently *Room* and *Weather*) as close as possible. 
-
-## Hint
-**Because this is a work-in-progress project which is neither feature-complete nor fully testet this readme is more of a stub. Use at your own risk.**
+Whilst the original [homebridge-netatmo](https://github.com/planetk/homebridge-netatmo)-plugin goes a mostly HomeKit-standard approach (predefined services, characteristics, ...), this plugin tries to mimic the Elgato Eve devices as close as possible. 
 
 ## Configuration
 Because this plugin's base was taken from [homebridge-netatmo](https://github.com/planetk/homebridge-netatmo) (see above) you can adapt its config. Just use the plattform-code "eveatmo" and remove "ttl" and/or the other "refresh_" properties for the beginning.
@@ -20,7 +17,6 @@ Because this plugin's base was taken from [homebridge-netatmo](https://github.co
             "platform": "eveatmo",
             "name": "eveatmo platform",
             "extra_co2_sensor": false,
-            "ttl": 540,
             "auth": {
     	        "client_id": "XXXXX Create at https://dev.netatmo.com/",
                 "client_secret": "XXXXX Create at https://dev.netatmo.com/",
@@ -33,7 +29,7 @@ Because this plugin's base was taken from [homebridge-netatmo](https://github.co
 ```
 
 - **extra_co2_sensor:** Adds an extra CO2 sensor which is available via Apple's stock Home.app, too.
-- **ttl:** Seconds between two Netatmo API polls. Lower is not neccessarily better! The weatherstation itself collects one value per 5minutes, so going below 300s makes no sense
+- **ttl: (optional)** Seconds between two Netatmo API polls. Lower is not neccessarily better! The weatherstation itself collects one value per 5minutes, so going below 300s makes no sense. Default value is 540s (9min)
 - **auth:** Credentials for the Netatmo API
 
 ### Retrieve client id and secret
