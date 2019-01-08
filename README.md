@@ -28,8 +28,8 @@ Because this plugin's base was taken from [homebridge-netatmo](https://github.co
 
 ```
 
-- **extra_co2_sensor:** Adds an extra CO2 sensor which is available via Apple's stock Home.app, too.
-- **ttl: (optional)** Seconds between two Netatmo API polls. Lower is not neccessarily better! The weatherstation itself collects one value per 5minutes, so going below 300s makes no sense. Default value is 540s (9min)
+- **extra_co2_sensor: (optional)** Adds an extra CO2 sensor which is available via Apple's stock Home.app, too. Default value is *false*
+- **ttl: (optional)** Seconds between two Netatmo API polls. Lower is not neccessarily better! The weatherstation itself collects one value per 5minutes, so going below 300s makes no sense. Default value is *540* (=9min)
 - **auth:** Credentials for the Netatmo API
 
 ### Retrieve client id and secret
