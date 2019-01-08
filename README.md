@@ -66,7 +66,7 @@ Like this and want to express your feelings? Please buy me a beer :beers: ...
 [![Donate](https://img.shields.io/badge/Donate-PayPal-blue.svg)](https://www.paypal.me/skroll)
 
 Cheers go to:
-- @DJay79 :beers: :beers:
+- @DJay79 2x:beers:
 - s.k**********r@aon.at :beers:
 - C. Schneider :beers:
 - S. Eisenkrämer :beers:
