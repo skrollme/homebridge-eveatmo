@@ -1,5 +1,8 @@
 ## version history
 
+### 0.4.3
+- added configuration-option to override the alert-state threshold for the extra co2-sensors (https://github.com/skrollme/homebridge-eveatmo/issues/24)
+
 ### 0.4.2
 - hopefully fixed a problem which caused the low-battery warning to persist even after replacing the module's battery (https://github.com/skrollme/homebridge-eveatmo/issues/21)
 

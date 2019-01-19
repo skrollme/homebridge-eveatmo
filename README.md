@@ -17,6 +17,8 @@ Because this plugin's base was taken from [homebridge-netatmo](https://github.co
             "platform": "eveatmo",
             "name": "eveatmo platform",
             "extra_co2_sensor": false,
+            "co2_alert_threshold": 1000,
+            "ttl": 540,
             "auth": {
     	        "client_id": "XXXXX Create at https://dev.netatmo.com/",
                 "client_secret": "XXXXX Create at https://dev.netatmo.com/",
@@ -29,6 +31,7 @@ Because this plugin's base was taken from [homebridge-netatmo](https://github.co
 ```
 
 - **extra_co2_sensor: (optional)** Adds an extra CO2 sensor which is available via Apple's stock Home.app, too. Default value is *false*
+- **co2_alert_threshold (optional):** Sets the co2-level [ppm] at which the sensors switch to alert-state
 - **ttl: (optional)** Seconds between two Netatmo API polls. Lower is not neccessarily better! The weatherstation itself collects one value per 5minutes, so going below 300s makes no sense. Default value is *540* (=9min)
 - **auth:** Credentials for the Netatmo API
 

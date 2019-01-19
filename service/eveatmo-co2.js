@@ -45,7 +45,7 @@ module.exports = function(pHomebridge) {
         }
 
         transformCO2ToCarbonDioxideDetected() {
-            return (this.accessory.co2 > 1000 ? Characteristic.CarbonDioxideDetected.CO2_LEVELS_ABNORMAL : Characteristic.CarbonDioxideDetected.CO2_LEVELS_NORMAL);
+            return (this.accessory.co2 >= this.accessory.config.co2_alert_threshold ? Characteristic.CarbonDioxideDetected.CO2_LEVELS_ABNORMAL : Characteristic.CarbonDioxideDetected.CO2_LEVELS_NORMAL);
         }
     }
 
