@@ -6,10 +6,7 @@
 
 This is a [homebridge](https://github.com/nfarina/homebridge) plugin which lets you integrate your non-HomeKit Netatmo Weatherstation into HomeKit.
 
-Whilst the original [homebridge-netatmo](https://github.com/planetk/homebridge-netatmo)-plugin goes a mostly HomeKit-standard approach (predefined services, characteristics, ...), this plugin tries to mimic the Elgato Eve devices (currently *Room* and *Weather*) as close as possible. 
-
-## Hint
-**Because this is a work-in-progress project which is neither feature-complete nor fully testet this readme is more of a stub. Use at your own risk.**
+Whilst the original [homebridge-netatmo](https://github.com/planetk/homebridge-netatmo)-plugin goes a mostly HomeKit-standard approach (predefined services, characteristics, ...), this plugin tries to mimic the Elgato Eve devices as close as possible. 
 
 ## Configuration
 Because this plugin's base was taken from [homebridge-netatmo](https://github.com/planetk/homebridge-netatmo) (see above) you can adapt its config. Just use the plattform-code "eveatmo" and remove "ttl" and/or the other "refresh_" properties for the beginning.
@@ -33,9 +30,9 @@ Because this plugin's base was taken from [homebridge-netatmo](https://github.co
 
 ```
 
-- **extra_co2_sensor:** Adds an extra CO2 sensor which is available via Apple's stock Home.app, too.
-- **co2_alert_threshold:** Sets the co2-level [ppm] at which the sensors switch to alert-state
-- **ttl:** Seconds between two Netatmo API polls. Lower is not neccessarily better! The weatherstation itself collects one value per 5minutes, so going below 300s makes no sense
+- **extra_co2_sensor: (optional)** Adds an extra CO2 sensor which is available via Apple's stock Home.app, too. Default value is *false*
+- **co2_alert_threshold (optional):** Sets the co2-level [ppm] at which the sensors switch to alert-state
+- **ttl: (optional)** Seconds between two Netatmo API polls. Lower is not neccessarily better! The weatherstation itself collects one value per 5minutes, so going below 300s makes no sense. Default value is *540* (=9min)
 - **auth:** Credentials for the Netatmo API
 
 ### Retrieve client id and secret
@@ -58,6 +55,7 @@ see [HISTORY.md](https://github.com/skrollme/homebridge-eveatmo/blob/master/HIST
 - reintegrate <del>rain-sensor, wind-sensor and</del> thermostat
 - <del>adding CO2 [ppm] or maybe just "CO2 detected" to indoor devices</del>
 - <del>researching/testing/implementing Eve's history-functionality (see: [https://gist.github.com/0ff/668f4b7753c80ad7b60b](https://gist.github.com/0ff/668f4b7753c80ad7b60b))</del>
+- Make CO2 trigger threshold configurable (see: https://github.com/skrollme/homebridge-eveatmo/issues/24)
 
 ## Thanks
 
@@ -72,10 +70,10 @@ Like this and want to express your feelings? Please buy me a beer :beers: ...
 [![Donate](https://img.shields.io/badge/Donate-PayPal-blue.svg)](https://www.paypal.me/skroll)
 
 Cheers go to:
-- @DJay79 (x2)
-- s.k**********r@aon.at
-- C. Schneider
-- S. Eisenkrämer
+- @DJay79 2x:beers:
+- s.k**********r@aon.at :beers:
+- C. Schneider :beers:
+- S. Eisenkrämer :beers:
 
 
 
