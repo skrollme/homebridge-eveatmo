@@ -74,6 +74,7 @@ Cheers go to:
 - s.k**********r@aon.at :beers:
 - C. Schneider :beers:
 - S. Eisenkrämer :beers:
+- C. Kowalczyk :beers:
 
 
 
