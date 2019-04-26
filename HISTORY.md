@@ -1,5 +1,8 @@
 ## version history
 
+### 0.4.4
+- added a config option which prevents the netatmo's devicename to be prepended and instead appends a configurable name to the modules
+
 ### 0.4.3
 - added configuration-option to override the alert-state threshold for the extra co2-sensors (https://github.com/skrollme/homebridge-eveatmo/issues/24)
 

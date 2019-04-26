@@ -34,6 +34,7 @@ Because this plugin's base was taken from [homebridge-netatmo](https://github.co
 - **co2_alert_threshold (optional):** Sets the co2-level [ppm] at which the sensors switch to alert-state
 - **ttl: (optional)** Seconds between two Netatmo API polls. Lower is not neccessarily better! The weatherstation itself collects one value per 5minutes, so going below 300s makes no sense. Default value is *540* (=9min)
 - **auth:** Credentials for the Netatmo API
+- **module_suffix: (optional)** If this is set, the Netatmo's devicename will not be prepended to the modulename. Instead this config-value will be appended - with a space - to the module name 
 
 ### Retrieve client id and secret
 

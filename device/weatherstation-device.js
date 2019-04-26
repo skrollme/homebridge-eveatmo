@@ -30,10 +30,21 @@ module.exports = function(pHomebridge) {
 					var deviceMap = {};
 					devices.forEach(function(device) {
 						deviceMap[device._id] = device;
-						device._name = device.station_name + " " + device.module_name;
+
+						if(this.config.module_suffix != "") {
+							device._name =  device.module_name + " " + this.config.module_suffix;
+						} else {
+							device._name = device.station_name + " " + device.module_name;
+						}
+
 						if (device.modules) {
 							device.modules.forEach(function(module) {
-								module._name = device.station_name + " " + module.module_name;
+								if(this.config.module_suffix != "") {
+									module._name = module.module_name + " " + this.config.module_suffix;
+								} else {
+									module._name = device.station_name + " " + module.module_name;
+								}
+
 								deviceMap[module._id] = module;
 							}.bind(this));
 						}
