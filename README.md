@@ -56,7 +56,7 @@ see [HISTORY.md](https://github.com/skrollme/homebridge-eveatmo/blob/master/HIST
 - reintegrate <del>rain-sensor, wind-sensor and</del> thermostat
 - <del>adding CO2 [ppm] or maybe just "CO2 detected" to indoor devices</del>
 - <del>researching/testing/implementing Eve's history-functionality (see: [https://gist.github.com/0ff/668f4b7753c80ad7b60b](https://gist.github.com/0ff/668f4b7753c80ad7b60b))</del>
-- Make CO2 trigger threshold configurable (see: https://github.com/skrollme/homebridge-eveatmo/issues/24)
+- <del>Make CO2 trigger threshold configurable (see: https://github.com/skrollme/homebridge-eveatmo/issues/24)</del>
 
 ## Thanks
 
@@ -75,6 +75,7 @@ Cheers go to:
 - s.k**********r@aon.at :beers:
 - C. Schneider :beers:
 - S. Eisenkrämer :beers:
+- C. Kowalczyk :beers:
 
 
 
