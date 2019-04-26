@@ -19,6 +19,8 @@ class EveatmoPlatform {
         this.config.extra_co2_sensor = typeof config.extra_co2_sensor !== 'undefined' ? Boolean(config.extra_co2_sensor) : false;
         this.config.co2_alert_threshold = typeof config.co2_alert_threshold !== 'undefined' ? parseInt(config.co2_alert_threshold) : 1000;
 
+		this.config.module_suffix = typeof config.module_suffix !== 'undefined' ? config.module_suffix : '';
+
 		// If this log message is not seen, most likely the config.js is not found.
 		this.log.debug('Creating EveatmoPlatform');
 
