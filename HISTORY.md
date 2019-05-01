@@ -1,5 +1,8 @@
 ## version history
 
+### 0.4.5
+- added an extra co2-characteristic for stock-home.app, can be hidden in eve.app
+
 ### 0.4.4
 - added a config option which prevents the netatmo's devicename to be prepended and instead appends a configurable name to the modules
 
