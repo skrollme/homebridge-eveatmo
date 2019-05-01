@@ -44,6 +44,12 @@ module.exports = function(pHomebridge) {
 				.on('get', this.getAirQuality.bind(this))
 				.eventEnabled = true;
 
+			// extra characteristic for stock home.app
+            var co2LevelCharacteristic = this.getCharacteristic(Characteristic.CarbonDioxideLevel) ||
+                this.addCharacteristic(Characteristic.CarbonDioxideLevel);
+            co2LevelCharacteristic.on('get', this.getAQExtra1.bind(this))
+                .eventEnabled = true;
+
             this.addCharacteristic(AQExtra1Characteristic)
                 .on('get', this.getAQExtra1.bind(this));
 
@@ -68,6 +74,8 @@ module.exports = function(pHomebridge) {
 			this.getCharacteristic(Characteristic.AirQuality)
 				.updateValue(this.transformCO2ToAirQuality());
 
+            this.getCharacteristic(Characteristic.CarbonDioxideLevel)
+                .updateValue(this.accessory.co2);
             this.getCharacteristic(AQExtra1Characteristic)
                 .updateValue(this.accessory.co2);
 
