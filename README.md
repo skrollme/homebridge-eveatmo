@@ -45,7 +45,14 @@ Because this plugin's base was taken from [homebridge-netatmo](https://github.co
 
 ## Siri-Voicecommands
 
-A donator suggest to add some documentation on how to question Siri for the measurements this plugin collects. I think this is a good idea and I will add this here soon.
+Because the possible Siri-Commands depend on your home language it would suggest to check the official blog of eve first.
+For german language you find some infos in these two blog-posts:
+- https://blog.evehome.com/de/spass-mit-siri/
+- https://blog.evehome.com/de/tipp-siri-namen/
+
+The english versions of these blog-posts are:
+- https://blog.evehome.com/fun-with-siri/
+- https://blog.evehome.com/tip-siri-names/
 
 ## History
 
@@ -57,6 +64,7 @@ see [HISTORY.md](https://github.com/skrollme/homebridge-eveatmo/blob/master/HIST
 - <del>adding CO2 [ppm] or maybe just "CO2 detected" to indoor devices</del>
 - <del>researching/testing/implementing Eve's history-functionality (see: [https://gist.github.com/0ff/668f4b7753c80ad7b60b](https://gist.github.com/0ff/668f4b7753c80ad7b60b))</del>
 - <del>Make CO2 trigger threshold configurable (see: https://github.com/skrollme/homebridge-eveatmo/issues/24)</del>
+
 
 ## Thanks
 
