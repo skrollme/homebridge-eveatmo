@@ -43,16 +43,35 @@ Because this plugin's base was taken from [homebridge-netatmo](https://github.co
 3. On the following page, enter a name for your app. Any name can be chosen. All other fields of the form (like callback url, etc.) can be left blank.
 4. After successfully submitting the form the overview page of your app should show client id and secret.
 
-## Siri-Voicecommands
+## Siri Voice Commands
 
-Because the possible Siri-Commands depend on your home language it would suggest to check the official blog of eve first.
-For german language you find some infos in these two blog-posts:
-- https://blog.evehome.com/de/spass-mit-siri/
-- https://blog.evehome.com/de/tipp-siri-namen/
+Here are sample English voice commands:
+- How cool is it in the ROOM NAME?
+- How warm is it in the ROOM NAME?
+- How humid is it in the ROOM NAME?
+- What's the temperature in my ROOM NAME?
+- What's the humidity in my ROOM NAME?
+- What's the air quality in my ROOM NAME?
+- What's the CO2 level in my ROOM NAME?
+- What's the carbon dioxide level in my ROOM NAME?
 
-The english versions of these blog-posts are:
+Siri understands variations of each command:
+- What's the temperature ROOM NAME?
+- What's the temperature in ROOM NAME?
+- What's the temperature in my ROOM NAME?
+- What's the temperature in the ROOM NAME?
+- What's the temperature down in my ROOM NAME?
+- What's the temperature down in the ROOM NAME?
+
+Siri voice commands may vary by language. Since this plugin tries to mimic the Elgato Eve devices, you can search the Eve blog for articles listing voice commands in your language.
+
+Blog posts with English commands:
 - https://blog.evehome.com/fun-with-siri/
 - https://blog.evehome.com/tip-siri-names/
+
+Blog posts with German commands:
+- https://blog.evehome.com/de/spass-mit-siri/
+- https://blog.evehome.com/de/tipp-siri-namen/
 
 ## History
 
