@@ -1,5 +1,8 @@
 ## version history
 
+### 0.4.6
+- removed startup-logspammer
+
 ### 0.4.5
 - added an extra co2-characteristic for stock-home.app, can be hidden in eve.app
 
