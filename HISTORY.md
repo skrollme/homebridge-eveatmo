@@ -1,5 +1,9 @@
 ## version history
 
+### 0.4.7
+- Accessory update is now always triggered, even if an error occurs
+- refresh trigger from accessories just triggers a cache-read, no api-read
+
 ### 0.4.6
 - removed startup-logspammer
 
