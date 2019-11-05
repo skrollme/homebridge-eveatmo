@@ -1,5 +1,8 @@
 ## version history
 
+### 0.4.8
+- Updated fakegato-plugin to 0.5.6
+
 ### 0.4.7
 - Accessory update is now always triggered, even if an error occurs
 - refresh trigger from accessories just triggers a cache-read, no api-read
