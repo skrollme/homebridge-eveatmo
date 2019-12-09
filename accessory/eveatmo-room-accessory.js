@@ -77,6 +77,10 @@ module.exports = function(pHomebridge) {
 
 		notifyUpdate(deviceData) {
 			var accessoryData = this.extractAccessoryData(deviceData);
+			if(!accessoryData.reachable) {
+				return;
+			}
+
 			var weatherData = this.mapAccessoryDataToWeatherData(accessoryData);
 
             // testing, because it seems, that low co2 values cause gaps in history

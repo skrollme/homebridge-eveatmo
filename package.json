@@ -1,6 +1,6 @@
 {
 	"name": "homebridge-eveatmo",
-	"version": "0.4.8",
+	"version": "0.4.9",
 	"description": "Homebridge plugin which adds a Netatmo weatherstation as HomeKit device and tries to act like Elgato Eve Room/Weather",
 	"license": "ISC",
 	"keywords": [
@@ -17,10 +17,10 @@
 		"homebridge": ">=0.4.16"
 	},
 	"dependencies": {
-		"async": "^2.6.0",
+		"async": "^2.6.3",
 		"fakegato-history": "^0.5.6",
-		"glob": "^7.0.5",
-		"netatmo": "^2.2.0",
+		"glob": "^7.1.6",
+		"netatmo": "^2.3.0",
 		"node-cache": "^3.0.0"
 	},
 	"bugs": {

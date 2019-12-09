@@ -1,5 +1,8 @@
 ## version history
 
+### 0.4.9
+- First attempt to implement a mechanism for non-reachable devices (https://github.com/skrollme/homebridge-eveatmo/issues/34)
+
 ### 0.4.8
 - Updated fakegato-plugin to 0.5.6
 

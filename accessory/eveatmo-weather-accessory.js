@@ -80,8 +80,13 @@ module.exports = function(pHomebridge) {
 
 		notifyUpdate(deviceData) {
 			var accessoryData = this.extractAccessoryData(deviceData);
+			if(!accessoryData.reachable) {
+				return;
+			}
+
 			var weatherData = this.mapAccessoryDataToWeatherData(accessoryData);
-			
+
+
 			// transfer NAMain's pressure value to outdoor-module
 			if(mainDeviceId) {
 				if(deviceData[mainDeviceId]) {
