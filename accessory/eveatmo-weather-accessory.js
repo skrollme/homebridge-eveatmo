@@ -17,16 +17,16 @@ module.exports = function(pHomebridge) {
 
 	class EveatmoWeatherAccessory extends NetatmoAccessory {
 		constructor(deviceData, netatmoDevice) {
-			
+
 			for (var deviceId in netatmoDevice.deviceData) {
 				if (!netatmoDevice.deviceData.hasOwnProperty(deviceId)) continue;
 				var device = netatmoDevice.deviceData[deviceId];
-				
+
 				if(device.dashboard_data && device.dashboard_data.Pressure) {
 					mainDeviceId = deviceId;
 				}
 			}
-			
+
 			var accessoryConfig = {
 				"id": deviceData._id,
 				"model": "Eve Weather",
@@ -54,15 +54,15 @@ module.exports = function(pHomebridge) {
 				var TemperatureService = require(serviceDir + '/eveatmo-temperature')(homebridge);
 				var serviceTemperature = new TemperatureService(this);
 				this.addService(serviceTemperature);
-				
+
 				var HumidityService = require(serviceDir + '/eveatmo-humidity')(homebridge);
 				var serviceHumidity = new HumidityService(this);
 				this.addService(serviceHumidity);
-				
+
 				var EveatmoWeatherPressureService = require(serviceDir + '/eveatmo-weather-pressure')(homebridge);
 				var servicePressure = new EveatmoWeatherPressureService(this);
 				this.addService(servicePressure);
-				
+
 				if(accessoryConfig.hasBattery) {
 					var EveatmoBatteryService = require(serviceDir + '/eveatmo-battery')(homebridge);
 					var serviceBattery = new EveatmoBatteryService(this);
@@ -78,9 +78,9 @@ module.exports = function(pHomebridge) {
 			}
 		}
 
-		notifyUpdate(deviceData) {
+		notifyUpdate(deviceData, force) {
 			var accessoryData = this.extractAccessoryData(deviceData);
-			if(!accessoryData.reachable) {
+			if(!accessoryData.reachable && !force) {
 				return;
 			}
 
@@ -100,7 +100,7 @@ module.exports = function(pHomebridge) {
                 pressure: weatherData["pressure"],
                 humidity: weatherData["humidity"]
             });
-			
+
 			this.applyWeatherData(weatherData);
 		}
 

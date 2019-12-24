@@ -52,10 +52,10 @@ module.exports = function(pHomebridge) {
                     this.log.debug("Setting cache with key: "+this.deviceType);
 					this.cache.set(this.deviceType, deviceMap);
                     this.deviceData = deviceMap;
-					
+
 					if (this.accessories) {
 						this.accessories.forEach(function(accessory) {
-							accessory.notifyUpdate(this.deviceData);
+							accessory.notifyUpdate(this.deviceData, true);
 						}.bind(this));
 					}
 				}
