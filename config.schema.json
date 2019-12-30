@@ -1,0 +1,73 @@
+{
+  "pluginAlias": "eveatmo",
+  "pluginType": "platform",
+  "singular": true,
+  "headerDisplay": "Homebridge plugin for the Netatmo Weatherstation",
+  "footerDisplay": "For a detailed description, see the [README](https://github.com/skrollme/homebridge-eveatmo#readme) file.",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "name": {
+        "title": "Name",
+        "type": "string",
+        "default": "eveatmo platform",
+        "required": true
+      },
+      "ttl": {
+        "title": "TTL",
+        "type": "integer",
+        "default": 540,
+        "minimum": 300,
+        "description": "Seconds between two Netatmo API polls (default 540)"
+      },
+      "extra_co2_sensor": {
+        "title": "Extra CO2 sensor",
+        "type": "boolean",
+        "default": false,
+        "description": "Adds an extra CO2 sensor for alerts"
+      },
+      "co2_alert_threshold": {
+        "title": "CO2 alert threshold",
+        "type": "integer",
+        "default": 1000,
+        "minimum": 450,
+        "description": "Sets the CO2-level in ppm at which the sensors switches to alert-state"
+      },
+      "module_suffix": {
+        "title": "Name suffix",
+        "type": "string",
+        "description": "Suffix to the module name. Deletes the prepended Netatmo device name"
+      },
+      "auth": {
+        "title": "Netatmo credentials",
+        "type": "object",
+        "properties": {
+          "client_id": {
+            "title": "Client ID",
+            "type": "string",
+            "required": true,
+            "description": "Create this at https://dev.netatmo.com/"
+          },
+          "client_secret": {
+            "title": "Client secret",
+            "type": "string",
+            "required": true,
+            "description": "Create this at https://dev.netatmo.com/"
+          },
+          "username": {
+            "title": "Username",
+            "type": "string",
+            "required": true,
+            "description": "Your Netatmo username"
+          },
+          "password": {
+            "title": "Password",
+            "type": "string",
+            "required": true,
+            "description": "Your Netatmo password"
+          }
+        }
+      }
+    }
+  }
+}
