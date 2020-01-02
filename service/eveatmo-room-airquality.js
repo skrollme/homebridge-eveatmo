@@ -65,7 +65,7 @@ module.exports = function(pHomebridge) {
 			else if (level > 1600) quality = Characteristic.AirQuality.INFERIOR;
 			else if (level > 1100) quality = Characteristic.AirQuality.FAIR;
 			else if (level > 700) quality = Characteristic.AirQuality.GOOD;
-			else if (level > 450) quality = Characteristic.AirQuality.EXCELLENT;
+			else if (level >= 400) quality = Characteristic.AirQuality.EXCELLENT;
 
 			return quality;
 		}
