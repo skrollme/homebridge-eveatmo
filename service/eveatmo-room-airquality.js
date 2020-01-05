@@ -61,11 +61,11 @@ module.exports = function(pHomebridge) {
 			var level = this.accessory.co2;
 			var quality = Characteristic.AirQuality.UNKNOWN;
 
-			if (level > 2000) quality = Characteristic.AirQuality.POOR;
-			else if (level > 1500) quality = Characteristic.AirQuality.INFERIOR;
-			else if (level > 1000) quality = Characteristic.AirQuality.FAIR;
-			else if (level > 500) quality = Characteristic.AirQuality.GOOD;
-			else if (level > 0) quality = Characteristic.AirQuality.EXCELLENT;
+			if (level > 2100) quality = Characteristic.AirQuality.POOR;
+			else if (level > 1600) quality = Characteristic.AirQuality.INFERIOR;
+			else if (level > 1100) quality = Characteristic.AirQuality.FAIR;
+			else if (level > 700) quality = Characteristic.AirQuality.GOOD;
+			else if (level >= 400) quality = Characteristic.AirQuality.EXCELLENT;
 
 			return quality;
 		}

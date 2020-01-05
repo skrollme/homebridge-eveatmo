@@ -53,9 +53,9 @@ module.exports = function(pHomebridge) {
 			}
 		}
 
-		notifyUpdate(deviceData) {
+		notifyUpdate(deviceData, force) {
 			var accessoryData = this.extractAccessoryData(deviceData);
-			if(!accessoryData.reachable) {
+			if(!accessoryData.reachable && !force) {
 				return;
 			}
 
@@ -95,7 +95,7 @@ module.exports = function(pHomebridge) {
 				this.windAngle = weatherData.windAngle;
 				dataChanged = true;
 			}
-			
+
 			if (weatherData.batteryPercent && this.batteryPercent != weatherData.batteryPercent) {
 				this.batteryPercent = weatherData.batteryPercent;
 				dataChanged = true;

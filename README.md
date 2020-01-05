@@ -11,6 +11,8 @@ Whilst the original [homebridge-netatmo](https://github.com/planetk/homebridge-n
 ## Configuration
 Because this plugin's base was taken from [homebridge-netatmo](https://github.com/planetk/homebridge-netatmo) (see above) you can adapt its config. Just use the plattform-code "eveatmo" and remove "ttl" and/or the other "refresh_" properties for the beginning.
 
+You can also configure this plugin via [ConfigUI-X's settings](https://github.com/oznu/homebridge-config-ui-x/wiki/Developers:-Plugin-Settings-GUI) feature. 
+
 ```
 "platforms": [
         {
@@ -90,6 +92,10 @@ see [HISTORY.md](https://github.com/skrollme/homebridge-eveatmo/blob/master/HIST
 This plugin's basic structure and most of its basic code is a fork (ok, lets say "copy") of [homebridge-netatmo](https://github.com/planetk/homebridge-netatmo). So big thanks to @planetk and all the other contributors of this project. 
 
 Also big thanks to @gomfunkel and @simont77 for [this gist](https://gist.github.com/gomfunkel/b1a046d729757120907c) and its [fork](https://gist.github.com/simont77/3f4d4330fa55b83f8ca96388d9004e7d), @KhaosT for [this gist](https://gist.github.com/KhaosT/e365acfd589ce840a403), @mplewis for [this gist](https://gist.github.com/mplewis/def678dc4b6e63a86905) and @0ff for [this (almost) working Eve Weather imitating homebridge-plugin](https://gist.github.com/0ff/668f4b7753c80ad7b60b) and once again special thanks to @simont77 for his endurance in digging deeper in Eve's custom characteristics and its protocols.
+
+Thanks go also to the following direct contributors:
+- @jason-klein (https://github.com/skrollme/homebridge-eveatmo/pull/28)
+- @lisanet (https://github.com/skrollme/homebridge-eveatmo/pull/36)
 
 ## What else
 

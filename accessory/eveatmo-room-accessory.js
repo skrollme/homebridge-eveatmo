@@ -45,11 +45,11 @@ module.exports = function(pHomebridge) {
 				var TemperatureService = require(serviceDir + '/eveatmo-temperature')(homebridge);
 				var serviceTemperature = new TemperatureService(this);
 				this.addService(serviceTemperature);
-				
+
 				var HumidityService = require(serviceDir + '/eveatmo-humidity')(homebridge);
 				var serviceHumidity = new HumidityService(this);
 				this.addService(serviceHumidity);
-				
+
 				var EveatmoRoomAirqualityService = require(serviceDir + '/eveatmo-room-airquality')(homebridge);
                 var serviceAirquality = new EveatmoRoomAirqualityService(this);
                 this.addService(serviceAirquality);
@@ -59,7 +59,7 @@ module.exports = function(pHomebridge) {
                     var serviceCo2 = new EveatmoRoomCo2Service(this);
                     this.addService(serviceCo2);
                 }
-				
+
 				if(accessoryConfig.hasBattery) {
 					var EveatmoBatteryService = require(serviceDir + '/eveatmo-battery')(homebridge);
 					var serviceBattery = new EveatmoBatteryService(this);
@@ -67,7 +67,7 @@ module.exports = function(pHomebridge) {
 				}
 
                 this.historyService = new FakeGatoHistoryService("room", this, {storage:'fs'});
-				
+
 			} catch (err) {
 				this.log.warn("Could not process service files for " + accessoryConfig.name);
 				this.log.warn(err);
@@ -75,9 +75,9 @@ module.exports = function(pHomebridge) {
 			}
 		}
 
-		notifyUpdate(deviceData) {
+		notifyUpdate(deviceData, force) {
 			var accessoryData = this.extractAccessoryData(deviceData);
-			if(!accessoryData.reachable) {
+			if(!accessoryData.reachable && !force) {
 				return;
 			}
 

@@ -26,40 +26,38 @@ module.exports = function(pHomebridge) {
 
 		loadDeviceData(callback) {
 			this.api.getStationsData(function(err, devices) {
-				if (!err) {
-					var deviceMap = {};
-					devices.forEach(function(device) {
-						deviceMap[device._id] = device;
+				var deviceMap = {};
+				devices.forEach(function(device) {
+					deviceMap[device._id] = device;
 
-						if(this.config.module_suffix != "") {
-							device._name =  device.module_name + " " + this.config.module_suffix;
-						} else {
-							device._name = device.station_name + " " + device.module_name;
-						}
+					if(this.config.module_suffix != "") {
+						device._name =  device.module_name + " " + this.config.module_suffix;
+					} else {
+						device._name = device.station_name + " " + device.module_name;
+					}
 
-						if (device.modules) {
-							device.modules.forEach(function(module) {
-								if(this.config.module_suffix != "") {
-									module._name = module.module_name + " " + this.config.module_suffix;
-								} else {
-									module._name = device.station_name + " " + module.module_name;
-								}
+					if (device.modules) {
+						device.modules.forEach(function(module) {
+							if(this.config.module_suffix != "") {
+								module._name = module.module_name + " " + this.config.module_suffix;
+							} else {
+								module._name = device.station_name + " " + module.module_name;
+							}
 
-								deviceMap[module._id] = module;
-							}.bind(this));
-						}
-					}.bind(this));
-                    this.log.debug("Setting cache with key: "+this.deviceType);
-					this.cache.set(this.deviceType, deviceMap);
-                    this.deviceData = deviceMap;
-					
-					if (this.accessories) {
-						this.accessories.forEach(function(accessory) {
-							accessory.notifyUpdate(this.deviceData);
+							deviceMap[module._id] = module;
 						}.bind(this));
 					}
-				}
-				callback(err, this.deviceData);
+				}.bind(this));
+				this.log.debug("Setting cache with key: "+this.deviceType);
+				this.cache.set(this.deviceType, deviceMap);
+				this.deviceData = deviceMap;
+				
+				if (this.accessories) {
+					this.accessories.forEach(function(accessory) {
+						accessory.notifyUpdate(this.deviceData);
+					}.bind(this));
+				}			
+				callback(null, this.deviceData);
 			}.bind(this));
 		}
 
