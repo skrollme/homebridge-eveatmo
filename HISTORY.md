@@ -1,5 +1,11 @@
 ## version history
 
+### 0.5.0
+- All thanks to a PR (https://github.com/skrollme/homebridge-eveatmo/pull/36) from @lisanet:
+    - Added ConfigUI X settings-panel (https://github.com/oznu/homebridge-config-ui-x/wiki/Developers:-Plugin-Settings-GUI)
+    - changed co2 / airquality alert levels (https://blog.evehome.com/wp-content/uploads/2015/12/VOC_EveRoom_EN.pdf)
+    - improved error-handling on getStationsData
+
 ### 0.4.9 / 0.4.10
 - First attempt to implement a mechanism for non-reachable devices (https://github.com/skrollme/homebridge-eveatmo/issues/34)
 
