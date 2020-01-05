@@ -57,7 +57,7 @@ module.exports = function(pHomebridge) {
 						accessory.notifyUpdate(this.deviceData);
 					}.bind(this));
 				}			
-				callback(NULL, this.deviceData);
+				callback(null, this.deviceData);
 			}.bind(this));
 		}
 
