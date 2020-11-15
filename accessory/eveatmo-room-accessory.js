@@ -4,6 +4,7 @@ var homebridge;
 var Characteristic;
 var NetatmoAccessory;
 var path = require('path');
+const eveatmoNoise = require('../service/eveatmo-noise');
 var FakeGatoHistoryService;
 
 module.exports = function(pHomebridge) {
@@ -35,6 +36,7 @@ module.exports = function(pHomebridge) {
 			this.lowBattery = false;
 			this.airPressure = 1000;
 			this.humidity = 50;
+			this.noise = 40;
 
 			this.refreshData(function(err, data) {});
 		}
@@ -66,6 +68,10 @@ module.exports = function(pHomebridge) {
 					this.addService(serviceBattery);
 				}
 
+				var NoiseService = require(serviceDir + '/eveatmo-noise')(homebridge);
+				var serviceNoise = new NoiseService(this);
+				this.addService(serviceNoise);
+
                 this.historyService = new FakeGatoHistoryService("room", this, {storage:'fs'});
 
 			} catch (err) {
@@ -84,7 +90,7 @@ module.exports = function(pHomebridge) {
 			var weatherData = this.mapAccessoryDataToWeatherData(accessoryData);
 
             // testing, because it seems, that low co2 values cause gaps in history
-            weatherData["co2"] = Math.max(450,weatherData["co2"]);
+            weatherData["co2"] = Math.max(450, weatherData["co2"]);
 
             this.historyService.addEntry({
                 time: new Date().getTime() / 1000,
@@ -111,6 +117,9 @@ module.exports = function(pHomebridge) {
 				}
 				if (dashboardData.Humidity) {
 					result.humidity = dashboardData.Humidity;
+				}
+				if (dashboardData.Noise) {
+					result.noise = dashboardData.Noise;
 				}
 			}
 
@@ -140,6 +149,10 @@ module.exports = function(pHomebridge) {
 			}
 			if (weatherData.humidity && this.humidity != weatherData.humidity) {
 				this.humidity = weatherData.humidity;
+				dataChanged = true;
+			}
+			if (weatherData.noise && this.noise != weatherData.noise) {
+				this.noise = weatherData.noise;
 				dataChanged = true;
 			}
 			if (weatherData.batteryPercent && this.batteryPercent != weatherData.batteryPercent) {
