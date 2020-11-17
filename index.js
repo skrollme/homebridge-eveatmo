@@ -61,20 +61,25 @@ class EveatmoPlatform {
 		var calls = [];
 
 		try {
-			calls.push(function(callback) {
-				var DeviceType = require('./device/weatherstation-device.js')(homebridge);
-				var devType = new DeviceType(this.log, this.api, this.config);
-				devType.buildAccessoriesForDevices(function(err, deviceAccessories) {
-					callback(err, deviceAccessories);
-				});
-			}.bind(this));
-			calls.push(function(callback) {
-				var DeviceType = require('./device/airquality-device.js')(homebridge);
-				var devType = new DeviceType(this.log, this.api, this.config);
-				devType.buildAccessoriesForDevices(function(err, deviceAccessories) {
-					callback(err, deviceAccessories);
-				});
-			}.bind(this));
+			if(this.config.weatherstation) {
+				calls.push(function(callback) {
+					var DeviceType = require('./device/weatherstation-device.js')(homebridge);
+					var devType = new DeviceType(this.log, this.api, this.config);
+					devType.buildAccessoriesForDevices(function(err, deviceAccessories) {
+						callback(err, deviceAccessories);
+					});
+				}.bind(this));
+			}
+
+			if(this.config.airquality) {
+				calls.push(function(callback) {
+					var DeviceType = require('./device/airquality-device.js')(homebridge);
+					var devType = new DeviceType(this.log, this.api, this.config);
+					devType.buildAccessoriesForDevices(function(err, deviceAccessories) {
+						callback(err, deviceAccessories);
+					});
+				}.bind(this));
+			}	
 		} catch (err) {
 			this.log("Could not process device");
 			this.log(err);

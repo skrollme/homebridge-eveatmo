@@ -26,6 +26,18 @@
         "default": false,
         "description": "Adds an extra CO2 sensor for alerts"
       },
+      "weatherstation": {
+        "title": "Weatherstation",
+        "type": "boolean",
+        "default": true,
+        "description": "Activate Netatmo Weatherstation reporting"
+      },
+      "airquality": {
+        "title": "Air Quality Monitor",
+        "type": "boolean",
+        "default": false,
+        "description": "Activate Netatmo Air Quality Monitor reporting"
+      },
       "co2_alert_threshold": {
         "title": "CO2 alert threshold",
         "type": "integer",

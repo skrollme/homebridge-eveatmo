@@ -4,7 +4,6 @@ var homebridge;
 var Characteristic;
 var NetatmoAccessory;
 var path = require('path');
-const eveatmoNoise = require('../service/eveatmo-noise');
 var FakeGatoHistoryService;
 
 module.exports = function(pHomebridge) {
@@ -23,8 +22,8 @@ module.exports = function(pHomebridge) {
 				"netatmoType": deviceData.type,
 				"firmware": deviceData.firmware,
 				"name": deviceData._name || "Eveatmo " + netatmoDevice.deviceType + " " + deviceData._id,
-				"hasBattery": (deviceData.battery_vp)?true:false,
-				"hasPressure": (deviceData.data_type.indexOf("Pressure") >= 0)?true:false,
+				"hasBattery": (deviceData.battery_vp),
+				"hasPressure": (deviceData.data_type.indexOf("Pressure") >= 0),
 			};
 
 			super(homebridge, accessoryConfig, netatmoDevice);
