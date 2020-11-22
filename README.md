@@ -50,7 +50,7 @@ If the whitelist contains at least one entry, all other ids will be excluded.
 
     "platforms": [
         {
-            "platform": "netatmo",
+            "platform": "eveatmo",
             
             ...
             
