@@ -38,6 +38,37 @@ You can also configure this plugin via [ConfigUI-X's settings](https://github.co
 - **auth:** Credentials for the Netatmo API
 - **module_suffix: (optional)** If this is set, the Netatmo's devicename will not be prepended to the modulename. Instead this config-value will be appended - with a space - to the module name 
 
+###  Control Accessories by device ID
+
+Controlling devices can be done on a finer level by id. The id of a netatmo device or module basically is it's mac address.
+
+In order to include or exclude a specific device, the corresponding id can be included in a whitelist resp. blacklist.
+
+If the whitelist contains at least one entry, all other ids will be excluded.
+
+<pre>
+
+    "platforms": [
+        {
+            "platform": "netatmo",
+            
+            ...
+            
+            <b>"whitelist": [
+              "aa:bb:cc:11:22:33"
+            ],
+            "blacklist": [
+              "01:02:03:04:05:06",
+              "01:23:45:67:89:ab"
+            ],</b>
+
+            ...
+            
+        }
+    ],
+
+</pre>
+
 ### Retrieve client id and secret
 
 1. Register at http://dev.netatmo.com as a developer
