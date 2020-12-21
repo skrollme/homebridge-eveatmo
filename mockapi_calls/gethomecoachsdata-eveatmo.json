@@ -1,0 +1,65 @@
+
+{
+	"body": {
+		"devices": [
+			{
+				"_id": "70:00:00:01:23:45",
+				"cipher_id": "enc:16:00",
+				"last_status_store": 1501492718,
+				"place": {
+					"altitude": 66,
+					"city": "Somewhere",
+					"country": "DE",
+					"timezone": "Europe/Berlin",
+					"location": [
+						8.00000,
+						52.00000
+					]
+				},
+				"station_name": "eveatmo",
+				"type": "NHC",
+				"dashboard_data": {
+                    "time_utc": 1608477101,
+                    "Temperature": 21.6,
+                    "CO2": 2396,
+                    "Humidity": 63,
+                    "Noise": 38,
+                    "Pressure": 1029.2,
+                    "AbsolutePressure": 1021.2,
+                    "health_idx": 2
+				},
+				"data_type": [
+                    "Temperature",
+                    "CO2",
+                    "Humidity",
+                    "Noise",
+                    "Pressure",
+                    "health_idx"
+                ],
+				"co2_calibrating": false,
+				"date_setup": 1414690069,
+				"last_setup": 1414690069,
+				"module_name": "Livingroom",
+				"firmware": 48,
+				"last_upgrade": 1532721662,
+                "reachable": true,
+				"wifi_status": 25
+			}
+		],
+		"user": {
+			"mail": "mail@example.com",
+			"administrative": {
+				"country": "DE",
+				"reg_locale": "de-DE",
+				"lang": "de-DE",
+				"unit": 0,
+				"windunit": 0,
+				"pressureunit": 0,
+				"feel_like_algo": 0
+			}
+		}
+	},
+	"status": "ok",
+	"time_exec": 0.07361102104187,
+	"time_server": 1501492826
+}
