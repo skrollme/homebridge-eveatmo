@@ -16,6 +16,7 @@ class EveatmoPlatform {
 		this.config = config || {};
 		this.foundAccessories = [];
 
+		this.config.weatherstation = typeof config.weatherstation !== 'undefined' ? Boolean(config.weatherstation) : true;
         this.config.extra_co2_sensor = typeof config.extra_co2_sensor !== 'undefined' ? Boolean(config.extra_co2_sensor) : false;
         this.config.co2_alert_threshold = typeof config.co2_alert_threshold !== 'undefined' ? parseInt(config.co2_alert_threshold) : 1000;
 
@@ -79,7 +80,7 @@ class EveatmoPlatform {
 						callback(err, deviceAccessories);
 					});
 				}.bind(this));
-			}	
+			}
 		} catch (err) {
 			this.log("Could not process device");
 			this.log(err);
