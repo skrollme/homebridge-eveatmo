@@ -127,6 +127,7 @@ Also big thanks to @gomfunkel and @simont77 for [this gist](https://gist.github.
 Thanks go also to the following direct contributors:
 - @jason-klein (https://github.com/skrollme/homebridge-eveatmo/pull/28)
 - @lisanet (https://github.com/skrollme/homebridge-eveatmo/pull/36)
+- @foliveira (https://github.com/skrollme/homebridge-eveatmo/pull/52)
 
 ## What else
 
