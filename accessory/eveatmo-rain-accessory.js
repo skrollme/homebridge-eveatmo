@@ -26,6 +26,7 @@ module.exports = function(pHomebridge) {
 			super(homebridge, accessoryConfig, netatmoDevice);
 			this.buildServices(accessoryConfig);
 
+			this.rainLevel = 0;
 			this.rainLevelSum1 = 0;
 			this.rainLevelSum24 = 0;
 
@@ -67,6 +68,9 @@ module.exports = function(pHomebridge) {
 			var result = {};
 			var dashboardData = accessoryData.dashboard_data;
 			if (dashboardData) {
+				if (dashboardData.hasOwnProperty("Rain")) {
+					result.rainLevel = Math.round(dashboardData.Rain * 1000) / 1000;
+				}
 				if (dashboardData.hasOwnProperty("sum_rain_1")) {
 					result.rainLevelSum1 = Math.round(dashboardData.sum_rain_1 * 1000) / 1000;
 				}
@@ -87,6 +91,10 @@ module.exports = function(pHomebridge) {
 		applyWeatherData(weatherData) {
 			var dataChanged = false;
 
+			if (weatherData.hasOwnProperty("rainLevel") && this.rainLevel != weatherData.rainLevel) {
+				this.rainLevel = weatherData.rainLevel;
+				dataChanged = true;
+			}
 			if (weatherData.hasOwnProperty("rainLevelSum1") && this.rainLevelSum1 != weatherData.rainLevelSum1) {
 				this.rainLevelSum1 = weatherData.rainLevelSum1;
 				dataChanged = true;
