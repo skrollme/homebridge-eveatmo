@@ -1,5 +1,9 @@
 ## version history
 
+### 0.6.2
+- Thanks to a PR (https://github.com/skrollme/homebridge-eveatmo/pull/54) from @RyanHS7VM:
+    - Added a "currently raining" characteristic 
+
 ### 0.6.0
 - Thanks to a PR (https://github.com/skrollme/homebridge-eveatmo/pull/52) from @foliveira:
     - Support for Netatmo HomeCoach

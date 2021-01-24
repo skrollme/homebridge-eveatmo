@@ -133,6 +133,7 @@ Thanks go also to the following direct contributors:
 - @jason-klein (https://github.com/skrollme/homebridge-eveatmo/pull/28)
 - @lisanet (https://github.com/skrollme/homebridge-eveatmo/pull/36)
 - @foliveira (https://github.com/skrollme/homebridge-eveatmo/pull/52)
+- @RyanHS7VM (https://github.com/skrollme/homebridge-eveatmo/pull/54)
 
 ## What else
 
