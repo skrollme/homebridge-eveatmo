@@ -4,7 +4,7 @@
 
 # homebridge-eveatmo
 
-This is a [homebridge](https://github.com/nfarina/homebridge) plugin which lets you integrate your non-HomeKit Netatmo Weatherstation into HomeKit.
+This is a [homebridge](https://github.com/nfarina/homebridge) plugin which lets you integrate your non-HomeKit Netatmo Weatherstation and Indoor Air Quality monitor into HomeKit.
 
 Whilst the original [homebridge-netatmo](https://github.com/planetk/homebridge-netatmo)-plugin goes a mostly HomeKit-standard approach (predefined services, characteristics, ...), this plugin tries to mimic the Elgato Eve devices as close as possible. 
 
@@ -20,6 +20,8 @@ You can also configure this plugin via [ConfigUI-X's settings](https://github.co
             "name": "eveatmo platform",
             "extra_co2_sensor": false,
             "co2_alert_threshold": 1000,
+            "weatherstation": true,
+            "airquality": false,
             "ttl": 540,
             "auth": {
     	        "client_id": "XXXXX Create at https://dev.netatmo.com/",
@@ -32,6 +34,8 @@ You can also configure this plugin via [ConfigUI-X's settings](https://github.co
 
 ```
 
+- **weatherstation** Enables support for Netatmo's WeatherStation. Default value is *true*
+- **airquality** Enables support for Netatmo's Indoor Air Quality monitor. Default value is *false*
 - **extra_co2_sensor: (optional)** Adds an extra CO2 sensor which is available via Apple's stock Home.app, too. Default value is *false*
 - **co2_alert_threshold (optional):** Sets the co2-level [ppm] at which the sensors switch to alert-state
 - **ttl: (optional)** Seconds between two Netatmo API polls. Lower is not neccessarily better! The weatherstation itself collects one value per 5minutes, so going below 300s makes no sense. Default value is *540* (=9min)
@@ -50,7 +54,7 @@ If the whitelist contains at least one entry, all other ids will be excluded.
 
     "platforms": [
         {
-            "platform": "netatmo",
+            "platform": "eveatmo",
             
             ...
             
@@ -116,6 +120,7 @@ see [HISTORY.md](https://github.com/skrollme/homebridge-eveatmo/blob/master/HIST
 - <del>adding CO2 [ppm] or maybe just "CO2 detected" to indoor devices</del>
 - <del>researching/testing/implementing Eve's history-functionality (see: [https://gist.github.com/0ff/668f4b7753c80ad7b60b](https://gist.github.com/0ff/668f4b7753c80ad7b60b))</del>
 - <del>Make CO2 trigger threshold configurable (see: https://github.com/skrollme/homebridge-eveatmo/issues/24)</del>
+- <del>Support Indoor Air Quality monitor (see: https://github.com/skrollme/homebridge-eveatmo/issues/51)</del>
 
 
 ## Thanks
@@ -127,6 +132,8 @@ Also big thanks to @gomfunkel and @simont77 for [this gist](https://gist.github.
 Thanks go also to the following direct contributors:
 - @jason-klein (https://github.com/skrollme/homebridge-eveatmo/pull/28)
 - @lisanet (https://github.com/skrollme/homebridge-eveatmo/pull/36)
+- @foliveira (https://github.com/skrollme/homebridge-eveatmo/pull/52)
+- @RyanHS7VM (https://github.com/skrollme/homebridge-eveatmo/pull/54)
 
 ## What else
 

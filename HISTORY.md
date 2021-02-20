@@ -1,5 +1,13 @@
 ## version history
 
+### 0.6.2
+- Thanks to a PR (https://github.com/skrollme/homebridge-eveatmo/pull/54) from @RyanHS7VM:
+    - Added a "currently raining" characteristic 
+
+### 0.6.0
+- Thanks to a PR (https://github.com/skrollme/homebridge-eveatmo/pull/52) from @foliveira:
+    - Support for Netatmo HomeCoach
+
 ### 0.5.0
 - All thanks to a PR (https://github.com/skrollme/homebridge-eveatmo/pull/36) from @lisanet:
     - Added ConfigUI X settings-panel (https://github.com/oznu/homebridge-config-ui-x/wiki/Developers:-Plugin-Settings-GUI)
