@@ -44,7 +44,7 @@ module.exports = function(pHomebridge) {
 
 		getBatteryLevel(callback) {
 			this.accessory.refreshData(function(err, data) {
-				callback(err, this.accessory.batteryPercent);
+				callback(err, this.accessory.batteryPercent ? this.accessory.batteryPercent : 100);
 			}.bind(this));
 		}
 

@@ -1,5 +1,8 @@
 ## version history
 
+### 0.6.3
+- Homebridge 1.3 compatibility (#56)
+
 ### 0.6.2
 - Thanks to a PR (https://github.com/skrollme/homebridge-eveatmo/pull/54) from @RyanHS7VM:
     - Added a "currently raining" characteristic 
