@@ -1,5 +1,8 @@
 ## version history
 
+### 0.6.4
+- Updated fakegato-plugin to 0.6.1
+
 ### 0.6.3
 - Homebridge 1.3 compatibility (#56)
 
