@@ -18,7 +18,7 @@ module.exports = function(pHomebridge) {
 				"id": deviceData._id,
 				"model": "Eve Rain",
 				"netatmoType": deviceData.type,
-				"firmware": deviceData.firmware,
+				"firmware": String(deviceData.firmware),
 				"name": deviceData._name || "Eveatmo " + netatmoDevice.deviceType + " " + deviceData._id,
 				"hasBattery": (deviceData.battery_vp) ? true : false,
 			};
@@ -103,7 +103,7 @@ module.exports = function(pHomebridge) {
 				this.rainLevelSum24 = weatherData.rainLevelSum24;
 				dataChanged = true;
 			}
-			
+
 			if (weatherData.batteryPercent && this.batteryPercent != weatherData.batteryPercent) {
 				this.batteryPercent = weatherData.batteryPercent;
 				dataChanged = true;

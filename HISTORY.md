@@ -1,5 +1,8 @@
 ## version history
 
+### 0.6.3
+- Homebridge 1.3 compatibility (#56)
+
 ### 0.6.2
 - Thanks to a PR (https://github.com/skrollme/homebridge-eveatmo/pull/54) from @RyanHS7VM:
     - Added a "currently raining" characteristic 
@@ -34,10 +37,10 @@
 - added a config option which prevents the netatmo's devicename to be prepended and instead appends a configurable name to the modules
 
 ### 0.4.3
-- added configuration-option to override the alert-state threshold for the extra co2-sensors (https://github.com/skrollme/homebridge-eveatmo/issues/24)
+- added configuration-option to override the alert-state threshold for the extra co2-sensors (#24)
 
 ### 0.4.2
-- hopefully fixed a problem which caused the low-battery warning to persist even after replacing the module's battery (https://github.com/skrollme/homebridge-eveatmo/issues/21)
+- hopefully fixed a problem which caused the low-battery warning to persist even after replacing the module's battery (#21)
 
 ### 0.4.1
 - setting min value for co2 for investigating history gaps
@@ -50,7 +53,7 @@
 - changed polling mechanism to prevent deadlocks on netatmo API errors 
 
 ### 0.3.6
-- fixed bug were zero-measurement-values were not applied to characteristics (https://github.com/skrollme/homebridge-eveatmo/issues/15)
+- fixed bug were zero-measurement-values were not applied to characteristics (#15)
 - switched to default history length and timer-handling
 
 ### 0.3.5
@@ -76,10 +79,10 @@
 - Simplified and fixed backround-refreshing from API. "refresh_check_rate" was removed, internal polling is handled by "refresh_run_rate" (default 20s) and "ttl" (540s = 9min). Also fixed a bug which caused way too frequent api-calls which could lead to softbans (and an unresponsive homebridge).
 
 ### 0.2.10 & 0.2.11
-- Resolved [Issue #7](https://github.com/skrollme/homebridge-eveatmo/issues/7): Marked Eve's custom characteristics as hidden + some defaults for refreshtimings / ttl
+- Resolved #7 Marked Eve's custom characteristics as hidden + some defaults for refreshtimings / ttl
 
 ### 0.2.9
-- Resolved [Issue #5](https://github.com/skrollme/homebridge-eveatmo/issues/5): Added configswitch (see config sample above) which adds an additional default-homekit _Carbon Dioxide Sensor_ for notifications
+- Resolved #5 Added configswitch (see config sample above) which adds an additional default-homekit _Carbon Dioxide Sensor_ for notifications
 
 ### 0.2.6 & 0.2.7 & 0.2.8
 - Removed L2 caching because it did not work as expected. Instead the polling interval was reduced to 5min and the default cache ttl was set to match the intervall >> less force-refreshes (which cause duplicate apicalls)
