@@ -11,6 +11,7 @@
 						"type": "NAModule1",
 						"last_message": 1501492713,
 						"last_seen": 1501492681,
+						"reachable": true,
 						"dashboard_data": {
 							"time_utc": 1501492681,
 							"Temperature": 21.5,
@@ -37,6 +38,7 @@
 						"type": "NAModule2",
 						"last_message": 1469639523,
 						"last_seen": 1469639502,
+						"reachable": true,
 						"dashboard_data": {
 							"WindAngle": 188,
 							"WindStrength": 6,
@@ -128,6 +130,7 @@
 						"type": "NAModule4",
 						"last_message": 1501492713,
 						"last_seen": 1501492713,
+						"reachable": true,
 						"dashboard_data": {
 							"time_utc": 1501492662,
 							"Temperature": 22.6,
@@ -156,6 +159,7 @@
 						"type": "NAModule3",
 						"last_message": 1501492713,
 						"last_seen": 1501492713,
+						"reachable": true,
 						"dashboard_data": {
 							"time_utc": 1501492700,
 							"Rain": 0,
@@ -185,6 +189,7 @@
 				},
 				"station_name": "eveatmo",
 				"type": "NAMain",
+				"reachable": true,
 				"dashboard_data": {
 					"AbsolutePressure": 999.3,
 					"time_utc": 1501492704,

@@ -20,6 +20,9 @@ module.exports = function(pHomebridge) {
 				})
 				.on('get', this.getCurrentTemperature.bind(this))
 				.eventEnabled = true;
+
+			this.getCharacteristic(Characteristic.TemperatureDisplayUnits)
+				.on('get', this.getTemperatureDisplayUnit.bind(this));
 		}
 
 		updateCharacteristics() {
@@ -31,6 +34,10 @@ module.exports = function(pHomebridge) {
 			this.accessory.refreshData(function(err, data) {
 				callback(err, this.accessory.currentTemperature);
 			}.bind(this));
+		}
+
+		getTemperatureDisplayUnit(callback) {
+			callback(null, 0);
 		}
 	}
 
