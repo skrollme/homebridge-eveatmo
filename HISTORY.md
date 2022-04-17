@@ -1,7 +1,7 @@
 ## version history
 
 ### 0.6.5
-- Added max. wind-strength (gust) to wind-accessory ([#59][i59])
+- Added max. wind-strength (gust) to wind-accessory ([#59](/../../issues/59))
 
 ### 0.6.4
 - Updated fakegato-plugin to 0.6.1
