@@ -27,6 +27,7 @@ module.exports = function(pHomebridge) {
 			this.buildServices(accessoryConfig);
 
 			this.windStrength = 0.0;
+			this.gustStrength = 0.0;
 			this.windAngle = 0;
 
 			this.refreshData(function(err, data) {});
@@ -70,6 +71,9 @@ module.exports = function(pHomebridge) {
 				if (dashboardData.hasOwnProperty("WindStrength")) {
 					result.windStrength = dashboardData.WindStrength;
 				}
+				if (dashboardData.hasOwnProperty("GustStrength")) {
+					result.gustStrength = dashboardData.GustStrength;
+				}
 				if (dashboardData.hasOwnProperty("WindAngle")) {
 					result.windAngle = dashboardData.WindAngle;
 				}
@@ -89,6 +93,10 @@ module.exports = function(pHomebridge) {
 
 			if (weatherData.hasOwnProperty("windStrength") && this.windStrength != weatherData.windStrength) {
 				this.windStrength = weatherData.windStrength;
+				dataChanged = true;
+			}
+			if (weatherData.hasOwnProperty("gustStrength") && this.gustStrength != weatherData.gustStrength) {
+				this.gustStrength = weatherData.gustStrength;
 				dataChanged = true;
 			}
 			if (weatherData.hasOwnProperty("windAngle") && this.windAngle != weatherData.windAngle) {

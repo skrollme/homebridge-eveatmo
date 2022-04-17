@@ -6,6 +6,7 @@ var Characteristic;
 const WIND_MEASURE_STYPE_ID = "2AFB775E-79E5-4399-B3CD-398474CAE86C";
 const WIND_STRENGTH_CTYPE_ID = "49C8AE5A-A3A5-41AB-BF1F-12D5654F9F41";
 const WIND_ANGLE_CTYPE_ID = "46F1284C-1912-421B-82F5-EB75008B167E";
+const GUST_STRENGTH_CTYPE_ID = "6B8861E5-D6F3-425C-83B6-069945FFD1F1";
 
 module.exports = function(pHomebridge) {
     if (pHomebridge && !homebridge) {
@@ -20,7 +21,25 @@ module.exports = function(pHomebridge) {
                 format: Characteristic.Formats.FLOAT,
                 unit: "km/h",
                 minValue: 0,
-                maxValue: 100,
+                maxValue: 200,
+                minStep: 0.1,
+                perms: [
+                    Characteristic.Perms.READ,
+                    Characteristic.Perms.NOTIFY
+                ]
+            });
+            this.value = this.getDefaultValue();
+        }
+    }
+
+    class GustStrengthCharacteristic extends Characteristic {
+        constructor(accessory) {
+            super('Gust Strength', GUST_STRENGTH_CTYPE_ID);
+            this.setProps({
+                format: Characteristic.Formats.FLOAT,
+                unit: "km/h",
+                minValue: 0,
+                maxValue: 200,
                 minStep: 0.1,
                 perms: [
                     Characteristic.Perms.READ,
@@ -53,6 +72,9 @@ module.exports = function(pHomebridge) {
             this.addCharacteristic(WindStrengthCharacteristic)
                 .on('get', this.getWindStrength.bind(this))
                 .eventEnabled = true;
+            this.addCharacteristic(GustStrengthCharacteristic)
+                .on('get', this.getGustStrength.bind(this))
+                .eventEnabled = true;
             this.addCharacteristic(WindAngleCharacteristic)
                 .on('get', this.getWindAngle.bind(this))
                 .eventEnabled = true;
@@ -63,6 +85,8 @@ module.exports = function(pHomebridge) {
         updateCharacteristics() {
             this.getCharacteristic(WindStrengthCharacteristic)
                 .updateValue(this.accessory.windStrength);
+            this.getCharacteristic(WindStrengthCharacteristic)
+                .updateValue(this.accessory.gustStrength);
             this.getCharacteristic(WindAngleCharacteristic)
                 .updateValue(this.transformDirectionDegToString());
         }
@@ -70,6 +94,12 @@ module.exports = function(pHomebridge) {
         getWindStrength(callback) {
             this.accessory.refreshData(function(err,data) {
                 callback(err, this.accessory.windStrength);
+            }.bind(this));
+        }
+
+        getGustStrength(callback) {
+            this.accessory.refreshData(function(err,data) {
+                callback(err, this.accessory.gustStrength);
             }.bind(this));
         }
 
