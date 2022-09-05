@@ -3,7 +3,7 @@
 [![GitHub last commit](https://img.shields.io/github/last-commit/skrollme/homebridge-eveatmo.svg?style=plastic)](https://github.com/skrollme/homebridge-eveatmo)
 
 # Warning
-Since Netatmo announced a change in their authentification-policies this plugin **will probably stop working on October 2022**. For more information see: https://github.com/skrollme/homebridge-eveatmo/issues/63
+Since Netatmo announced a change in their authentification-policies this plugin **will probably stop working on October 2022**. For more information see: https://github.com/skrollme/homebridge-eveatmo/issues/62
 
 # homebridge-eveatmo
 
