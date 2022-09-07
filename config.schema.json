@@ -50,6 +50,12 @@
         "type": "string",
         "description": "Suffix to the module name. Deletes the prepended Netatmo device name"
       },
+      "log_info_msg": {
+        "title": "Log info messages",
+        "type": "boolean",
+        "default": true,
+        "description": "Outputs log messages with loglevel set to info"
+      },      
       "auth": {
         "title": "Netatmo credentials",
         "type": "object",
