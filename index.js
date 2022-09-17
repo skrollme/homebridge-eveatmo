@@ -7,7 +7,7 @@ module.exports = function(pHomebridge) {
 	homebridge.registerPlatform("homebridge-eveatmo", "eveatmo", EveatmoPlatform);
 };
 
-var netatmo = require("netatmo");
+var netatmo = require("./lib/netatmo-api");
 var inherits = require('util').inherits;
 
 class EveatmoPlatform {
@@ -37,6 +37,30 @@ class EveatmoPlatform {
 		this.api.on("warning", function(error) {
 			this.log.warn('WARN - Netatmo: ' + error);
 		}.bind(this));
+	}
+
+	get_initial_token(refresh_token, client_id, client_secret, callback) {
+		var form = {
+			grant_type: 'refresh_token',
+			refresh_token: refresh_token,
+			client_id: client_id,
+			client_secret: client_secret,
+		};
+
+		request({
+			url: 'https://api.netatmo.net/oauth2/token',
+			method: "POST",
+			form: form,
+		}, function (err, response, body) {
+			if (err || response.statusCode != 200) {
+				return err;
+			}
+
+			body = JSON.parse(body);
+			console.log("Done: token="+body.access_token);
+
+			callback(body.access_token);
+		});
 	}
 
 	accessories(callback) {

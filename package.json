@@ -20,8 +20,9 @@
 		"async": "^2.6.3",
 		"fakegato-history": "^0.6.1",
 		"glob": "^7.1.6",
-		"netatmo": "^2.3.0",
-		"node-cache": "^3.0.0"
+		"node-cache": "^3.0.0",
+		"request": "^2.88.2",
+		"moment": "^2.29.1"
 	},
 	"bugs": {
 		"url": "https://github.com/skrollme/homebridge-eveatmo/issues"
