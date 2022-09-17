@@ -66,17 +66,11 @@
             "required": true,
             "description": "Create this at https://dev.netatmo.com/"
           },
-          "username": {
-            "title": "Username",
+          "refresh_token": {
+            "title": "Refresh Token",
             "type": "string",
             "required": true,
-            "description": "Your Netatmo username"
-          },
-          "password": {
-            "title": "Password",
-            "type": "string",
-            "required": true,
-            "description": "Your Netatmo password"
+            "description": "A valid Netatmo refreshToken, see https://dev.netatmo.com/apidocumentation/oauth for more information"
           }
         }
       }

@@ -2,9 +2,6 @@
 [![npm](https://img.shields.io/npm/dt/homebridge-eveatmo.svg?style=plastic)](https://www.npmjs.com/package/homebridge-eveatmo)
 [![GitHub last commit](https://img.shields.io/github/last-commit/skrollme/homebridge-eveatmo.svg?style=plastic)](https://github.com/skrollme/homebridge-eveatmo)
 
-# Warning
-Since Netatmo announced a change in their authentification-policies this plugin **will probably stop working on October 2022**. For more information see: https://github.com/skrollme/homebridge-eveatmo/issues/62
-
 # homebridge-eveatmo
 
 This is a [homebridge](https://github.com/nfarina/homebridge) plugin which lets you integrate your non-HomeKit Netatmo Weatherstation and Indoor Air Quality monitor into HomeKit.
@@ -29,8 +26,7 @@ You can also configure this plugin via [ConfigUI-X's settings](https://github.co
             "auth": {
     	        "client_id": "XXXXX Create at https://dev.netatmo.com/",
                 "client_secret": "XXXXX Create at https://dev.netatmo.com/",
-                "username": "your netatmo username",
-                "password": "your netatmo password"
+                "refresh_token": "a valid refresh token for the given client_id",
             }
         }
     ],
@@ -82,6 +78,8 @@ If the whitelist contains at least one entry, all other ids will be excluded.
 2. After successful registration create your own app by using the menu entry "CREATE AN APP"
 3. On the following page, enter a name for your app. Any name can be chosen. All other fields of the form (like callback url, etc.) can be left blank.
 4. After successfully submitting the form the overview page of your app should show client id and secret.
+5. Do an initial auth with the newly created app via the "Token generator" on your app's page https://dev.netatmo.com/apps/ to get a refresh token
+6. Add the _client_id_, the _client_secret_ and the _refresh_token_ to the config's _auth_-section
 
 ## Siri Voice Commands
 
@@ -126,7 +124,7 @@ see [HISTORY.md](https://github.com/skrollme/homebridge-eveatmo/blob/master/HIST
 - <del>Support Indoor Air Quality monitor (see: https://github.com/skrollme/homebridge-eveatmo/issues/51)</del>
 
 
-## Thanks
+## Thanks and disclaimer
 
 This plugin's basic structure and most of its basic code is a fork (ok, lets say "copy") of [homebridge-netatmo](https://github.com/planetk/homebridge-netatmo). So big thanks to @planetk and all the other contributors of this project. 
 
@@ -137,6 +135,8 @@ Thanks go also to the following direct contributors:
 - @lisanet (https://github.com/skrollme/homebridge-eveatmo/pull/36)
 - @foliveira (https://github.com/skrollme/homebridge-eveatmo/pull/52)
 - @RyanHS7VM (https://github.com/skrollme/homebridge-eveatmo/pull/54)
+
+**Since Netatmo announced some changes on what kind of authentication their API will support and I did not found a good solution to override the code of the [netatmo](https://github.com/karbassi/netatmo)-dependency to continue working, this module contains an altered full-copy of the module. All credits for the original code go to the respective authors.**
 
 ## What else
 
