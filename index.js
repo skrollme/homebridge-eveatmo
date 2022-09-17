@@ -39,30 +39,6 @@ class EveatmoPlatform {
 		}.bind(this));
 	}
 
-	get_initial_token(refresh_token, client_id, client_secret, callback) {
-		var form = {
-			grant_type: 'refresh_token',
-			refresh_token: refresh_token,
-			client_id: client_id,
-			client_secret: client_secret,
-		};
-
-		request({
-			url: 'https://api.netatmo.net/oauth2/token',
-			method: "POST",
-			form: form,
-		}, function (err, response, body) {
-			if (err || response.statusCode != 200) {
-				return err;
-			}
-
-			body = JSON.parse(body);
-			console.log("Done: token="+body.access_token);
-
-			callback(body.access_token);
-		});
-	}
-
 	accessories(callback) {
 		this.log.debug("Loading accessories");
 
