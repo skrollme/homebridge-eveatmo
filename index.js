@@ -29,10 +29,10 @@ class EveatmoPlatform {
 			this.log.warn('CAUTION! USING FAKE NETATMO API: ' + config.mockapi);
 			this.api = require("./lib/netatmo-api-mock")(config.mockapi);
 		} else {
-			if (config.auth.username) {
-				throw 'username / password auth is not supported anymore! Please see the readme and use a "refresh_token" instead.'
+			if (config.auth.username || config.auth.password) {
+				throw new Error("username / password auth is not supported anymore! Please see the readme and use a 'refresh_token' instead.");
 			} else if (!config.auth.refresh_token) {
-				throw "Authenticate 'refresh_token' not set."
+				throw new Error("Authenticate 'refresh_token' not set.");
 			}
 
 			this.api = new netatmo(config.auth);
