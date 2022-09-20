@@ -35,7 +35,7 @@ class EveatmoPlatform {
 				throw new Error("Authenticate 'refresh_token' not set.");
 			}
 
-			this.api = new netatmo(config.auth);
+			this.api = new netatmo(config.auth, homebridge);
 		}
 		this.api.on("error", function(error) {
 			this.log.error('ERROR - Netatmo: ' + error);
