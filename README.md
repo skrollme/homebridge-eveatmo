@@ -80,7 +80,8 @@ If the whitelist contains at least one entry, all other ids will be excluded.
 4. After successfully submitting the form the overview page of your app should show client id and secret.
 5. Do an initial auth with the newly created app via the "Token generator" on your app's page https://dev.netatmo.com/apps/ to get a refresh token
 6. Add the _client_id_, the _client_secret_ and the _refresh_token_ to the config's _auth_-section
-
+7. The plugin will use the _refresh_token_ from the config to retrieve and refresh _auth_tokens_. It will also store newly retrieved tokens in a file (_netatmo-token.js_) in your homebridge config directory. If you delete the _netatmo-token.js_ file, you may have to regenerate a new _refresh_token_ like in step 5) if your initial _refresh_token_ (from the _config.json_) already has expired
+ 
 ## Siri Voice Commands
 
 Here are sample English voice commands:
