@@ -10,7 +10,7 @@ Whilst the original [homebridge-netatmo](https://github.com/planetk/homebridge-n
 
 # :rotating_light: Warning
 Since Netatmo announced a change to their authentification-policies it was also necessary to update this plugin's authentication-mechanism. 
-**From 0.7.0 on it does not accept authentication via user-credentials anymore so you have to adapt your existing setup!** 
+**From 1.0.0 on it does not accept authentication via user-credentials anymore so you have to adapt your existing setup!** 
 You need to generate a refresh-token in your app's page at dev.netatmo.com instead.
 For more details see the instructions below or take a look at this issue: https://github.com/skrollme/homebridge-eveatmo/issues/62
 
