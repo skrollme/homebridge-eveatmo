@@ -2,14 +2,17 @@
 [![npm](https://img.shields.io/npm/dt/homebridge-eveatmo.svg?style=plastic)](https://www.npmjs.com/package/homebridge-eveatmo)
 [![GitHub last commit](https://img.shields.io/github/last-commit/skrollme/homebridge-eveatmo.svg?style=plastic)](https://github.com/skrollme/homebridge-eveatmo)
 
-# Warning
-Since Netatmo announced a change in their authentification-policies this plugin **will probably stop working on October 2022**. For more information see: https://github.com/skrollme/homebridge-eveatmo/issues/62
-
 # homebridge-eveatmo
 
 This is a [homebridge](https://github.com/nfarina/homebridge) plugin which lets you integrate your non-HomeKit Netatmo Weatherstation and Indoor Air Quality monitor into HomeKit.
 
 Whilst the original [homebridge-netatmo](https://github.com/planetk/homebridge-netatmo)-plugin goes a mostly HomeKit-standard approach (predefined services, characteristics, ...), this plugin tries to mimic the Elgato Eve devices as close as possible. 
+
+# :rotating_light: Warning
+Since Netatmo announced a change to their authentification-policies it was also necessary to update this plugin's authentication-mechanism. 
+**From 1.0.0 on it does not accept authentication via user-credentials anymore so you have to adapt your existing setup!** 
+You need to generate a refresh-token in your app's page at dev.netatmo.com instead.
+For more details see the instructions below or take a look at this issue: https://github.com/skrollme/homebridge-eveatmo/issues/62
 
 ## Configuration
 Because this plugin's base was taken from [homebridge-netatmo](https://github.com/planetk/homebridge-netatmo) (see above) you can adapt its config. Just use the plattform-code "eveatmo" and remove "ttl" and/or the other "refresh_" properties for the beginning.
@@ -29,8 +32,7 @@ You can also configure this plugin via [ConfigUI-X's settings](https://github.co
             "auth": {
     	        "client_id": "XXXXX Create at https://dev.netatmo.com/",
                 "client_secret": "XXXXX Create at https://dev.netatmo.com/",
-                "username": "your netatmo username",
-                "password": "your netatmo password"
+                "refresh_token": "a valid refresh token for the given client_id",
             }
         }
     ],
@@ -42,7 +44,7 @@ You can also configure this plugin via [ConfigUI-X's settings](https://github.co
 - **extra_co2_sensor: (optional)** Adds an extra CO2 sensor which is available via Apple's stock Home.app, too. Default value is *false*
 - **co2_alert_threshold (optional):** Sets the co2-level [ppm] at which the sensors switch to alert-state
 - **ttl: (optional)** Seconds between two Netatmo API polls. Lower is not neccessarily better! The weatherstation itself collects one value per 5minutes, so going below 300s makes no sense. Default value is *540* (=9min)
-- **auth:** Credentials for the Netatmo API
+- **auth:** Credentials for the Netatmo API (see below)
 - **module_suffix: (optional)** If this is set, the Netatmo's devicename will not be prepended to the modulename. Instead this config-value will be appended - with a space - to the module name 
 
 ###  Control Accessories by device ID
@@ -76,13 +78,16 @@ If the whitelist contains at least one entry, all other ids will be excluded.
 
 </pre>
 
-### Retrieve client id and secret
+### Retrieve _client_id_, _client_secret_ and _refresh_token_
 
 1. Register at http://dev.netatmo.com as a developer
 2. After successful registration create your own app by using the menu entry "CREATE AN APP"
-3. On the following page, enter a name for your app. Any name can be chosen. All other fields of the form (like callback url, etc.) can be left blank.
-4. After successfully submitting the form the overview page of your app should show client id and secret.
-
+3. On the following page, enter a name for your app. Any name can be chosen. All other fields of the form (like _callback_url_, etc.) can be left blank.
+4. After successfully submitting the form the overview page of your app should show _client_id_ and _client_secret_.
+5. Do an initial auth with the newly created app via the "Token generator" on your app's page https://dev.netatmo.com/apps/ to get a _refresh_token_
+6. Add the _client_id_, the _client_secret_ and the _refresh_token_ to the config's _auth_-section
+7. The plugin will use the _refresh_token_ from the config to retrieve and refresh _auth_tokens_. It will also store newly retrieved tokens in a file (_netatmo-token.js_) in your homebridge config directory. If you delete the _netatmo-token.js_ file, you may have to regenerate a new _refresh_token_ like in step 5) if your initial _refresh_token_ (from the _config.json_) already has expired
+ 
 ## Siri Voice Commands
 
 Here are sample English voice commands:
@@ -117,16 +122,7 @@ Blog posts with German commands:
 
 see [HISTORY.md](https://github.com/skrollme/homebridge-eveatmo/blob/master/HISTORY.md)
 
-## ToDos
-- <del>maybe refactoring to split characterstics into separate services (better functionality in Apple's default home.app)</del>
-- reintegrate <del>rain-sensor, wind-sensor and</del> thermostat
-- <del>adding CO2 [ppm] or maybe just "CO2 detected" to indoor devices</del>
-- <del>researching/testing/implementing Eve's history-functionality (see: [https://gist.github.com/0ff/668f4b7753c80ad7b60b](https://gist.github.com/0ff/668f4b7753c80ad7b60b))</del>
-- <del>Make CO2 trigger threshold configurable (see: https://github.com/skrollme/homebridge-eveatmo/issues/24)</del>
-- <del>Support Indoor Air Quality monitor (see: https://github.com/skrollme/homebridge-eveatmo/issues/51)</del>
-
-
-## Thanks
+## Thanks and disclaimer
 
 This plugin's basic structure and most of its basic code is a fork (ok, lets say "copy") of [homebridge-netatmo](https://github.com/planetk/homebridge-netatmo). So big thanks to @planetk and all the other contributors of this project. 
 
@@ -137,6 +133,8 @@ Thanks go also to the following direct contributors:
 - @lisanet (https://github.com/skrollme/homebridge-eveatmo/pull/36)
 - @foliveira (https://github.com/skrollme/homebridge-eveatmo/pull/52)
 - @RyanHS7VM (https://github.com/skrollme/homebridge-eveatmo/pull/54)
+
+**Since Netatmo announced some changes on what kind of authentication their API will support and I did not found a good solution to override the code of the [netatmo](https://github.com/karbassi/netatmo)-dependency to continue working, this module contains an altered full-copy of the module. All credits for the original code go to the respective authors.**
 
 ## What else
 

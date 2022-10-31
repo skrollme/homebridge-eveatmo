@@ -1,5 +1,11 @@
 ## version history
 
+### 1.0.0
+- Major version release to reflect breaking change in 0.7.0
+
+### 0.7.0
+- Switched to a different authentication-mechanism because Netatmo plans to deprecate the old username/password-authentication ([#62](/../../issues/62))
+
 ### 0.6.5
 - Added max. wind-strength (gust) to wind-accessory ([#59](/../../issues/59))
 

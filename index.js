@@ -7,7 +7,7 @@ module.exports = function(pHomebridge) {
 	homebridge.registerPlatform("homebridge-eveatmo", "eveatmo", EveatmoPlatform);
 };
 
-var netatmo = require("netatmo");
+var netatmo = require("./lib/netatmo-api");
 var inherits = require('util').inherits;
 
 class EveatmoPlatform {
@@ -30,7 +30,13 @@ class EveatmoPlatform {
 			this.log.warn('CAUTION! USING FAKE NETATMO API: ' + config.mockapi);
 			this.api = require("./lib/netatmo-api-mock")(config.mockapi);
 		} else {
-			this.api = new netatmo(config.auth);
+			if (config.auth.username || config.auth.password) {
+				throw new Error("username / password auth is not supported anymore! Please see the readme and use a 'refresh_token' instead.");
+			} else if (!config.auth.refresh_token) {
+				throw new Error("Authenticate 'refresh_token' not set.");
+			}
+
+			this.api = new netatmo(config.auth, homebridge);
 		}
 		this.api.on("error", function(error) {
 			this.log.error('ERROR - Netatmo: ' + error);
