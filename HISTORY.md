@@ -1,5 +1,9 @@
 ## version history
 
+### 1.0.1
+- Thanks to a PR (https://github.com/skrollme/homebridge-eveatmo/pull/65) from @smhex:
+  - Logging of "fetching weatherdata" is not configurable
+
 ### 1.0.0
 - Major version release to reflect breaking change in 0.7.0
 

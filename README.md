@@ -29,6 +29,7 @@ You can also configure this plugin via [ConfigUI-X's settings](https://github.co
             "weatherstation": true,
             "airquality": false,
             "ttl": 540,
+            "log_info_msg", true,
             "auth": {
     	        "client_id": "XXXXX Create at https://dev.netatmo.com/",
                 "client_secret": "XXXXX Create at https://dev.netatmo.com/",
@@ -45,6 +46,7 @@ You can also configure this plugin via [ConfigUI-X's settings](https://github.co
 - **co2_alert_threshold (optional):** Sets the co2-level [ppm] at which the sensors switch to alert-state
 - **ttl: (optional)** Seconds between two Netatmo API polls. Lower is not neccessarily better! The weatherstation itself collects one value per 5minutes, so going below 300s makes no sense. Default value is *540* (=9min)
 - **auth:** Credentials for the Netatmo API (see below)
+- **log_info_msg: (optional)** controls the logging of "fetching data" messages. Default value is _true_
 - **module_suffix: (optional)** If this is set, the Netatmo's devicename will not be prepended to the modulename. Instead this config-value will be appended - with a space - to the module name 
 
 ###  Control Accessories by device ID
