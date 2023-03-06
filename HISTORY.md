@@ -1,5 +1,11 @@
 ## version history
 
+### 1.1.0
+- allows new auth method (via refreshtoken) and old one (via password)
+  - added config-schema to configure this via UI   
+- refreshtokens are fetched 5min earlier to do not run into auth problems
+  - Added retry on failed refreshtoken-fetch
+
 ### 1.0.1
 - Thanks to a PR (https://github.com/skrollme/homebridge-eveatmo/pull/65) from @smhex:
   - Logging of "fetching weatherdata" is not configurable
