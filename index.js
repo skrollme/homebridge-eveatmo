@@ -30,13 +30,25 @@ class EveatmoPlatform {
 			this.log.warn('CAUTION! USING FAKE NETATMO API: ' + config.mockapi);
 			this.api = require("./lib/netatmo-api-mock")(config.mockapi);
 		} else {
-			if (config.auth.username || config.auth.password) {
-				throw new Error("username / password auth is not supported anymore! Please see the readme and use a 'refresh_token' instead.");
-			} else if (!config.auth.refresh_token) {
-				throw new Error("Authenticate 'refresh_token' not set.");
+			this.config.auth.grant_type = typeof config.auth.grant_type !== 'undefined' ? config.auth.grant_type : 'refresh_token';
+
+			if (this.config.auth.grant_type == 'refresh_token') {
+				if (config.auth.username || config.auth.password) {
+					throw new Error("'username' and 'password' are not used in grant_type 'refresh_token'");
+				} else if (!config.auth.refresh_token) {
+					throw new Error("'refresh_token' not set");
+				}
+				this.log.info("Authenticating using 'refresh_token' grant");
+			} else if (this.config.auth.grant_type == 'password') {
+				if (!config.auth.username || !config.auth.password) {
+					throw new Error("'username' and 'password' are mandatory when using grant_type 'password'");
+				}
+				this.log.info("Authenticating using 'password' grant");
+			} else  {
+				throw new Error("Unsupported grant_type. Please use 'password' or 'refresh_token'");
 			}
 
-			this.api = new netatmo(config.auth, homebridge);
+			this.api = new netatmo(this.config.auth, homebridge);
 		}
 		this.api.on("error", function(error) {
 			this.log.error('ERROR - Netatmo: ' + error);
