@@ -50,6 +50,7 @@ You can also configure this plugin via [ConfigUI-X's settings](https://github.co
 
 - **weatherstation** Enables support for Netatmo's WeatherStation. Default value is *true*
 - **airquality** Enables support for Netatmo's Indoor Air Quality monitor. Default value is *false*
+- **extra_aq_sensor: (optional)** Adds an extra AirQuality sensor which is available via Apple's stock Home.app, reporting CO2 level. Default value is *false*
 - **extra_co2_sensor: (optional)** Adds an extra CO2 sensor which is available via Apple's stock Home.app, too. Default value is *false*
 - **co2_alert_threshold (optional):** Sets the co2-level [ppm] at which the sensors switch to alert-state
 - **ttl: (optional)** Seconds between two Netatmo API polls. Lower is not neccessarily better! The weatherstation itself collects one value per 5minutes, so going below 300s makes no sense. Default value is *540* (=9min)

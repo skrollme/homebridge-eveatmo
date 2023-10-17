@@ -20,6 +20,12 @@
         "minimum": 300,
         "description": "Seconds between two Netatmo API polls (default 540)"
       },
+      "extra_aq_sensor": {
+        "title": "Extra AirQuality sensor",
+        "type": "boolean",
+        "default": false,
+        "description": "Adds an extra AirQuality sensor reporting CO2 level"
+      },
       "extra_co2_sensor": {
         "title": "Extra CO2 sensor",
         "type": "boolean",
