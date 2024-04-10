@@ -17,7 +17,8 @@ class EveatmoPlatform {
 		this.foundAccessories = [];
 
 		this.config.weatherstation = typeof config.weatherstation !== 'undefined' ? Boolean(config.weatherstation) : true;
-        this.config.extra_co2_sensor = typeof config.extra_co2_sensor !== 'undefined' ? Boolean(config.extra_co2_sensor) : false;
+        this.config.extra_aq_sensor = typeof config.extra_aq_sensor !== 'undefined' ? Boolean(config.extra_aq_sensor) : true;
+		this.config.extra_co2_sensor = typeof config.extra_co2_sensor !== 'undefined' ? Boolean(config.extra_co2_sensor) : false;
         this.config.co2_alert_threshold = typeof config.co2_alert_threshold !== 'undefined' ? parseInt(config.co2_alert_threshold) : 1000;
 
 		this.config.module_suffix = typeof config.module_suffix !== 'undefined' ? config.module_suffix : '';
