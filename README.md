@@ -161,6 +161,7 @@ Thanks go also to the following direct contributors:
 - @foliveira (https://github.com/skrollme/homebridge-eveatmo/pull/52)
 - @RyanHS7VM (https://github.com/skrollme/homebridge-eveatmo/pull/54)
 - @smhex (https://github.com/skrollme/homebridge-eveatmo/pull/65)
+- @Tellicious (https://github.com/skrollme/homebridge-eveatmo/pull/76)
 
 **Since Netatmo announced some changes on what kind of authentication their API will support and I did not found a good solution to override the code of the [netatmo](https://github.com/karbassi/netatmo)-dependency to continue working, this module contains an altered full-copy of the module. All credits for the original code go to the respective authors.**
 
