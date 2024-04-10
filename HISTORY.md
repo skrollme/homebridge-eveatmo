@@ -1,7 +1,8 @@
 ## version history
 
-## 1.1.1
-- Add new flag to enable/disable AirQuality sensor for indoor modules
+### 1.1.1
+- Thanks to a PR (https://github.com/skrollme/homebridge-eveatmo/pull/76) from @Tellicious:
+  - Add new flag to enable/disable AirQuality sensor for indoor modules
 
 ### 1.1.0
 - allows new auth method (via refreshtoken) and old one (via password)

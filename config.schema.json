@@ -23,7 +23,7 @@
       "extra_aq_sensor": {
         "title": "Extra AirQuality sensor",
         "type": "boolean",
-        "default": false,
+        "default": true,
         "description": "Adds an extra AirQuality sensor reporting CO2 level"
       },
       "extra_co2_sensor": {
