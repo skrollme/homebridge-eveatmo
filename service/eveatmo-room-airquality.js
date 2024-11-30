@@ -2,21 +2,27 @@
 
 var homebridge;
 var Characteristic;
+var Formats;
+var Units;
+var Perms;
 
 module.exports = function(pHomebridge) {
 	if (pHomebridge && !homebridge) {
 		homebridge = pHomebridge;
 		Characteristic = homebridge.hap.Characteristic;
+        Formats = homebridge.hap.Formats;
+        Units = homebridge.hap.Units;
+        Perms = homebridge.hap.Perms;
 	}
 
     class AQExtra1Characteristic extends Characteristic {
         constructor(accessory) {
             super('AQX1', 'E863F10B-079E-48FF-8F27-9C2605A29F52');
             this.setProps({
-                format: Characteristic.Formats.UINT16,
+                format: Formats.UINT16,
                 perms: [
-                    Characteristic.Perms.READ,
-                    Characteristic.Perms.HIDDEN
+                    Perms.READ,
+                    Perms.HIDDEN
                 ]
             });
         }
@@ -26,15 +32,15 @@ module.exports = function(pHomebridge) {
         constructor(accessory) {
             super('AQX2', 'E863F132-079E-48FF-8F27-9C2605A29F52');
             this.setProps({
-                format: Characteristic.Formats.DATA,
+                format: Formats.DATA,
                 perms: [
-                    Characteristic.Perms.READ,
-                    Characteristic.Perms.HIDDEN
+                    Perms.READ,
+                    Perms.HIDDEN
                 ]
             });
         }
     }
-    
+
     class EveatmoRoomAirqualityService extends homebridge.hap.Service.AirQualitySensor {
 		constructor(accessory) {
 			super(accessory.name + " Room Main"); // ROOM

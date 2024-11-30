@@ -13,12 +13,12 @@
 		"url": "https://github.com/skrollme/homebridge-eveatmo.git"
 	},
 	"engines": {
-		"node": ">=0.12.0",
-		"homebridge": ">=0.4.16"
+		"homebridge": "^1.6.0 || ^2.0.0-beta.0",
+		"node": "^18.20.4 || ^20.15.1"
 	},
 	"dependencies": {
 		"async": "^2.6.3",
-		"fakegato-history": "^0.6.1",
+		"fakegato-history": "^0.6.5",
 		"node-cache": "^3.0.0",
 		"request": "^2.88.2",
 		"moment": "^2.29.1"

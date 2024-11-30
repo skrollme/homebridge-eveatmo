@@ -23,22 +23,17 @@ module.exports = function(pHomebridge) {
 				var deviceMap = {};
 				devices.forEach(function(device) {
 					deviceMap[device._id] = device;
-
-					if(this.config.module_suffix != "") {
-						device._name = "Air Quality " + this.config.module_suffix;
-					} else {
-						device._name = device.station_name + " Air Quality";
-					}
+					device._name = this.buildDeviceName(device, this.config.module_suffix);
 				}.bind(this));
 				this.log.debug("Setting cache with key: "+this.deviceType);
 				this.cache.set(this.deviceType, deviceMap);
 				this.deviceData = deviceMap;
-				
+
 				if (this.accessories) {
 					this.accessories.forEach(function(accessory) {
 						accessory.notifyUpdate(this.deviceData);
 					}.bind(this));
-				}			
+				}
 				callback(null, this.deviceData);
 			}.bind(this));
 		}
@@ -48,6 +43,14 @@ module.exports = function(pHomebridge) {
 				return new EveatmoRoomAccessory(deviceData, this);
 			}
 			return false;
+		}
+
+		buildDeviceName(device, suffix) {
+			if (suffix != "") {
+				return "Air Quality " + suffix;
+			} else {
+				return device.station_name.substring(0, device.station_name.indexOf('(')-1) + " Air Quality";
+			}
 		}
 	}
 

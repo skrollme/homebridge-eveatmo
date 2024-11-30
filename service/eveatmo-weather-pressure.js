@@ -2,25 +2,29 @@
 
 var homebridge;
 var Characteristic;
+var Perms;
+var Formats;
 
 module.exports = function(pHomebridge) {
 	if (pHomebridge && !homebridge) {
 		homebridge = pHomebridge;
 		Characteristic = homebridge.hap.Characteristic;
+		Perms = homebridge.hap.Perms;
+		Formats = homebridge.hap.Formats;
 	}
 
 	class AtmosphericPressureCharacteristic extends Characteristic {
 		constructor(accessory) {
 			super('Atmospheric Pressure', 'E863F10F-079E-48FF-8F27-9C2605A29F52');
 			this.setProps({
-				format: Characteristic.Formats.DATA,
+				format: Formats.DATA,
 				unit: "hPA",
 				minValue: 500,
 				maxValue: 2000,
 				minStep: 0.1,
 				perms: [
-					Characteristic.Perms.READ,
-					Characteristic.Perms.NOTIFY
+					Perms.READ,
+					Perms.NOTIFY
 				]
 			});
 		}
@@ -30,11 +34,11 @@ module.exports = function(pHomebridge) {
 		constructor(accessory) {
 			super('S1T1', 'E863F11E-079E-48FF-8F27-9C2605A29F52');
 			this.setProps({
-				format: Characteristic.Formats.DATA,
+				format: Formats.DATA,
 				perms: [
-					Characteristic.Perms.READ,
-					Characteristic.Perms.WRITE,
-                    Characteristic.Perms.HIDDEN
+					Perms.READ,
+					Perms.WRITE,
+                    Perms.HIDDEN
 				]
 			});
 		}
@@ -44,11 +48,11 @@ module.exports = function(pHomebridge) {
 		constructor(accessory) {
 			super('S1T2', 'E863F112-079E-48FF-8F27-9C2605A29F52');
 			this.setProps({
-				format: Characteristic.Formats.DATA,
+				format: Formats.DATA,
 				perms: [
-					Characteristic.Perms.READ,
-					Characteristic.Perms.WRITE,
-                    Characteristic.Perms.HIDDEN
+					Perms.READ,
+					Perms.WRITE,
+                    Perms.HIDDEN
 				]
 			});
 		}
@@ -63,8 +67,8 @@ module.exports = function(pHomebridge) {
 				.setProps({
 					minValue: -100,
 					perms: [
-						Characteristic.Perms.READ,
-						Characteristic.Perms.HIDDEN
+						Perms.READ,
+						Perms.HIDDEN
 					]
 				})
 				.on('get', this.getCurrentTemperature.bind(this))
@@ -73,8 +77,8 @@ module.exports = function(pHomebridge) {
 			this.addCharacteristic(Characteristic.CurrentRelativeHumidity)
 				.setProps({
 					perms: [
-						Characteristic.Perms.READ,
-						Characteristic.Perms.HIDDEN
+						Perms.READ,
+						Perms.HIDDEN
 					]
 				})
 				.on('get', this.getCurrentRelativeHumidity.bind(this))
@@ -112,7 +116,7 @@ module.exports = function(pHomebridge) {
 
 			this.getCharacteristic(Characteristic.CurrentRelativeHumidity)
 				.updateValue(this.accessory.humidity);
-				
+
 			this.getCharacteristic(AtmosphericPressureCharacteristic)
 				.updateValue(this.hexToBase64(this.hPAtoHex(parseInt(this.accessory.pressure * 10))));
 
@@ -134,7 +138,7 @@ module.exports = function(pHomebridge) {
 				callback(err, this.accessory.humidity);
 			}.bind(this));
 		}
-		
+
 		getAtmosphericPressure(callback) {
 			this.accessory.refreshData(function(err, data) {
 				callback(err, this.hexToBase64(this.hPAtoHex(parseInt(this.accessory.pressure * 10))));

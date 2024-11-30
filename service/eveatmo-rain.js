@@ -2,6 +2,8 @@
 
 var homebridge;
 var Characteristic;
+var Perms;
+var Formats;
 
 const RAIN_LEVEL_STYPE_ID = "D92D5391-92AF-4824-AF4A-356F25F25EA1";
 const RAIN_LEVEL_CTYPE_ID = "C53F35CE-C615-4AA4-9112-EBF679C5EB14";
@@ -12,20 +14,22 @@ module.exports = function(pHomebridge) {
 	if (pHomebridge && !homebridge) {
 		homebridge = pHomebridge;
 		Characteristic = homebridge.hap.Characteristic;
+		Perms = homebridge.hap.Perms;
+		Formats = homebridge.hap.Formats;
 	}
-	
+
 	class RainLevelCharacteristic extends Characteristic {
 		constructor(accessory) {
 			super('Rain Level', RAIN_LEVEL_CTYPE_ID);
 			this.setProps({
-				format: Characteristic.Formats.FLOAT,
+				format: Formats.FLOAT,
 				unit: "mm",
 				minValue: 0,
 				maxValue: 1000,
 				minStep: 0.001,
 				perms: [
-					Characteristic.Perms.READ,
-					Characteristic.Perms.NOTIFY
+					Perms.READ,
+					Perms.NOTIFY
 				]
 			});
 			this.value = this.getDefaultValue();
@@ -36,14 +40,14 @@ module.exports = function(pHomebridge) {
 		constructor(accessory) {
 			super('1h', RAIN_LEVEL_SUM_1H_CTYPE_ID);
 			this.setProps({
-				format: Characteristic.Formats.FLOAT,
+				format: Formats.FLOAT,
 				unit: "mm",
 				minValue: 0,
 				maxValue: 1000,
 				minStep: 0.001,
 				perms: [
-					Characteristic.Perms.READ,
-					Characteristic.Perms.NOTIFY
+					Perms.READ,
+					Perms.NOTIFY
 				]
 			});
 			this.value = this.getDefaultValue();
@@ -54,14 +58,14 @@ module.exports = function(pHomebridge) {
 		constructor(accessory) {
 			super('24h', RAIN_LEVEL_SUM_24H_CTYPE_ID);
 			this.setProps({
-				format: Characteristic.Formats.FLOAT,
+				format: Formats.FLOAT,
 				unit: "mm",
 				minValue: 0,
 				maxValue: 1000,
 				minStep: 0.001,
 				perms: [
-					Characteristic.Perms.READ,
-					Characteristic.Perms.NOTIFY
+					Perms.READ,
+					Perms.NOTIFY
 				]
 			});
 			this.value = this.getDefaultValue();

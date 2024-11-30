@@ -2,6 +2,8 @@
 
 var homebridge;
 var Characteristic;
+var Perms;
+var Formats;
 
 const WIND_MEASURE_STYPE_ID = "2AFB775E-79E5-4399-B3CD-398474CAE86C";
 const WIND_STRENGTH_CTYPE_ID = "49C8AE5A-A3A5-41AB-BF1F-12D5654F9F41";
@@ -12,20 +14,22 @@ module.exports = function(pHomebridge) {
     if (pHomebridge && !homebridge) {
         homebridge = pHomebridge;
         Characteristic = homebridge.hap.Characteristic;
+        Perms = homebridge.hap.Perms;
+        Formats = homebridge.hap.Formats;
     }
 
     class WindStrengthCharacteristic extends Characteristic {
         constructor(accessory) {
             super('Wind Strength', WIND_STRENGTH_CTYPE_ID);
             this.setProps({
-                format: Characteristic.Formats.FLOAT,
+                format: Formats.FLOAT,
                 unit: "km/h",
                 minValue: 0,
                 maxValue: 200,
                 minStep: 0.1,
                 perms: [
-                    Characteristic.Perms.READ,
-                    Characteristic.Perms.NOTIFY
+                    Perms.READ,
+                    Perms.NOTIFY
                 ]
             });
             this.value = this.getDefaultValue();
@@ -36,14 +40,14 @@ module.exports = function(pHomebridge) {
         constructor(accessory) {
             super('Gust Strength', GUST_STRENGTH_CTYPE_ID);
             this.setProps({
-                format: Characteristic.Formats.FLOAT,
+                format: Formats.FLOAT,
                 unit: "km/h",
                 minValue: 0,
                 maxValue: 200,
                 minStep: 0.1,
                 perms: [
-                    Characteristic.Perms.READ,
-                    Characteristic.Perms.NOTIFY
+                    Perms.READ,
+                    Perms.NOTIFY
                 ]
             });
             this.value = this.getDefaultValue();
@@ -54,10 +58,10 @@ module.exports = function(pHomebridge) {
         constructor(accessory) {
             super('Wind Angle', WIND_ANGLE_CTYPE_ID);
             this.setProps({
-                format: Characteristic.Formats.STRING,
+                format: Formats.STRING,
                 perms: [
-                    Characteristic.Perms.READ,
-                    Characteristic.Perms.NOTIFY
+                    Perms.READ,
+                    Perms.NOTIFY
                 ]
             });
             this.value = this.getDefaultValue();

@@ -2,14 +2,18 @@
 
 var homebridge;
 var Characteristic;
+var Perms;
+var Formats;
 
 module.exports = function(pHomebridge) {
 	if (pHomebridge && !homebridge) {
 		homebridge = pHomebridge;
 		Characteristic = homebridge.hap.Characteristic;
+		Perms = homebridge.hap.Perms;
+		Formats = homebridge.hap.Formats;
 	}
 
-	class EveatmoBatteryService extends homebridge.hap.Service.BatteryService {
+	class EveatmoBatteryService extends homebridge.hap.Service.Battery {
 		constructor(accessory) {
 			super(accessory.name + " Battery");
 			this.accessory = accessory;
@@ -17,8 +21,8 @@ module.exports = function(pHomebridge) {
 			this.getCharacteristic(Characteristic.BatteryLevel)
 				.setProps({
 					perms: [
-						Characteristic.Perms.READ,
-						Characteristic.Perms.HIDDEN
+						Perms.READ,
+						Perms.HIDDEN
 					]
 				})
 				.on('get', this.getBatteryLevel.bind(this))
@@ -26,8 +30,8 @@ module.exports = function(pHomebridge) {
 			this.getCharacteristic(Characteristic.StatusLowBattery)
 				.setProps({
 					perms: [
-						Characteristic.Perms.READ,
-						Characteristic.Perms.HIDDEN
+						Perms.READ,
+						Perms.HIDDEN
 					]
 				})
 				.on('get', this.getStatusLowBattery.bind(this))
@@ -35,8 +39,8 @@ module.exports = function(pHomebridge) {
 			this.getCharacteristic(Characteristic.ChargingState)
 				.setProps({
 					perms: [
-						Characteristic.Perms.READ,
-						Characteristic.Perms.HIDDEN
+						Perms.READ,
+						Perms.HIDDEN
 					]
 				})
 				.on('get', this.getChargingState.bind(this));

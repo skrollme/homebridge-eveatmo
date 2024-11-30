@@ -29,21 +29,11 @@ module.exports = function(pHomebridge) {
 				var deviceMap = {};
 				devices.forEach(function(device) {
 					deviceMap[device._id] = device;
-
-					if(this.config.module_suffix != "") {
-						device._name =  device.module_name + " " + this.config.module_suffix;
-					} else {
-						device._name = device.station_name + " " + device.module_name;
-					}
+					device._name = this.buildDeviceName(device, this.config.module_suffix);
 
 					if (device.modules) {
 						device.modules.forEach(function(module) {
-							if(this.config.module_suffix != "") {
-								module._name = module.module_name + " " + this.config.module_suffix;
-							} else {
-								module._name = device.station_name + " " + module.module_name;
-							}
-
+							module._name = this.buildModuleName(device, module, this.config.module_suffix);
 							deviceMap[module._id] = module;
 						}.bind(this));
 					}
@@ -51,12 +41,12 @@ module.exports = function(pHomebridge) {
 				this.log.debug("Setting cache with key: "+this.deviceType);
 				this.cache.set(this.deviceType, deviceMap);
 				this.deviceData = deviceMap;
-				
+
 				if (this.accessories) {
 					this.accessories.forEach(function(accessory) {
 						accessory.notifyUpdate(this.deviceData);
 					}.bind(this));
-				}			
+				}
 				callback(null, this.deviceData);
 			}.bind(this));
 		}
@@ -74,6 +64,22 @@ module.exports = function(pHomebridge) {
                 return new EveatmoWindAccessory(deviceData, this);
             }
 			return false;
+		}
+
+		buildDeviceName(device, suffix) {
+			if (suffix != "") {
+				return device.module_name + " " + suffix;
+			} else {
+				return device.station_name.substring(0, device.station_name.indexOf(' ')) + " " + device.module_name;
+			}
+		}
+
+		buildModuleName(device, module, suffix) {
+			if (suffix != "") {
+				return module.module_name + " " + suffix;
+			} else {
+				return device.station_name.substring(0, device.station_name.indexOf('(')-1) + " " + module.module_name;
+			}
 		}
 	}
 
