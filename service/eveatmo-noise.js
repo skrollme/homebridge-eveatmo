@@ -5,8 +5,8 @@ var Characteristic;
 var Perms;
 var Formats;
 
-const NOISE_LEVEL_STYPE_ID = "8C85FD40-EB20-45EE-86C5-BCADC773E580";
-const NOISE_LEVEL_CTYPE_ID = "2CD7B6FD-419A-4740-8995-E3BFE43735AB";
+const NOISE_LEVEL_STYPE_ID = '8C85FD40-EB20-45EE-86C5-BCADC773E580';
+const NOISE_LEVEL_CTYPE_ID = '2CD7B6FD-419A-4740-8995-E3BFE43735AB';
 
 module.exports = function(pHomebridge) {
   if (pHomebridge && !homebridge) {
@@ -21,14 +21,14 @@ module.exports = function(pHomebridge) {
       super('Noise Level', NOISE_LEVEL_CTYPE_ID);
       this.setProps({
         format: Formats.UINT8,
-        unit: "dB",
+        unit: 'dB',
         minValue: 0,
         maxValue: 200,
         minStep: 1,
         perms: [
           Perms.READ,
-          Perms.NOTIFY
-        ]
+          Perms.NOTIFY,
+        ],
       });
       this.value = this.getDefaultValue();
     }
@@ -36,7 +36,7 @@ module.exports = function(pHomebridge) {
 
   class NoiseService extends homebridge.hap.Service {
     constructor(accessory) {
-      super(accessory.name + " Noise", NOISE_LEVEL_STYPE_ID);
+      super(accessory.name + ' Noise', NOISE_LEVEL_STYPE_ID);
       this.accessory = accessory;
 
       this.addCharacteristic(NoiseCharacteristic)
@@ -48,13 +48,13 @@ module.exports = function(pHomebridge) {
 
     updateCharacteristics() {
       this.getCharacteristic(NoiseCharacteristic)
-            .updateValue(this.accessory.noise);
+        .updateValue(this.accessory.noise);
     }
 
     getNoise(callback) {
-      this.accessory.refreshData(function(err, data) {
+      this.accessory.refreshData((err, data) => {
         callback(err, this.accessory.noise);
-      }.bind(this));
+      });
     }
   }
 
