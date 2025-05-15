@@ -39,7 +39,7 @@ module.exports = function(pHomebridge) {
     }
 
     buildAccessory(deviceData) {
-      if(deviceData.type == 'NHC') {
+      if (deviceData.type == 'NHC') {
         return new EveatmoRoomAccessory(deviceData, this);
       }
       return false;
@@ -49,7 +49,7 @@ module.exports = function(pHomebridge) {
       if (suffix != '') {
         return 'Air Quality ' + suffix;
       } else {
-        return device.station_name.substring(0, device.station_name.indexOf('(')-1) + ' Air Quality';
+        return device.station_name + ' Air Quality';
       }
     }
   }

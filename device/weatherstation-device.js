@@ -70,7 +70,7 @@ module.exports = function(pHomebridge) {
       if (suffix != '') {
         return device.module_name + ' ' + suffix;
       } else {
-        return device.station_name.substring(0, device.station_name.indexOf(' ')) + ' ' + device.module_name;
+        return device.station_name + ' ' + device.module_name;
       }
     }
 
@@ -78,7 +78,7 @@ module.exports = function(pHomebridge) {
       if (suffix != '') {
         return module.module_name + ' ' + suffix;
       } else {
-        return device.station_name.substring(0, device.station_name.indexOf('(')-1) + ' ' + module.module_name;
+        return device.station_name + ' ' + module.module_name;
       }
     }
   }
