@@ -1,5 +1,10 @@
 ## version history
 
+### 1.2.0
+- Added Homebridge 2.0 and HAP 1.0 compatibility
+- Added official support for Node v22
+- Added Github CI
+
 ### 1.1.2
 - Fixing "Invalid access token"-issue on restart (https://github.com/skrollme/homebridge-eveatmo/issues/81) 
 

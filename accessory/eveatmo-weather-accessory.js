@@ -8,155 +8,157 @@ var mainDeviceId = false;
 var FakeGatoHistoryService;
 
 module.exports = function(pHomebridge) {
-	if (pHomebridge && !homebridge) {
-		homebridge = pHomebridge;
-		NetatmoAccessory = require("../lib/netatmo-accessory")(homebridge);
-		Characteristic = homebridge.hap.Characteristic;
-        FakeGatoHistoryService = require('fakegato-history')(homebridge);
-	}
+  if (pHomebridge && !homebridge) {
+    homebridge = pHomebridge;
+    NetatmoAccessory = require('../lib/netatmo-accessory')(homebridge);
+    Characteristic = homebridge.hap.Characteristic;
+    FakeGatoHistoryService = require('fakegato-history')(homebridge);
+  }
 
-	class EveatmoWeatherAccessory extends NetatmoAccessory {
-		constructor(deviceData, netatmoDevice) {
+  class EveatmoWeatherAccessory extends NetatmoAccessory {
+    constructor(deviceData, netatmoDevice) {
 
-			for (var deviceId in netatmoDevice.deviceData) {
-				if (!netatmoDevice.deviceData.hasOwnProperty(deviceId)) continue;
-				var device = netatmoDevice.deviceData[deviceId];
+      for (var deviceId in netatmoDevice.deviceData) {
+        if (!netatmoDevice.deviceData.hasOwnProperty(deviceId)) {
+          continue;
+        }
+        var device = netatmoDevice.deviceData[deviceId];
 
-				if(device.dashboard_data && device.dashboard_data.Pressure) {
-					mainDeviceId = deviceId;
-				}
-			}
+        if(device.dashboard_data && device.dashboard_data.Pressure) {
+          mainDeviceId = deviceId;
+        }
+      }
 
-			var accessoryConfig = {
-				"id": deviceData._id,
-				"model": "Eve Weather",
-				"netatmoType": deviceData.type,
-				"firmware": String(deviceData.firmware),
-				"name": deviceData._name || "Eveatmo " + netatmoDevice.deviceType + " " + deviceData._id,
-				"hasBattery": (deviceData.battery_vp)?true:false,
-			};
+      var accessoryConfig = {
+        'id': deviceData._id,
+        'model': 'Eve Weather',
+        'netatmoType': deviceData.type,
+        'firmware': String(deviceData.firmware),
+        'name': deviceData._name || 'Eveatmo ' + netatmoDevice.deviceType + ' ' + deviceData._id,
+        'hasBattery': (deviceData.battery_vp)?true:false,
+      };
 
-			super(homebridge, accessoryConfig, netatmoDevice);
-			this.buildServices(accessoryConfig);
+      super(homebridge, accessoryConfig, netatmoDevice);
+      this.buildServices(accessoryConfig);
 
-			this.currentTemperature = 11.1;
-			this.batteryPercent = 100;
-			this.lowBattery = false;
-			this.humidity = 50;
-			this.pressure = 1000.0;
+      this.currentTemperature = 11.1;
+      this.batteryPercent = 100;
+      this.lowBattery = false;
+      this.humidity = 50;
+      this.pressure = 1000.0;
 
-			this.refreshData(function(err, data) {});
-		}
+      this.refreshData((err, data) => {});
+    }
 
-		buildServices(accessoryConfig) {
-			var serviceDir = path.dirname(__dirname) + '/service';
-			try {
-				var TemperatureService = require(serviceDir + '/eveatmo-temperature')(homebridge);
-				var serviceTemperature = new TemperatureService(this);
-				this.addService(serviceTemperature);
+    buildServices(accessoryConfig) {
+      var serviceDir = path.dirname(__dirname) + '/service';
+      try {
+        var TemperatureService = require(serviceDir + '/eveatmo-temperature')(homebridge);
+        var serviceTemperature = new TemperatureService(this);
+        this.addService(serviceTemperature);
 
-				var HumidityService = require(serviceDir + '/eveatmo-humidity')(homebridge);
-				var serviceHumidity = new HumidityService(this);
-				this.addService(serviceHumidity);
+        var HumidityService = require(serviceDir + '/eveatmo-humidity')(homebridge);
+        var serviceHumidity = new HumidityService(this);
+        this.addService(serviceHumidity);
 
-				var EveatmoWeatherPressureService = require(serviceDir + '/eveatmo-weather-pressure')(homebridge);
-				var servicePressure = new EveatmoWeatherPressureService(this);
-				this.addService(servicePressure);
+        var EveatmoWeatherPressureService = require(serviceDir + '/eveatmo-weather-pressure')(homebridge);
+        var servicePressure = new EveatmoWeatherPressureService(this);
+        this.addService(servicePressure);
 
-				if(accessoryConfig.hasBattery) {
-					var EveatmoBatteryService = require(serviceDir + '/eveatmo-battery')(homebridge);
-					var serviceBattery = new EveatmoBatteryService(this);
-					this.addService(serviceBattery);
-				}
+        if(accessoryConfig.hasBattery) {
+          var EveatmoBatteryService = require(serviceDir + '/eveatmo-battery')(homebridge);
+          var serviceBattery = new EveatmoBatteryService(this);
+          this.addService(serviceBattery);
+        }
 
-                this.historyService = new FakeGatoHistoryService("weather", this, {storage:'fs'});
+        this.historyService = new FakeGatoHistoryService('weather', this, { storage:'fs' });
 
-			} catch (err) {
-				this.log.warn("Could not process service files for " + accessoryConfig.name);
-				this.log.warn(err);
-				this.log.warn(err.stack);
-			}
-		}
+      } catch (err) {
+        this.log.warn('Could not process service files for ' + accessoryConfig.name);
+        this.log.warn(err);
+        this.log.warn(err.stack);
+      }
+    }
 
-		notifyUpdate(deviceData, force) {
-			var accessoryData = this.extractAccessoryData(deviceData);
-			if(!accessoryData.reachable && !force) {
-				return;
-			}
+    notifyUpdate(deviceData, force) {
+      var accessoryData = this.extractAccessoryData(deviceData);
+      if(!accessoryData.reachable && !force) {
+        return;
+      }
 
-			var weatherData = this.mapAccessoryDataToWeatherData(accessoryData);
+      var weatherData = this.mapAccessoryDataToWeatherData(accessoryData);
 
 
-			// transfer NAMain's pressure value to outdoor-module
-			if(mainDeviceId) {
-				if(deviceData[mainDeviceId]) {
-					weatherData["pressure"] = deviceData[mainDeviceId].dashboard_data.Pressure;
-				}
-			}
+      // transfer NAMain's pressure value to outdoor-module
+      if(mainDeviceId) {
+        if(deviceData[mainDeviceId]) {
+          weatherData.pressure = deviceData[mainDeviceId].dashboard_data.Pressure;
+        }
+      }
 
-            this.historyService.addEntry({
-                time: new Date().getTime() / 1000,
-                temp: weatherData["currentTemperature"],
-                pressure: weatherData["pressure"],
-                humidity: weatherData["humidity"]
-            });
+      this.historyService.addEntry({
+        time: new Date().getTime() / 1000,
+        temp: weatherData.currentTemperature,
+        pressure: weatherData.pressure,
+        humidity: weatherData.humidity,
+      });
 
-			this.applyWeatherData(weatherData);
-		}
+      this.applyWeatherData(weatherData);
+    }
 
-		mapAccessoryDataToWeatherData(accessoryData) {
-			var result = {};
-			var dashboardData = accessoryData.dashboard_data;
-			if (dashboardData) {
-				if (dashboardData.hasOwnProperty("Temperature")) {
-					result.currentTemperature = dashboardData.Temperature;
-				}
-				if (dashboardData.Humidity) {
-					result.humidity = dashboardData.Humidity;
-				}
-			}
+    mapAccessoryDataToWeatherData(accessoryData) {
+      var result = {};
+      var dashboardData = accessoryData.dashboard_data;
+      if (dashboardData) {
+        if (dashboardData.hasOwnProperty('Temperature')) {
+          result.currentTemperature = dashboardData.Temperature;
+        }
+        if (dashboardData.Humidity) {
+          result.humidity = dashboardData.Humidity;
+        }
+      }
 
-			result.batteryPercent = accessoryData.battery_percent;
-			if (!result.batteryPercent) {
-				result.batteryPercent = 100;
-			}
-            result.lowBattery = (result.batteryPercent <= 20) ? true : false;
+      result.batteryPercent = accessoryData.battery_percent;
+      if (!result.batteryPercent) {
+        result.batteryPercent = 100;
+      }
+      result.lowBattery = (result.batteryPercent <= 20) ? true : false;
 
-			return result;
-		}
+      return result;
+    }
 
-		applyWeatherData(weatherData) {
-			var dataChanged = false;
+    applyWeatherData(weatherData) {
+      var dataChanged = false;
 
-			if (weatherData.hasOwnProperty("currentTemperature") && this.currentTemperature != weatherData.currentTemperature) {
-				this.currentTemperature = weatherData.currentTemperature;
-				dataChanged = true;
-			}
-			if (weatherData.humidity && this.humidity != weatherData.humidity) {
-				this.humidity = weatherData.humidity;
-				dataChanged = true;
-			}
-			if (weatherData.pressure && this.pressure != weatherData.pressure) {
-				this.pressure = weatherData.pressure;
-				dataChanged = true;
-			}
-			if (weatherData.batteryPercent && this.batteryPercent != weatherData.batteryPercent) {
-				this.batteryPercent = weatherData.batteryPercent;
-				dataChanged = true;
-			}
-			if (this.lowBattery != weatherData.lowBattery) {
-				this.lowBattery = weatherData.lowBattery;
-				dataChanged = true;
-			}
+      if (weatherData.hasOwnProperty('currentTemperature') && this.currentTemperature != weatherData.currentTemperature) {
+        this.currentTemperature = weatherData.currentTemperature;
+        dataChanged = true;
+      }
+      if (weatherData.humidity && this.humidity != weatherData.humidity) {
+        this.humidity = weatherData.humidity;
+        dataChanged = true;
+      }
+      if (weatherData.pressure && this.pressure != weatherData.pressure) {
+        this.pressure = weatherData.pressure;
+        dataChanged = true;
+      }
+      if (weatherData.batteryPercent && this.batteryPercent != weatherData.batteryPercent) {
+        this.batteryPercent = weatherData.batteryPercent;
+        dataChanged = true;
+      }
+      if (this.lowBattery != weatherData.lowBattery) {
+        this.lowBattery = weatherData.lowBattery;
+        dataChanged = true;
+      }
 
-			if (dataChanged) {
-				this.getServices().forEach(
-					function(svc) {
-						var call = svc.updateCharacteristics && svc.updateCharacteristics();
-					}
-				);
-			}
-		}
-	}
-	return EveatmoWeatherAccessory;
+      if (dataChanged) {
+        this.getServices().forEach(
+          (svc) => {
+            var call = svc.updateCharacteristics && svc.updateCharacteristics();
+          },
+        );
+      }
+    }
+  }
+  return EveatmoWeatherAccessory;
 };

@@ -1,6 +1,6 @@
 {
 	"name": "homebridge-eveatmo",
-	"version": "1.1.2",
+	"version": "1.2.0",
 	"description": "Homebridge plugin which adds a Netatmo weatherstation as HomeKit device and tries to act like Elgato Eve Room/Weather",
 	"license": "ISC",
 	"keywords": [
@@ -13,12 +13,12 @@
 		"url": "https://github.com/skrollme/homebridge-eveatmo.git"
 	},
 	"engines": {
-		"node": ">=0.12.0",
-		"homebridge": ">=0.4.16"
+		"homebridge": "^1.6.0 || ^2.0.0-beta.0",
+		"node": "22.14.0 || 22 || ^20 || ^18"
 	},
 	"dependencies": {
 		"async": "^2.6.3",
-		"fakegato-history": "^0.6.1",
+		"fakegato-history": "^0.6.5",
 		"node-cache": "^3.0.0",
 		"request": "^2.88.2",
 		"moment": "^2.29.1"
@@ -26,5 +26,21 @@
 	"bugs": {
 		"url": "https://github.com/skrollme/homebridge-eveatmo/issues"
 	},
-	"homepage": "https://github.com/skrollme/homebridge-eveatmo#readme"
+	"homepage": "https://github.com/skrollme/homebridge-eveatmo#readme",
+	"scripts": {
+		"lint": "eslint . --max-warnings=0",
+		"fix": "eslint . --max-warnings=0 --fix"
+	},
+	"devDependencies": {
+		"@eslint/js": "^9.14.0",
+		"@types/eslint__js": "^8.42.3",
+		"@types/node": "^22.8.6",
+		"eslint": "^9.14.0",
+		"homebridge": "^2.0.0-beta.0",
+		"nodemon": "^3.1.7",
+		"rimraf": "^6.0.1",
+		"ts-node": "^10.9.2",
+		"typescript": "^5.6.3",
+		"typescript-eslint": "^8.12.2"
+	}
 }
