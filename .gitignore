@@ -28,4 +28,3 @@ build/Release
 node_modules
 /.idea
 config.json
-/package-lock.json
