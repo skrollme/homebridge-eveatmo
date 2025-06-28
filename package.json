@@ -8,6 +8,16 @@
 		"homebridge",
 		"netatmo"
 	],
+	"funding": [
+		{
+			"type": "github",
+			"url": "https://github.com/sponsors/skrollme"
+		},
+		{
+			"type": "paypal",
+			"url": "https://www.paypal.com/paypalme/skroll"
+		}
+	],
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/skrollme/homebridge-eveatmo.git"
