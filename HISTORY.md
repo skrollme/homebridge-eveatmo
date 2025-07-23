@@ -1,5 +1,8 @@
 ## version history
 
+### 1.2.1
+- Adapt Netatmo API's base URL to the upcoming change from `api.netatmo.net` to `api.netatmo.com`
+
 ### 1.2.0
 - Added Homebridge 2.0 and HAP 1.0 compatibility
 - Added official support for Node v22
