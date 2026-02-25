@@ -1,17 +1,17 @@
 'use strict';
 
 var homebridge;
-var Characteristic;
 var NetatmoAccessory;
-var path = require('path');
 var FakeGatoHistoryService;
 
-module.exports = function(pHomebridge) {
+/* eslint-disable-next-line no-undef */
+module.exports = function (pHomebridge) {
   if (pHomebridge && !homebridge) {
     homebridge = pHomebridge;
+    /* eslint-disable @typescript-eslint/no-require-imports, no-undef */
     NetatmoAccessory = require('../lib/netatmo-accessory')(homebridge);
-    Characteristic = homebridge.hap.Characteristic;
     FakeGatoHistoryService = require('fakegato-history')(homebridge);
+    /* eslint-enable @typescript-eslint/no-require-imports, no-undef */
   }
 
   class EveatmoRoomAccessory extends NetatmoAccessory {
@@ -37,12 +37,14 @@ module.exports = function(pHomebridge) {
       this.humidity = 50;
       this.noise = 40;
 
-      this.refreshData((err, data) => {});
+      this.refreshData(() => { });
     }
 
     buildServices(accessoryConfig) {
-      var serviceDir = path.dirname(__dirname) + '/service';
+      /* eslint-disable-next-line no-undef */
+      var serviceDir = __dirname.replace('/accessory', '/service');
       try {
+        /* eslint-disable @typescript-eslint/no-require-imports, no-undef */
         var TemperatureService = require(serviceDir + '/eveatmo-temperature')(homebridge);
         var serviceTemperature = new TemperatureService(this);
         this.addService(serviceTemperature);
@@ -50,20 +52,20 @@ module.exports = function(pHomebridge) {
         var HumidityService = require(serviceDir + '/eveatmo-humidity')(homebridge);
         var serviceHumidity = new HumidityService(this);
         this.addService(serviceHumidity);
-				
-        if(this.config.extra_aq_sensor) {
+
+        if (this.config.extra_aq_sensor) {
           var EveatmoRoomAirqualityService = require(serviceDir + '/eveatmo-room-airquality')(homebridge);
           var serviceAirquality = new EveatmoRoomAirqualityService(this);
           this.addService(serviceAirquality);
         }
 
-        if(this.config.extra_co2_sensor) {
+        if (this.config.extra_co2_sensor) {
           var EveatmoRoomCo2Service = require(serviceDir + '/eveatmo-co2')(homebridge);
           var serviceCo2 = new EveatmoRoomCo2Service(this);
           this.addService(serviceCo2);
         }
 
-        if(accessoryConfig.hasBattery) {
+        if (accessoryConfig.hasBattery) {
           var EveatmoBatteryService = require(serviceDir + '/eveatmo-battery')(homebridge);
           var serviceBattery = new EveatmoBatteryService(this);
           this.addService(serviceBattery);
@@ -72,8 +74,9 @@ module.exports = function(pHomebridge) {
         var NoiseService = require(serviceDir + '/eveatmo-noise')(homebridge);
         var serviceNoise = new NoiseService(this);
         this.addService(serviceNoise);
+        /* eslint-enable @typescript-eslint/no-require-imports, no-undef */
 
-        this.historyService = new FakeGatoHistoryService('room', this, { storage:'fs' });
+        this.historyService = new FakeGatoHistoryService('room', this, { storage: 'fs' });
 
       } catch (err) {
         this.log.warn('Could not process service files for ' + accessoryConfig.name);
@@ -84,7 +87,7 @@ module.exports = function(pHomebridge) {
 
     notifyUpdate(deviceData, force) {
       var accessoryData = this.extractAccessoryData(deviceData);
-      if(!accessoryData.reachable && !force) {
+      if (!accessoryData.reachable && !force) {
         return;
       }
 
@@ -107,7 +110,7 @@ module.exports = function(pHomebridge) {
       var result = {};
       var dashboardData = accessoryData.dashboard_data;
       if (dashboardData) {
-        if (dashboardData.hasOwnProperty('Temperature')) {
+        if (Object.prototype.hasOwnProperty.call(dashboardData, 'Temperature')) {
           result.currentTemperature = dashboardData.Temperature;
         }
         if (dashboardData.CO2) {
@@ -136,31 +139,31 @@ module.exports = function(pHomebridge) {
     applyWeatherData(weatherData) {
       var dataChanged = false;
 
-      if (weatherData.hasOwnProperty('currentTemperature') && this.currentTemperature != weatherData.currentTemperature) {
+      if (Object.prototype.hasOwnProperty.call(weatherData, 'currentTemperature') && this.currentTemperature !== weatherData.currentTemperature) {
         this.currentTemperature = weatherData.currentTemperature;
         dataChanged = true;
       }
-      if (weatherData.co2 && this.co2 != weatherData.co2) {
+      if (weatherData.co2 && this.co2 !== weatherData.co2) {
         this.co2 = weatherData.co2;
         dataChanged = true;
       }
-      if (weatherData.airPressure && this.airPressure != weatherData.airPressure) {
+      if (weatherData.airPressure && this.airPressure !== weatherData.airPressure) {
         this.airPressure = weatherData.airPressure;
         dataChanged = true;
       }
-      if (weatherData.humidity && this.humidity != weatherData.humidity) {
+      if (weatherData.humidity && this.humidity !== weatherData.humidity) {
         this.humidity = weatherData.humidity;
         dataChanged = true;
       }
-      if (weatherData.noise && this.noise != weatherData.noise) {
+      if (weatherData.noise && this.noise !== weatherData.noise) {
         this.noise = weatherData.noise;
         dataChanged = true;
       }
-      if (weatherData.batteryPercent && this.batteryPercent != weatherData.batteryPercent) {
+      if (weatherData.batteryPercent && this.batteryPercent !== weatherData.batteryPercent) {
         this.batteryPercent = weatherData.batteryPercent;
         dataChanged = true;
       }
-      if (this.lowBattery != weatherData.lowBattery) {
+      if (this.lowBattery !== weatherData.lowBattery) {
         this.lowBattery = weatherData.lowBattery;
         dataChanged = true;
       }
@@ -168,7 +171,9 @@ module.exports = function(pHomebridge) {
       if (dataChanged) {
         this.getServices().forEach(
           (svc) => {
-            var call = svc.updateCharacteristics && svc.updateCharacteristics();
+            if (svc.updateCharacteristics) {
+              svc.updateCharacteristics();
+            }
           },
         );
       }

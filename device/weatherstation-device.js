@@ -1,5 +1,6 @@
 'use strict';
 
+/* eslint-disable-next-line @typescript-eslint/no-require-imports, no-undef */
 var NetatmoDevice = require('../lib/netatmo-device');
 
 var homebridge;
@@ -8,13 +9,16 @@ var EveatmoWeatherAccessory;
 var EveatmoRainAccessory;
 var EveatmoWindAccessory;
 
-module.exports = function(pHomebridge) {
+/* eslint-disable-next-line no-undef */
+module.exports = function (pHomebridge) {
   if (pHomebridge && !homebridge) {
     homebridge = pHomebridge;
+    /* eslint-disable @typescript-eslint/no-require-imports, no-undef */
     EveatmoRoomAccessory = require('../accessory/eveatmo-room-accessory')(homebridge);
     EveatmoWeatherAccessory = require('../accessory/eveatmo-weather-accessory')(homebridge);
     EveatmoRainAccessory = require('../accessory/eveatmo-rain-accessory')(homebridge);
     EveatmoWindAccessory = require('../accessory/eveatmo-wind-accessory')(homebridge);
+    /* eslint-enable @typescript-eslint/no-require-imports, no-undef */
   }
 
   class WeatherstationDeviceType extends NetatmoDevice {
@@ -38,7 +42,7 @@ module.exports = function(pHomebridge) {
             });
           }
         });
-        this.log.debug('Setting cache with key: '+this.deviceType);
+        this.log.debug('Setting cache with key: ' + this.deviceType);
         this.cache.set(this.deviceType, deviceMap);
         this.deviceData = deviceMap;
 
@@ -52,22 +56,22 @@ module.exports = function(pHomebridge) {
     }
 
     buildAccessory(deviceData) {
-      if(deviceData.type == 'NAMain') { // Basestation
+      if (deviceData.type === 'NAMain') { // Basestation
         return new EveatmoRoomAccessory(deviceData, this);
-      } else if(deviceData.type == 'NAModule4') { // Indoor
+      } else if (deviceData.type === 'NAModule4') { // Indoor
         return new EveatmoRoomAccessory(deviceData, this);
-      } else if(deviceData.type == 'NAModule1') { // Outdoor
+      } else if (deviceData.type === 'NAModule1') { // Outdoor
         return new EveatmoWeatherAccessory(deviceData, this);
-      } else if(deviceData.type == 'NAModule3') { // Rain
+      } else if (deviceData.type === 'NAModule3') { // Rain
         return new EveatmoRainAccessory(deviceData, this);
-      } else if(deviceData.type == 'NAModule2') { // Wind
+      } else if (deviceData.type === 'NAModule2') { // Wind
         return new EveatmoWindAccessory(deviceData, this);
       }
       return false;
     }
 
     buildDeviceName(device, suffix) {
-      if (suffix != '') {
+      if (suffix !== '') {
         return device.module_name + ' ' + suffix;
       } else {
         return device.station_name + ' ' + device.module_name;
@@ -75,7 +79,7 @@ module.exports = function(pHomebridge) {
     }
 
     buildModuleName(device, module, suffix) {
-      if (suffix != '') {
+      if (suffix !== '') {
         return module.module_name + ' ' + suffix;
       } else {
         return device.station_name + ' ' + module.module_name;

@@ -10,7 +10,8 @@ const RAIN_LEVEL_CTYPE_ID = 'C53F35CE-C615-4AA4-9112-EBF679C5EB14';
 const RAIN_LEVEL_SUM_1H_CTYPE_ID = '10c88f40-7ec4-478c-8d5a-bd0c3cce14b7';
 const RAIN_LEVEL_SUM_24H_CTYPE_ID = 'ccc04890-565b-4376-b39a-3113341d9e0f';
 
-module.exports = function(pHomebridge) {
+/* eslint-disable-next-line no-undef */
+module.exports = function (pHomebridge) {
   if (pHomebridge && !homebridge) {
     homebridge = pHomebridge;
     Characteristic = homebridge.hap.Characteristic;
@@ -19,7 +20,7 @@ module.exports = function(pHomebridge) {
   }
 
   class RainLevelCharacteristic extends Characteristic {
-    constructor(accessory) {
+    constructor() {
       super('Rain Level', RAIN_LEVEL_CTYPE_ID);
       this.setProps({
         format: Formats.FLOAT,
@@ -37,7 +38,7 @@ module.exports = function(pHomebridge) {
   }
 
   class RainLevelSum1Characteristic extends Characteristic {
-    constructor(accessory) {
+    constructor() {
       super('1h', RAIN_LEVEL_SUM_1H_CTYPE_ID);
       this.setProps({
         format: Formats.FLOAT,
@@ -55,7 +56,7 @@ module.exports = function(pHomebridge) {
   }
 
   class RainLevelSum24Characteristic extends Characteristic {
-    constructor(accessory) {
+    constructor() {
       super('24h', RAIN_LEVEL_SUM_24H_CTYPE_ID);
       this.setProps({
         format: Formats.FLOAT,
@@ -98,19 +99,19 @@ module.exports = function(pHomebridge) {
     }
 
     getRainLevel(callback) {
-      this.accessory.refreshData((err, data) => {
+      this.accessory.refreshData((err) => {
         callback(err, this.accessory.rainLevel);
       });
     }
 
     getRainLevelSum1(callback) {
-      this.accessory.refreshData((err, data) => {
+      this.accessory.refreshData((err) => {
         callback(err, this.accessory.rainLevelSum1);
       });
     }
 
     getRainLevelSum24(callback) {
-      this.accessory.refreshData((err, data) => {
+      this.accessory.refreshData((err) => {
         callback(err, this.accessory.rainLevelSum24);
       });
     }

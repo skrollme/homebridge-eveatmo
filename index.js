@@ -1,14 +1,16 @@
 'use strict';
 var homebridge;
+/* eslint-disable-next-line @typescript-eslint/no-require-imports, no-undef */
 var async = require('async');
 
-module.exports = function(pHomebridge) {
+/* eslint-disable-next-line no-undef */
+module.exports = function (pHomebridge) {
   homebridge = pHomebridge;
   homebridge.registerPlatform('homebridge-eveatmo', 'eveatmo', EveatmoPlatform);
 };
 
+/* eslint-disable-next-line @typescript-eslint/no-require-imports, no-undef */
 var netatmo = require('./lib/netatmo-api');
-var inherits = require('util').inherits;
 
 class EveatmoPlatform {
   constructor(log, config) {
@@ -29,23 +31,24 @@ class EveatmoPlatform {
 
     if (config.mockapi) {
       this.log.warn('CAUTION! USING FAKE NETATMO API: ' + config.mockapi);
+      /* eslint-disable-next-line @typescript-eslint/no-require-imports, no-undef */
       this.api = require('./lib/netatmo-api-mock')(config.mockapi);
     } else {
       this.config.auth.grant_type = typeof config.auth.grant_type !== 'undefined' ? config.auth.grant_type : 'refresh_token';
 
-      if (this.config.auth.grant_type == 'refresh_token') {
+      if (this.config.auth.grant_type === 'refresh_token') {
         if (config.auth.username || config.auth.password) {
           throw new Error('\'username\' and \'password\' are not used in grant_type \'refresh_token\'');
         } else if (!config.auth.refresh_token) {
           throw new Error('\'refresh_token\' not set');
         }
         this.log.info('Authenticating using \'refresh_token\' grant');
-      } else if (this.config.auth.grant_type == 'password') {
+      } else if (this.config.auth.grant_type === 'password') {
         if (!config.auth.username || !config.auth.password) {
           throw new Error('\'username\' and \'password\' are mandatory when using grant_type \'password\'');
         }
         this.log.info('Authenticating using \'password\' grant');
-      } else  {
+      } else {
         throw new Error('Unsupported grant_type. Please use \'password\' or \'refresh_token\'');
       }
 
@@ -82,8 +85,9 @@ class EveatmoPlatform {
     var calls = [];
 
     try {
-      if(this.config.weatherstation) {
+      if (this.config.weatherstation) {
         calls.push((callback) => {
+          /* eslint-disable-next-line @typescript-eslint/no-require-imports, no-undef */
           var DeviceType = require('./device/weatherstation-device.js')(homebridge);
           var devType = new DeviceType(this.log, this.api, this.config);
           devType.buildAccessoriesForDevices((err, deviceAccessories) => {
@@ -92,8 +96,9 @@ class EveatmoPlatform {
         });
       }
 
-      if(this.config.airquality) {
+      if (this.config.airquality) {
         calls.push((callback) => {
+          /* eslint-disable-next-line @typescript-eslint/no-require-imports, no-undef */
           var DeviceType = require('./device/airquality-device.js')(homebridge);
           var devType = new DeviceType(this.log, this.api, this.config);
           devType.buildAccessoriesForDevices((err, deviceAccessories) => {

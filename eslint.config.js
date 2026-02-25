@@ -17,7 +17,7 @@ export default tseslint.config(
       'curly': ['error', 'all'],
       'brace-style': ['error'],
       'prefer-arrow-callback': 'warn',
-      'max-len': ['warn', 160],
+      'max-len': ['warn', 200],
       'object-curly-spacing': ['error', 'always'],
       'no-use-before-define': 'off',
       '@typescript-eslint/no-use-before-define': ['error', { 'classes': false, 'enums': false }],

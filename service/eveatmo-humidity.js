@@ -3,6 +3,7 @@
 var homebridge;
 var Characteristic;
 
+/* eslint-disable-next-line no-undef */
 module.exports = function(pHomebridge) {
   if (pHomebridge && !homebridge) {
     homebridge = pHomebridge;
@@ -25,7 +26,7 @@ module.exports = function(pHomebridge) {
     }
 
     getCurrentRelativeHumidity(callback) {
-      this.accessory.refreshData((err, data) => {
+      this.accessory.refreshData((err) => {
         callback(err, this.accessory.humidity);
       });
     }
