@@ -38,6 +38,7 @@
 	},
 	"homepage": "https://github.com/skrollme/homebridge-eveatmo#readme",
 	"scripts": {
+		"build": "rimraf ./dist && tsc",
 		"lint": "eslint . --max-warnings=0",
 		"fix": "eslint . --max-warnings=0 --fix"
 	},
