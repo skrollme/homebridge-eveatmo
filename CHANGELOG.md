@@ -1,4 +1,4 @@
-# version history
+# Changelog
 
 ## 1.2.2
 
