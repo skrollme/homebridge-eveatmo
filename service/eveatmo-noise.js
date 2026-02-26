@@ -8,7 +8,7 @@ var Formats;
 const NOISE_LEVEL_STYPE_ID = '8C85FD40-EB20-45EE-86C5-BCADC773E580';
 const NOISE_LEVEL_CTYPE_ID = '2CD7B6FD-419A-4740-8995-E3BFE43735AB';
 
-/* eslint-disable-next-line no-undef */
+ 
 module.exports = function(pHomebridge) {
   if (pHomebridge && !homebridge) {
     homebridge = pHomebridge;

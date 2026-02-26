@@ -4,14 +4,14 @@ var homebridge;
 var NetatmoAccessory;
 var FakeGatoHistoryService;
 
-/* eslint-disable-next-line no-undef */
+ 
 module.exports = function (pHomebridge) {
   if (pHomebridge && !homebridge) {
     homebridge = pHomebridge;
-    /* eslint-disable @typescript-eslint/no-require-imports, no-undef */
+    /* eslint-disable @typescript-eslint/no-require-imports */
     NetatmoAccessory = require('../lib/netatmo-accessory')(homebridge);
     FakeGatoHistoryService = require('fakegato-history')(homebridge);
-    /* eslint-enable @typescript-eslint/no-require-imports, no-undef */
+    /* eslint-enable @typescript-eslint/no-require-imports */
   }
 
   class EveatmoRoomAccessory extends NetatmoAccessory {
@@ -41,10 +41,10 @@ module.exports = function (pHomebridge) {
     }
 
     buildServices(accessoryConfig) {
-      /* eslint-disable-next-line no-undef */
+       
       var serviceDir = __dirname.replace('/accessory', '/service');
       try {
-        /* eslint-disable @typescript-eslint/no-require-imports, no-undef */
+        /* eslint-disable @typescript-eslint/no-require-imports */
         var TemperatureService = require(serviceDir + '/eveatmo-temperature')(homebridge);
         var serviceTemperature = new TemperatureService(this);
         this.addService(serviceTemperature);
@@ -74,7 +74,7 @@ module.exports = function (pHomebridge) {
         var NoiseService = require(serviceDir + '/eveatmo-noise')(homebridge);
         var serviceNoise = new NoiseService(this);
         this.addService(serviceNoise);
-        /* eslint-enable @typescript-eslint/no-require-imports, no-undef */
+        /* eslint-enable @typescript-eslint/no-require-imports */
 
         this.historyService = new FakeGatoHistoryService('room', this, { storage: 'fs' });
 

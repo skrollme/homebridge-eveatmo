@@ -1,6 +1,6 @@
 'use strict';
 
-/* eslint-disable-next-line @typescript-eslint/no-require-imports, no-undef */
+/* eslint-disable-next-line @typescript-eslint/no-require-imports */
 var NetatmoDevice = require('../lib/netatmo-device');
 
 var homebridge;
@@ -9,16 +9,16 @@ var EveatmoWeatherAccessory;
 var EveatmoRainAccessory;
 var EveatmoWindAccessory;
 
-/* eslint-disable-next-line no-undef */
+ 
 module.exports = function (pHomebridge) {
   if (pHomebridge && !homebridge) {
     homebridge = pHomebridge;
-    /* eslint-disable @typescript-eslint/no-require-imports, no-undef */
+    /* eslint-disable @typescript-eslint/no-require-imports */
     EveatmoRoomAccessory = require('../accessory/eveatmo-room-accessory')(homebridge);
     EveatmoWeatherAccessory = require('../accessory/eveatmo-weather-accessory')(homebridge);
     EveatmoRainAccessory = require('../accessory/eveatmo-rain-accessory')(homebridge);
     EveatmoWindAccessory = require('../accessory/eveatmo-wind-accessory')(homebridge);
-    /* eslint-enable @typescript-eslint/no-require-imports, no-undef */
+    /* eslint-enable @typescript-eslint/no-require-imports */
   }
 
   class WeatherstationDeviceType extends NetatmoDevice {

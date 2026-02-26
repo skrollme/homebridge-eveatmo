@@ -1,16 +1,16 @@
 'use strict';
 
-/* eslint-disable-next-line @typescript-eslint/no-require-imports, no-undef */
+/* eslint-disable-next-line @typescript-eslint/no-require-imports */
 var NetatmoDevice = require('../lib/netatmo-device');
 
 var homebridge;
 var EveatmoRoomAccessory;
 
-/* eslint-disable-next-line no-undef */
+ 
 module.exports = function (pHomebridge) {
   if (pHomebridge && !homebridge) {
     homebridge = pHomebridge;
-    /* eslint-disable-next-line @typescript-eslint/no-require-imports, no-undef */
+    /* eslint-disable-next-line @typescript-eslint/no-require-imports */
     EveatmoRoomAccessory = require('../accessory/eveatmo-room-accessory')(homebridge);
   }
 

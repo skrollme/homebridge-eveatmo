@@ -28,9 +28,9 @@
 	},
 	"dependencies": {
 		"async": "^2.6.3",
+		"axios": "^1.6.7",
 		"fakegato-history": "^0.6.5",
 		"node-cache": "^3.0.0",
-		"request": "^2.88.2",
 		"moment": "^2.29.1"
 	},
 	"bugs": {

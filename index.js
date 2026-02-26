@@ -1,15 +1,15 @@
 'use strict';
 var homebridge;
-/* eslint-disable-next-line @typescript-eslint/no-require-imports, no-undef */
+/* eslint-disable-next-line @typescript-eslint/no-require-imports */
 var async = require('async');
 
-/* eslint-disable-next-line no-undef */
+ 
 module.exports = function (pHomebridge) {
   homebridge = pHomebridge;
   homebridge.registerPlatform('homebridge-eveatmo', 'eveatmo', EveatmoPlatform);
 };
 
-/* eslint-disable-next-line @typescript-eslint/no-require-imports, no-undef */
+/* eslint-disable-next-line @typescript-eslint/no-require-imports */
 var netatmo = require('./lib/netatmo-api');
 
 class EveatmoPlatform {
@@ -31,7 +31,7 @@ class EveatmoPlatform {
 
     if (config.mockapi) {
       this.log.warn('CAUTION! USING FAKE NETATMO API: ' + config.mockapi);
-      /* eslint-disable-next-line @typescript-eslint/no-require-imports, no-undef */
+      /* eslint-disable-next-line @typescript-eslint/no-require-imports */
       this.api = require('./lib/netatmo-api-mock')(config.mockapi);
     } else {
       this.config.auth.grant_type = typeof config.auth.grant_type !== 'undefined' ? config.auth.grant_type : 'refresh_token';
@@ -87,7 +87,7 @@ class EveatmoPlatform {
     try {
       if (this.config.weatherstation) {
         calls.push((callback) => {
-          /* eslint-disable-next-line @typescript-eslint/no-require-imports, no-undef */
+          /* eslint-disable-next-line @typescript-eslint/no-require-imports */
           var DeviceType = require('./device/weatherstation-device.js')(homebridge);
           var devType = new DeviceType(this.log, this.api, this.config);
           devType.buildAccessoriesForDevices((err, deviceAccessories) => {
@@ -98,7 +98,7 @@ class EveatmoPlatform {
 
       if (this.config.airquality) {
         calls.push((callback) => {
-          /* eslint-disable-next-line @typescript-eslint/no-require-imports, no-undef */
+          /* eslint-disable-next-line @typescript-eslint/no-require-imports */
           var DeviceType = require('./device/airquality-device.js')(homebridge);
           var devType = new DeviceType(this.log, this.api, this.config);
           devType.buildAccessoriesForDevices((err, deviceAccessories) => {

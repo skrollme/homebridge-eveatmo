@@ -10,7 +10,7 @@ const WIND_STRENGTH_CTYPE_ID = '49C8AE5A-A3A5-41AB-BF1F-12D5654F9F41';
 const WIND_ANGLE_CTYPE_ID = '46F1284C-1912-421B-82F5-EB75008B167E';
 const GUST_STRENGTH_CTYPE_ID = '6B8861E5-D6F3-425C-83B6-069945FFD1F1';
 
-/* eslint-disable-next-line no-undef */
+ 
 module.exports = function (pHomebridge) {
   if (pHomebridge && !homebridge) {
     homebridge = pHomebridge;

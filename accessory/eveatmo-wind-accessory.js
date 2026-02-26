@@ -3,11 +3,11 @@
 var homebridge;
 var NetatmoAccessory;
 
-/* eslint-disable-next-line no-undef */
+ 
 module.exports = function (pHomebridge) {
   if (pHomebridge && !homebridge) {
     homebridge = pHomebridge;
-    /* eslint-disable-next-line @typescript-eslint/no-require-imports, no-undef */
+    /* eslint-disable-next-line @typescript-eslint/no-require-imports */
     NetatmoAccessory = require('../lib/netatmo-accessory')(homebridge);
   }
 
@@ -33,17 +33,17 @@ module.exports = function (pHomebridge) {
     }
 
     buildServices(accessoryConfig) {
-      /* eslint-disable-next-line no-undef */
+       
       var serviceDir = __dirname.replace('/accessory', '/service');
       try {
-        /* eslint-disable-next-line @typescript-eslint/no-require-imports, no-undef */
+        /* eslint-disable-next-line @typescript-eslint/no-require-imports */
         var EveatmoWindService = require(serviceDir + '/eveatmo-wind')(homebridge);
         var serviceWind = new EveatmoWindService(this);
         serviceWind.isPrimaryService = true;
         this.addService(serviceWind);
 
         if (accessoryConfig.hasBattery) {
-          /* eslint-disable-next-line @typescript-eslint/no-require-imports, no-undef */
+          /* eslint-disable-next-line @typescript-eslint/no-require-imports */
           var EveatmoBatteryService = require(serviceDir + '/eveatmo-battery')(homebridge);
           var serviceBattery = new EveatmoBatteryService(this);
           this.addService(serviceBattery);

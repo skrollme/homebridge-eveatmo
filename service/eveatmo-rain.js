@@ -10,7 +10,7 @@ const RAIN_LEVEL_CTYPE_ID = 'C53F35CE-C615-4AA4-9112-EBF679C5EB14';
 const RAIN_LEVEL_SUM_1H_CTYPE_ID = '10c88f40-7ec4-478c-8d5a-bd0c3cce14b7';
 const RAIN_LEVEL_SUM_24H_CTYPE_ID = 'ccc04890-565b-4376-b39a-3113341d9e0f';
 
-/* eslint-disable-next-line no-undef */
+ 
 module.exports = function (pHomebridge) {
   if (pHomebridge && !homebridge) {
     homebridge = pHomebridge;

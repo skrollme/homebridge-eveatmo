@@ -5,7 +5,7 @@ var Characteristic;
 var Formats;
 var Perms;
 
-/* eslint-disable-next-line no-undef */
+ 
 module.exports = function (pHomebridge) {
   if (pHomebridge && !homebridge) {
     homebridge = pHomebridge;

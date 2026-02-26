@@ -5,7 +5,7 @@ var Characteristic;
 var Perms;
 var Formats;
 
-/* eslint-disable-next-line no-undef */
+ 
 module.exports = function (pHomebridge) {
   if (pHomebridge && !homebridge) {
     homebridge = pHomebridge;
@@ -99,7 +99,7 @@ module.exports = function (pHomebridge) {
     }
 
     hexToBase64(val) {
-      /* eslint-disable-next-line no-undef */
+       
       return Buffer.from(('' + val).replace(/[^0-9A-F]/ig, ''), 'hex').toString('base64');
     }
 

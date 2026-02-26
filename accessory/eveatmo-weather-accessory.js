@@ -5,14 +5,14 @@ var NetatmoAccessory;
 var mainDeviceId = false;
 var FakeGatoHistoryService;
 
-/* eslint-disable-next-line no-undef */
+ 
 module.exports = function (pHomebridge) {
   if (pHomebridge && !homebridge) {
     homebridge = pHomebridge;
-    /* eslint-disable @typescript-eslint/no-require-imports, no-undef */
+    /* eslint-disable @typescript-eslint/no-require-imports */
     NetatmoAccessory = require('../lib/netatmo-accessory')(homebridge);
     FakeGatoHistoryService = require('fakegato-history')(homebridge);
-    /* eslint-enable @typescript-eslint/no-require-imports, no-undef */
+    /* eslint-enable @typescript-eslint/no-require-imports */
   }
 
   class EveatmoWeatherAccessory extends NetatmoAccessory {
@@ -51,10 +51,10 @@ module.exports = function (pHomebridge) {
     }
 
     buildServices(accessoryConfig) {
-      /* eslint-disable-next-line no-undef */
+       
       var serviceDir = __dirname.replace('/accessory', '/service');
       try {
-        /* eslint-disable @typescript-eslint/no-require-imports, no-undef */
+        /* eslint-disable @typescript-eslint/no-require-imports */
         var TemperatureService = require(serviceDir + '/eveatmo-temperature')(homebridge);
         var serviceTemperature = new TemperatureService(this);
         this.addService(serviceTemperature);
@@ -72,7 +72,7 @@ module.exports = function (pHomebridge) {
           var serviceBattery = new EveatmoBatteryService(this);
           this.addService(serviceBattery);
         }
-        /* eslint-enable @typescript-eslint/no-require-imports, no-undef */
+        /* eslint-enable @typescript-eslint/no-require-imports */
 
         this.historyService = new FakeGatoHistoryService('weather', this, { storage: 'fs' });
 

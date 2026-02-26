@@ -28,6 +28,18 @@ export default tseslint.config(
     languageOptions: {
       ecmaVersion: 2022,
       sourceType: 'module',
+      globals: {
+        // Node.js globals
+        Buffer: 'readonly',
+        URLSearchParams: 'readonly',
+        setTimeout: 'readonly',
+        module: 'readonly',
+        require: 'readonly',
+        __dirname: 'readonly',
+        __filename: 'readonly',
+        process: 'readonly',
+        console: 'readonly',
+      },
     },
   },
   eslint.configs.recommended,
