@@ -153,9 +153,9 @@ Blog posts with German commands:
 - <https://blog.evehome.com/de/spass-mit-siri/>
 - <https://blog.evehome.com/de/tipp-siri-namen/>
 
-## History
+## Changelog
 
-see [HISTORY.md](https://github.com/skrollme/homebridge-eveatmo/blob/master/HISTORY.md)
+see [CHANGELOG.md](https://github.com/skrollme/homebridge-eveatmo/blob/master/CHANGELOG.md)
 
 ## Thanks and disclaimer
 
