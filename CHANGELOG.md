@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.3.0
+## 1.3.0-beta1
 
 - Refactor of Netamo-API to not use outdated `request` package anymore
 - Codestyle fixes + code modernization
