@@ -183,7 +183,7 @@ Like this and want to express your feelings? Please buy me a beer :beers: ...
 Cheers go to:
 
 - @DJay79 :beers: :beers:
-- s.k**********<r@aon.at> :beers:
+- s.k**********r@aon.at :beers:
 - C. Schneider :beers:
 - S. Eisenkrämer :beers:
 - C. Kowalczyk :beers:

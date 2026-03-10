@@ -5,7 +5,7 @@ var NetatmoAccessory;
 var FakeGatoHistoryService;
 
  
-module.exports = function (pHomebridge) {
+module.exports = function(pHomebridge) {
   if (pHomebridge && !homebridge) {
     homebridge = pHomebridge;
     /* eslint-disable @typescript-eslint/no-require-imports */
@@ -37,7 +37,7 @@ module.exports = function (pHomebridge) {
       this.humidity = 50;
       this.noise = 40;
 
-      this.refreshData(() => { });
+      this.refreshData(() => {});
     }
 
     buildServices(accessoryConfig) {
@@ -52,20 +52,20 @@ module.exports = function (pHomebridge) {
         var HumidityService = require(serviceDir + '/eveatmo-humidity')(homebridge);
         var serviceHumidity = new HumidityService(this);
         this.addService(serviceHumidity);
-
-        if (this.config.extra_aq_sensor) {
+				
+        if(this.config.extra_aq_sensor) {
           var EveatmoRoomAirqualityService = require(serviceDir + '/eveatmo-room-airquality')(homebridge);
           var serviceAirquality = new EveatmoRoomAirqualityService(this);
           this.addService(serviceAirquality);
         }
 
-        if (this.config.extra_co2_sensor) {
+        if(this.config.extra_co2_sensor) {
           var EveatmoRoomCo2Service = require(serviceDir + '/eveatmo-co2')(homebridge);
           var serviceCo2 = new EveatmoRoomCo2Service(this);
           this.addService(serviceCo2);
         }
 
-        if (accessoryConfig.hasBattery) {
+        if(accessoryConfig.hasBattery) {
           var EveatmoBatteryService = require(serviceDir + '/eveatmo-battery')(homebridge);
           var serviceBattery = new EveatmoBatteryService(this);
           this.addService(serviceBattery);
@@ -76,7 +76,7 @@ module.exports = function (pHomebridge) {
         this.addService(serviceNoise);
         /* eslint-enable @typescript-eslint/no-require-imports */
 
-        this.historyService = new FakeGatoHistoryService('room', this, { storage: 'fs' });
+        this.historyService = new FakeGatoHistoryService('room', this, { storage:'fs' });
 
       } catch (err) {
         this.log.warn('Could not process service files for ' + accessoryConfig.name);
@@ -87,7 +87,7 @@ module.exports = function (pHomebridge) {
 
     notifyUpdate(deviceData, force) {
       var accessoryData = this.extractAccessoryData(deviceData);
-      if (!accessoryData.reachable && !force) {
+      if(!accessoryData.reachable && !force) {
         return;
       }
 
