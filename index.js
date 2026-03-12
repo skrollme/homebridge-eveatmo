@@ -42,7 +42,6 @@ class EveatmoPlatform {
       if (this.config.auth.grant_type === 'refresh_token') {
         if (config.auth.username || config.auth.password) {
           this.log.error('\'username\' and \'password\' are not used in grant_type \'refresh_token\'');
-          badConfig = true;
         } else if (!config.auth.refresh_token) {
           this.log.error('\'refresh_token\' not set');
           badConfig = true;
