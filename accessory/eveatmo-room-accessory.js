@@ -1,5 +1,7 @@
 'use strict';
 
+/* eslint-disable-next-line @typescript-eslint/no-require-imports */
+var path = require('path');
 var homebridge;
 var NetatmoAccessory;
 var FakeGatoHistoryService;
@@ -42,7 +44,7 @@ module.exports = function(pHomebridge) {
 
     buildServices(accessoryConfig) {
        
-      var serviceDir = __dirname.replace('/accessory', '/service');
+      var serviceDir = path.resolve(__dirname, '../service');
       try {
         /* eslint-disable @typescript-eslint/no-require-imports */
         var TemperatureService = require(serviceDir + '/eveatmo-temperature')(homebridge);
