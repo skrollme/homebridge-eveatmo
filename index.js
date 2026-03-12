@@ -11,8 +11,6 @@ module.exports = function (pHomebridge) {
 
 /* eslint-disable-next-line @typescript-eslint/no-require-imports */
 var netatmo = require('./lib/netatmo-api');
-/* eslint-disable-next-line @typescript-eslint/no-require-imports */
-const { exit } = require('process');
 
 class EveatmoPlatform {
   constructor(log, config) {
@@ -59,8 +57,7 @@ class EveatmoPlatform {
       }
 
       if (badConfig) {
-        this.log.error('Bad configuration. Please check the README and the sample config in the repository.');
-        exit(1);
+        throw new Error('Bad configuration. Please check the README and the sample config in the repository.');
       }
       this.api = new netatmo(this.config.auth, homebridge);
     }
