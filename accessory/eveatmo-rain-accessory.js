@@ -1,5 +1,7 @@
 'use strict';
 
+/* eslint-disable-next-line @typescript-eslint/no-require-imports */
+var path = require('path');
 var homebridge;
 var NetatmoAccessory;
 
@@ -33,17 +35,17 @@ module.exports = function (pHomebridge) {
 
     buildServices(accessoryConfig) {
        
-      var serviceDir = __dirname.replace('/accessory', '/service');
+      var serviceDir = path.resolve(__dirname, '../service');
       try {
         /* eslint-disable-next-line @typescript-eslint/no-require-imports */
-        var EveatmoRainService = require(serviceDir + '/eveatmo-rain')(homebridge);
+        var EveatmoRainService = require(path.join(serviceDir, 'eveatmo-rain'))(homebridge);
         var serviceRain = new EveatmoRainService(this);
         serviceRain.isPrimaryService = true;
         this.addService(serviceRain);
 
         if (accessoryConfig.hasBattery) {
           /* eslint-disable-next-line @typescript-eslint/no-require-imports */
-          var EveatmoBatteryService = require(serviceDir + '/eveatmo-battery')(homebridge);
+          var EveatmoBatteryService = require(path.join(serviceDir, 'eveatmo-battery'))(homebridge);
           var serviceBattery = new EveatmoBatteryService(this);
           this.addService(serviceBattery);
         }

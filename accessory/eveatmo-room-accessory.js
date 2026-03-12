@@ -1,5 +1,7 @@
 'use strict';
 
+/* eslint-disable-next-line @typescript-eslint/no-require-imports */
+var path = require('path');
 var homebridge;
 var NetatmoAccessory;
 var FakeGatoHistoryService;
@@ -42,36 +44,36 @@ module.exports = function(pHomebridge) {
 
     buildServices(accessoryConfig) {
        
-      var serviceDir = __dirname.replace('/accessory', '/service');
+      var serviceDir = path.resolve(__dirname, '../service');
       try {
         /* eslint-disable @typescript-eslint/no-require-imports */
-        var TemperatureService = require(serviceDir + '/eveatmo-temperature')(homebridge);
+        var TemperatureService = require(path.join(serviceDir, 'eveatmo-temperature'))(homebridge);
         var serviceTemperature = new TemperatureService(this);
         this.addService(serviceTemperature);
 
-        var HumidityService = require(serviceDir + '/eveatmo-humidity')(homebridge);
+        var HumidityService = require(path.join(serviceDir, 'eveatmo-humidity'))(homebridge);
         var serviceHumidity = new HumidityService(this);
         this.addService(serviceHumidity);
 				
         if(this.config.extra_aq_sensor) {
-          var EveatmoRoomAirqualityService = require(serviceDir + '/eveatmo-room-airquality')(homebridge);
+          var EveatmoRoomAirqualityService = require(path.join(serviceDir, 'eveatmo-room-airquality'))(homebridge);
           var serviceAirquality = new EveatmoRoomAirqualityService(this);
           this.addService(serviceAirquality);
         }
 
         if(this.config.extra_co2_sensor) {
-          var EveatmoRoomCo2Service = require(serviceDir + '/eveatmo-co2')(homebridge);
+          var EveatmoRoomCo2Service = require(path.join(serviceDir, 'eveatmo-co2'))(homebridge);
           var serviceCo2 = new EveatmoRoomCo2Service(this);
           this.addService(serviceCo2);
         }
 
         if(accessoryConfig.hasBattery) {
-          var EveatmoBatteryService = require(serviceDir + '/eveatmo-battery')(homebridge);
+          var EveatmoBatteryService = require(path.join(serviceDir, 'eveatmo-battery'))(homebridge);
           var serviceBattery = new EveatmoBatteryService(this);
           this.addService(serviceBattery);
         }
 
-        var NoiseService = require(serviceDir + '/eveatmo-noise')(homebridge);
+        var NoiseService = require(path.join(serviceDir, 'eveatmo-noise'))(homebridge);
         var serviceNoise = new NoiseService(this);
         this.addService(serviceNoise);
         /* eslint-enable @typescript-eslint/no-require-imports */
