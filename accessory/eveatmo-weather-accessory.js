@@ -1,5 +1,7 @@
 'use strict';
 
+/* eslint-disable-next-line @typescript-eslint/no-require-imports */
+var path = require('path');
 var homebridge;
 var NetatmoAccessory;
 var mainDeviceId = false;
@@ -52,23 +54,23 @@ module.exports = function (pHomebridge) {
 
     buildServices(accessoryConfig) {
        
-      var serviceDir = __dirname.replace('/accessory', '/service');
+      var serviceDir = path.resolve(__dirname, '../service');
       try {
         /* eslint-disable @typescript-eslint/no-require-imports */
-        var TemperatureService = require(serviceDir + '/eveatmo-temperature')(homebridge);
+        var TemperatureService = require(path.join(serviceDir, 'eveatmo-temperature'))(homebridge);
         var serviceTemperature = new TemperatureService(this);
         this.addService(serviceTemperature);
 
-        var HumidityService = require(serviceDir + '/eveatmo-humidity')(homebridge);
+        var HumidityService = require(path.join(serviceDir, 'eveatmo-humidity'))(homebridge);
         var serviceHumidity = new HumidityService(this);
         this.addService(serviceHumidity);
 
-        var EveatmoWeatherPressureService = require(serviceDir + '/eveatmo-weather-pressure')(homebridge);
+        var EveatmoWeatherPressureService = require(path.join(serviceDir, 'eveatmo-weather-pressure'))(homebridge);
         var servicePressure = new EveatmoWeatherPressureService(this);
         this.addService(servicePressure);
 
         if (accessoryConfig.hasBattery) {
-          var EveatmoBatteryService = require(serviceDir + '/eveatmo-battery')(homebridge);
+          var EveatmoBatteryService = require(path.join(serviceDir, 'eveatmo-battery'))(homebridge);
           var serviceBattery = new EveatmoBatteryService(this);
           this.addService(serviceBattery);
         }
