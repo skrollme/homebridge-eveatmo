@@ -10,7 +10,7 @@ Whilst the original [homebridge-netatmo](https://github.com/planetk/homebridge-n
 
 ## :rotating_light: Warning
 
-Since Netatmo announced a change to their authentification-policies it was also necessary to update this plugin's authentication-mechanism.
+Since Netatmo announced a change to their authentication policies it was also necessary to update this plugin's authentication-mechanism.
 **From 1.0.0 it is not recommended to use username/password auth anymore although it is technically still supported in the latest release (1.1.0).**
 
 You need to generate an OAuth _refresh_token_ on your app's page at [dev.netatmo.com](https://dev.netatmo.com/apps/) instead. For more details see the instructions below or take a look at this issue: <https://github.com/skrollme/homebridge-eveatmo/issues/62>. Since some users have still unidentified problems with the new authentication-mechanism you can keep using the username/password auth, but it can be shut down by netatmo at any time.
@@ -33,7 +33,7 @@ You can also configure this plugin via [ConfigUI-X's settings](https://github.co
             "ttl": 540,
             "log_info_msg", true,
             "auth": {
-             "client_id": "XXXXX Create at https://dev.netatmo.com/",
+              "client_id": "XXXXX Create at https://dev.netatmo.com/",
                 "client_secret": "XXXXX Create at https://dev.netatmo.com/",
                 "refresh_token": "a valid refresh token for the given client_id",
                 "grant_type": "refresh_token"

@@ -2,7 +2,7 @@
 
 ## 1.3.0-beta1
 
-- Refactor of Netamo-API to not use outdated `request` package anymore
+- Refactor of Netatmo API to not use outdated `request` package anymore
 - Codestyle fixes + code modernization
 
 ## 1.2.2
