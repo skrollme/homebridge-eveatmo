@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.3.0-beta1
+## 1.3.0 - Maintenance update
 
 - Refactor of Netatmo API to not use outdated `request` package anymore
 - Codestyle fixes + code modernization
