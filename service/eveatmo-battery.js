@@ -3,14 +3,13 @@
 var homebridge;
 var Characteristic;
 var Perms;
-var Formats;
 
-module.exports = function(pHomebridge) {
+ 
+module.exports = function (pHomebridge) {
   if (pHomebridge && !homebridge) {
     homebridge = pHomebridge;
     Characteristic = homebridge.hap.Characteristic;
     Perms = homebridge.hap.Perms;
-    Formats = homebridge.hap.Formats;
   }
 
   class EveatmoBatteryService extends homebridge.hap.Service.Battery {
@@ -47,13 +46,13 @@ module.exports = function(pHomebridge) {
     }
 
     getBatteryLevel(callback) {
-      this.accessory.refreshData((err, data) => {
+      this.accessory.refreshData((err) => {
         callback(err, this.accessory.batteryPercent ? this.accessory.batteryPercent : 100);
       });
     }
 
     getStatusLowBattery(callback) {
-      this.accessory.refreshData((err, data) => {
+      this.accessory.refreshData((err) => {
         callback(err, this.accessory.lowBattery ? Characteristic.StatusLowBattery.BATTERY_LEVEL_LOW : Characteristic.StatusLowBattery.BATTERY_LEVEL_NORMAL);
       });
     }

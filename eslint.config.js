@@ -17,7 +17,7 @@ export default tseslint.config(
       'curly': ['error', 'all'],
       'brace-style': ['error'],
       'prefer-arrow-callback': 'warn',
-      'max-len': ['warn', 160],
+      'max-len': ['warn', 200],
       'object-curly-spacing': ['error', 'always'],
       'no-use-before-define': 'off',
       '@typescript-eslint/no-use-before-define': ['error', { 'classes': false, 'enums': false }],
@@ -28,6 +28,18 @@ export default tseslint.config(
     languageOptions: {
       ecmaVersion: 2022,
       sourceType: 'module',
+      globals: {
+        // Node.js globals
+        Buffer: 'readonly',
+        URLSearchParams: 'readonly',
+        setTimeout: 'readonly',
+        module: 'readonly',
+        require: 'readonly',
+        __dirname: 'readonly',
+        __filename: 'readonly',
+        process: 'readonly',
+        console: 'readonly',
+      },
     },
   },
   eslint.configs.recommended,

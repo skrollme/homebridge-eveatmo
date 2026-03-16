@@ -5,7 +5,8 @@ var Characteristic;
 var Perms;
 var Formats;
 
-module.exports = function(pHomebridge) {
+ 
+module.exports = function (pHomebridge) {
   if (pHomebridge && !homebridge) {
     homebridge = pHomebridge;
     Characteristic = homebridge.hap.Characteristic;
@@ -14,7 +15,7 @@ module.exports = function(pHomebridge) {
   }
 
   class AtmosphericPressureCharacteristic extends Characteristic {
-    constructor(accessory) {
+    constructor() {
       super('Atmospheric Pressure', 'E863F10F-079E-48FF-8F27-9C2605A29F52');
       this.setProps({
         format: Formats.DATA,
@@ -31,7 +32,7 @@ module.exports = function(pHomebridge) {
   }
 
   class S1T1Characteristic extends Characteristic {
-    constructor(accessory) {
+    constructor() {
       super('S1T1', 'E863F11E-079E-48FF-8F27-9C2605A29F52');
       this.setProps({
         format: Formats.DATA,
@@ -45,7 +46,7 @@ module.exports = function(pHomebridge) {
   }
 
   class S1T2Characteristic extends Characteristic {
-    constructor(accessory) {
+    constructor() {
       super('S1T2', 'E863F112-079E-48FF-8F27-9C2605A29F52');
       this.setProps({
         format: Formats.DATA,
@@ -98,12 +99,13 @@ module.exports = function(pHomebridge) {
     }
 
     hexToBase64(val) {
-      return new Buffer(('' + val).replace(/[^0-9A-F]/ig, ''), 'hex').toString('base64');
+       
+      return Buffer.from(('' + val).replace(/[^0-9A-F]/ig, ''), 'hex').toString('base64');
     }
 
     swap16(val) {
       return ((val & 0xFF) << 8) |
-				((val >> 8) & 0xFF);
+        ((val >> 8) & 0xFF);
     }
 
     hPAtoHex(val) {
@@ -128,31 +130,31 @@ module.exports = function(pHomebridge) {
     }
 
     getCurrentTemperature(callback) {
-      this.accessory.refreshData((err, data) => {
+      this.accessory.refreshData((err) => {
         callback(err, this.accessory.currentTemperature);
       });
     }
 
     getCurrentRelativeHumidity(callback) {
-      this.accessory.refreshData((err, data) => {
+      this.accessory.refreshData((err) => {
         callback(err, this.accessory.humidity);
       });
     }
 
     getAtmosphericPressure(callback) {
-      this.accessory.refreshData((err, data) => {
+      this.accessory.refreshData((err) => {
         callback(err, this.hexToBase64(this.hPAtoHex(parseInt(this.accessory.pressure * 10))));
       });
     }
 
     getCurrentS1T1(callback) {
-      this.accessory.refreshData((err, data) => {
+      this.accessory.refreshData((err) => {
         callback(err, this.hexToBase64(''));
       });
     }
 
     getCurrentS1T2(callback) {
-      this.accessory.refreshData((err, data) => {
+      this.accessory.refreshData((err) => {
         callback(err, this.hexToBase64('00000000'));
       });
     }

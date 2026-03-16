@@ -10,7 +10,8 @@ const WIND_STRENGTH_CTYPE_ID = '49C8AE5A-A3A5-41AB-BF1F-12D5654F9F41';
 const WIND_ANGLE_CTYPE_ID = '46F1284C-1912-421B-82F5-EB75008B167E';
 const GUST_STRENGTH_CTYPE_ID = '6B8861E5-D6F3-425C-83B6-069945FFD1F1';
 
-module.exports = function(pHomebridge) {
+ 
+module.exports = function (pHomebridge) {
   if (pHomebridge && !homebridge) {
     homebridge = pHomebridge;
     Characteristic = homebridge.hap.Characteristic;
@@ -19,7 +20,7 @@ module.exports = function(pHomebridge) {
   }
 
   class WindStrengthCharacteristic extends Characteristic {
-    constructor(accessory) {
+    constructor() {
       super('Wind Strength', WIND_STRENGTH_CTYPE_ID);
       this.setProps({
         format: Formats.FLOAT,
@@ -37,7 +38,7 @@ module.exports = function(pHomebridge) {
   }
 
   class GustStrengthCharacteristic extends Characteristic {
-    constructor(accessory) {
+    constructor() {
       super('Gust Strength', GUST_STRENGTH_CTYPE_ID);
       this.setProps({
         format: Formats.FLOAT,
@@ -55,7 +56,7 @@ module.exports = function(pHomebridge) {
   }
 
   class WindAngleCharacteristic extends Characteristic {
-    constructor(accessory) {
+    constructor() {
       super('Wind Angle', WIND_ANGLE_CTYPE_ID);
       this.setProps({
         format: Formats.STRING,
@@ -89,26 +90,26 @@ module.exports = function(pHomebridge) {
     updateCharacteristics() {
       this.getCharacteristic(WindStrengthCharacteristic)
         .updateValue(this.accessory.windStrength);
-      this.getCharacteristic(WindStrengthCharacteristic)
+      this.getCharacteristic(GustStrengthCharacteristic)
         .updateValue(this.accessory.gustStrength);
       this.getCharacteristic(WindAngleCharacteristic)
         .updateValue(this.transformDirectionDegToString());
     }
 
     getWindStrength(callback) {
-      this.accessory.refreshData((err,data) => {
+      this.accessory.refreshData((err) => {
         callback(err, this.accessory.windStrength);
       });
     }
 
     getGustStrength(callback) {
-      this.accessory.refreshData((err,data) => {
+      this.accessory.refreshData((err) => {
         callback(err, this.accessory.gustStrength);
       });
     }
 
     getWindAngle(callback) {
-      this.accessory.refreshData((err,data) => {
+      this.accessory.refreshData((err) => {
         callback(err, this.transformDirectionDegToString());
       });
     }
@@ -148,6 +149,7 @@ module.exports = function(pHomebridge) {
       } else if (a >= 326.25 && a < 348.75) {
         return 'NNW';
       }
+      return 'N';
     }
   }
 

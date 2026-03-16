@@ -3,20 +3,19 @@
 var homebridge;
 var Characteristic;
 var Formats;
-var Units;
 var Perms;
 
-module.exports = function(pHomebridge) {
+ 
+module.exports = function (pHomebridge) {
   if (pHomebridge && !homebridge) {
     homebridge = pHomebridge;
     Characteristic = homebridge.hap.Characteristic;
     Formats = homebridge.hap.Formats;
-    Units = homebridge.hap.Units;
     Perms = homebridge.hap.Perms;
   }
 
   class AQExtra1Characteristic extends Characteristic {
-    constructor(accessory) {
+    constructor() {
       super('AQX1', 'E863F10B-079E-48FF-8F27-9C2605A29F52');
       this.setProps({
         format: Formats.UINT16,
@@ -29,7 +28,7 @@ module.exports = function(pHomebridge) {
   }
 
   class AQExtra2Characteristic extends Characteristic {
-    constructor(accessory) {
+    constructor() {
       super('AQX2', 'E863F132-079E-48FF-8F27-9C2605A29F52');
       this.setProps({
         format: Formats.DATA,
@@ -52,7 +51,7 @@ module.exports = function(pHomebridge) {
 
       // extra characteristic for stock home.app
       var co2LevelCharacteristic = this.getCharacteristic(Characteristic.CarbonDioxideLevel) ||
-                this.addCharacteristic(Characteristic.CarbonDioxideLevel);
+        this.addCharacteristic(Characteristic.CarbonDioxideLevel);
       co2LevelCharacteristic.on('get', this.getAQExtra1.bind(this))
         .eventEnabled = true;
 
@@ -96,19 +95,19 @@ module.exports = function(pHomebridge) {
     }
 
     getAirQuality(callback) {
-      this.accessory.refreshData((err, data) => {
+      this.accessory.refreshData((err) => {
         callback(err, this.transformCO2ToAirQuality());
       });
     }
 
     getAQExtra1(callback) {
-      this.accessory.refreshData((err, data) => {
+      this.accessory.refreshData((err) => {
         callback(err, this.accessory.co2);
       });
     }
 
     getAQExtra2(callback) {
-      this.accessory.refreshData((err, data) => {
+      this.accessory.refreshData((err) => {
         callback(err, '');
       });
     }

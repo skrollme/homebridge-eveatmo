@@ -3,6 +3,7 @@
 var homebridge;
 var Characteristic;
 
+ 
 module.exports = function(pHomebridge) {
   if (pHomebridge && !homebridge) {
     homebridge = pHomebridge;
@@ -33,13 +34,13 @@ module.exports = function(pHomebridge) {
     }
 
     getCarbonDioxideDetected(callback) {
-      this.accessory.refreshData((err,data) => {
+      this.accessory.refreshData((err) => {
         callback(err, this.transformCO2ToCarbonDioxideDetected());
       });
     }
 
     getCarbonDioxideLevel(callback) {
-      this.accessory.refreshData((err,data) => {
+      this.accessory.refreshData((err) => {
         callback(err, this.accessory.co2);
       });
     }

@@ -1,13 +1,16 @@
 'use strict';
 
+/* eslint-disable-next-line @typescript-eslint/no-require-imports */
 var NetatmoDevice = require('../lib/netatmo-device');
 
 var homebridge;
 var EveatmoRoomAccessory;
 
-module.exports = function(pHomebridge) {
+ 
+module.exports = function (pHomebridge) {
   if (pHomebridge && !homebridge) {
     homebridge = pHomebridge;
+    /* eslint-disable-next-line @typescript-eslint/no-require-imports */
     EveatmoRoomAccessory = require('../accessory/eveatmo-room-accessory')(homebridge);
   }
 
@@ -25,7 +28,7 @@ module.exports = function(pHomebridge) {
           deviceMap[device._id] = device;
           device._name = this.buildDeviceName(device, this.config.module_suffix);
         });
-        this.log.debug('Setting cache with key: '+this.deviceType);
+        this.log.debug('Setting cache with key: ' + this.deviceType);
         this.cache.set(this.deviceType, deviceMap);
         this.deviceData = deviceMap;
 
@@ -39,14 +42,14 @@ module.exports = function(pHomebridge) {
     }
 
     buildAccessory(deviceData) {
-      if (deviceData.type == 'NHC') {
+      if (deviceData.type === 'NHC') {
         return new EveatmoRoomAccessory(deviceData, this);
       }
       return false;
     }
 
     buildDeviceName(device, suffix) {
-      if (suffix != '') {
+      if (suffix !== '') {
         return 'Air Quality ' + suffix;
       } else {
         return device.station_name + ' Air Quality';

@@ -1,15 +1,16 @@
 'use strict';
 
-var homebridge;
-var Characteristic;
-var NetatmoAccessory;
+/* eslint-disable-next-line @typescript-eslint/no-require-imports */
 var path = require('path');
+var homebridge;
+var NetatmoAccessory;
 
-module.exports = function(pHomebridge) {
+ 
+module.exports = function (pHomebridge) {
   if (pHomebridge && !homebridge) {
     homebridge = pHomebridge;
+    /* eslint-disable-next-line @typescript-eslint/no-require-imports */
     NetatmoAccessory = require('../lib/netatmo-accessory')(homebridge);
-    Characteristic = homebridge.hap.Characteristic;
   }
 
   class EveatmoWindAccessory extends NetatmoAccessory {
@@ -30,19 +31,22 @@ module.exports = function(pHomebridge) {
       this.gustStrength = 0.0;
       this.windAngle = 0;
 
-      this.refreshData((err, data) => {});
+      this.refreshData(() => { });
     }
 
     buildServices(accessoryConfig) {
-      var serviceDir = path.dirname(__dirname) + '/service';
+       
+      var serviceDir = path.resolve(__dirname, '../service');
       try {
-        var EveatmoWindService = require(serviceDir + '/eveatmo-wind')(homebridge);
+        /* eslint-disable-next-line @typescript-eslint/no-require-imports */
+        var EveatmoWindService = require(path.join(serviceDir, 'eveatmo-wind'))(homebridge);
         var serviceWind = new EveatmoWindService(this);
         serviceWind.isPrimaryService = true;
         this.addService(serviceWind);
 
         if (accessoryConfig.hasBattery) {
-          var EveatmoBatteryService = require(serviceDir + '/eveatmo-battery')(homebridge);
+          /* eslint-disable-next-line @typescript-eslint/no-require-imports */
+          var EveatmoBatteryService = require(path.join(serviceDir, 'eveatmo-battery'))(homebridge);
           var serviceBattery = new EveatmoBatteryService(this);
           this.addService(serviceBattery);
         }
@@ -56,7 +60,7 @@ module.exports = function(pHomebridge) {
 
     notifyUpdate(deviceData, force) {
       var accessoryData = this.extractAccessoryData(deviceData);
-      if(!accessoryData.reachable && !force) {
+      if (!accessoryData.reachable && !force) {
         return;
       }
 
@@ -68,13 +72,13 @@ module.exports = function(pHomebridge) {
       var result = {};
       var dashboardData = accessoryData.dashboard_data;
       if (dashboardData) {
-        if (dashboardData.hasOwnProperty('WindStrength')) {
+        if (Object.prototype.hasOwnProperty.call(dashboardData, 'WindStrength')) {
           result.windStrength = dashboardData.WindStrength;
         }
-        if (dashboardData.hasOwnProperty('GustStrength')) {
+        if (Object.prototype.hasOwnProperty.call(dashboardData, 'GustStrength')) {
           result.gustStrength = dashboardData.GustStrength;
         }
-        if (dashboardData.hasOwnProperty('WindAngle')) {
+        if (Object.prototype.hasOwnProperty.call(dashboardData, 'WindAngle')) {
           result.windAngle = dashboardData.WindAngle;
         }
       }
@@ -91,24 +95,24 @@ module.exports = function(pHomebridge) {
     applyWeatherData(weatherData) {
       var dataChanged = false;
 
-      if (weatherData.hasOwnProperty('windStrength') && this.windStrength != weatherData.windStrength) {
+      if (Object.prototype.hasOwnProperty.call(weatherData, 'windStrength') && this.windStrength !== weatherData.windStrength) {
         this.windStrength = weatherData.windStrength;
         dataChanged = true;
       }
-      if (weatherData.hasOwnProperty('gustStrength') && this.gustStrength != weatherData.gustStrength) {
+      if (Object.prototype.hasOwnProperty.call(weatherData, 'gustStrength') && this.gustStrength !== weatherData.gustStrength) {
         this.gustStrength = weatherData.gustStrength;
         dataChanged = true;
       }
-      if (weatherData.hasOwnProperty('windAngle') && this.windAngle != weatherData.windAngle) {
+      if (Object.prototype.hasOwnProperty.call(weatherData, 'windAngle') && this.windAngle !== weatherData.windAngle) {
         this.windAngle = weatherData.windAngle;
         dataChanged = true;
       }
 
-      if (weatherData.batteryPercent && this.batteryPercent != weatherData.batteryPercent) {
+      if (weatherData.batteryPercent && this.batteryPercent !== weatherData.batteryPercent) {
         this.batteryPercent = weatherData.batteryPercent;
         dataChanged = true;
       }
-      if (this.lowBattery != weatherData.lowBattery) {
+      if (this.lowBattery !== weatherData.lowBattery) {
         this.lowBattery = weatherData.lowBattery;
         dataChanged = true;
       }
@@ -116,7 +120,9 @@ module.exports = function(pHomebridge) {
       if (dataChanged) {
         this.getServices().forEach(
           (svc) => {
-            var call = svc.updateCharacteristics && svc.updateCharacteristics();
+            if (svc.updateCharacteristics) {
+              svc.updateCharacteristics();
+            }
           },
         );
       }

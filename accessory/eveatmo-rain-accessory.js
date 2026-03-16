@@ -1,15 +1,15 @@
 'use strict';
 
-var homebridge;
-var Characteristic;
-var NetatmoAccessory;
+/* eslint-disable-next-line @typescript-eslint/no-require-imports */
 var path = require('path');
+var homebridge;
+var NetatmoAccessory;
 
-module.exports = function(pHomebridge) {
+module.exports = function (pHomebridge) {
   if (pHomebridge && !homebridge) {
     homebridge = pHomebridge;
+    /* eslint-disable-next-line @typescript-eslint/no-require-imports */
     NetatmoAccessory = require('../lib/netatmo-accessory')(homebridge);
-    Characteristic = homebridge.hap.Characteristic;
   }
 
   class EveatmoRainAccessory extends NetatmoAccessory {
@@ -30,19 +30,22 @@ module.exports = function(pHomebridge) {
       this.rainLevelSum1 = 0;
       this.rainLevelSum24 = 0;
 
-      this.refreshData((err, data) => {});
+      this.refreshData(() => { });
     }
 
     buildServices(accessoryConfig) {
-      var serviceDir = path.dirname(__dirname) + '/service';
+       
+      var serviceDir = path.resolve(__dirname, '../service');
       try {
-        var EveatmoRainService = require(serviceDir + '/eveatmo-rain')(homebridge);
+        /* eslint-disable-next-line @typescript-eslint/no-require-imports */
+        var EveatmoRainService = require(path.join(serviceDir, 'eveatmo-rain'))(homebridge);
         var serviceRain = new EveatmoRainService(this);
         serviceRain.isPrimaryService = true;
         this.addService(serviceRain);
 
         if (accessoryConfig.hasBattery) {
-          var EveatmoBatteryService = require(serviceDir + '/eveatmo-battery')(homebridge);
+          /* eslint-disable-next-line @typescript-eslint/no-require-imports */
+          var EveatmoBatteryService = require(path.join(serviceDir, 'eveatmo-battery'))(homebridge);
           var serviceBattery = new EveatmoBatteryService(this);
           this.addService(serviceBattery);
         }
@@ -56,7 +59,7 @@ module.exports = function(pHomebridge) {
 
     notifyUpdate(deviceData, force) {
       var accessoryData = this.extractAccessoryData(deviceData);
-      if(!accessoryData.reachable && !force) {
+      if (!accessoryData.reachable && !force) {
         return;
       }
 
@@ -68,13 +71,13 @@ module.exports = function(pHomebridge) {
       var result = {};
       var dashboardData = accessoryData.dashboard_data;
       if (dashboardData) {
-        if (dashboardData.hasOwnProperty('Rain')) {
+        if (Object.prototype.hasOwnProperty.call(dashboardData, 'Rain')) {
           result.rainLevel = Math.round(dashboardData.Rain * 1000) / 1000;
         }
-        if (dashboardData.hasOwnProperty('sum_rain_1')) {
+        if (Object.prototype.hasOwnProperty.call(dashboardData, 'sum_rain_1')) {
           result.rainLevelSum1 = Math.round(dashboardData.sum_rain_1 * 1000) / 1000;
         }
-        if (dashboardData.hasOwnProperty('sum_rain_24')) {
+        if (Object.prototype.hasOwnProperty.call(dashboardData, 'sum_rain_24')) {
           result.rainLevelSum24 = Math.round(dashboardData.sum_rain_24 * 1000) / 1000;
         }
       }
@@ -91,24 +94,24 @@ module.exports = function(pHomebridge) {
     applyWeatherData(weatherData) {
       var dataChanged = false;
 
-      if (weatherData.hasOwnProperty('rainLevel') && this.rainLevel != weatherData.rainLevel) {
+      if (Object.prototype.hasOwnProperty.call(weatherData, 'rainLevel') && this.rainLevel !== weatherData.rainLevel) {
         this.rainLevel = weatherData.rainLevel;
         dataChanged = true;
       }
-      if (weatherData.hasOwnProperty('rainLevelSum1') && this.rainLevelSum1 != weatherData.rainLevelSum1) {
+      if (Object.prototype.hasOwnProperty.call(weatherData, 'rainLevelSum1') && this.rainLevelSum1 !== weatherData.rainLevelSum1) {
         this.rainLevelSum1 = weatherData.rainLevelSum1;
         dataChanged = true;
       }
-      if (weatherData.hasOwnProperty('rainLevelSum24') && this.rainLevelSum24 != weatherData.rainLevelSum24) {
+      if (Object.prototype.hasOwnProperty.call(weatherData, 'rainLevelSum24') && this.rainLevelSum24 !== weatherData.rainLevelSum24) {
         this.rainLevelSum24 = weatherData.rainLevelSum24;
         dataChanged = true;
       }
 
-      if (weatherData.batteryPercent && this.batteryPercent != weatherData.batteryPercent) {
+      if (weatherData.batteryPercent && this.batteryPercent !== weatherData.batteryPercent) {
         this.batteryPercent = weatherData.batteryPercent;
         dataChanged = true;
       }
-      if (this.lowBattery != weatherData.lowBattery) {
+      if (this.lowBattery !== weatherData.lowBattery) {
         this.lowBattery = weatherData.lowBattery;
         dataChanged = true;
       }
@@ -116,7 +119,9 @@ module.exports = function(pHomebridge) {
       if (dataChanged) {
         this.getServices().forEach(
           (svc) => {
-            var call = svc.updateCharacteristics && svc.updateCharacteristics();
+            if (svc.updateCharacteristics) {
+              svc.updateCharacteristics();
+            }
           },
         );
       }

@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.3.0 - Maintenance update
+
+- Refactor of Netatmo API to not use outdated `request` package anymore
+- Codestyle fixes + code modernization
+
 ## 1.2.2
 
 - Added Node 24 to allowed versions

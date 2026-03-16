@@ -8,6 +8,7 @@ var Formats;
 const NOISE_LEVEL_STYPE_ID = '8C85FD40-EB20-45EE-86C5-BCADC773E580';
 const NOISE_LEVEL_CTYPE_ID = '2CD7B6FD-419A-4740-8995-E3BFE43735AB';
 
+ 
 module.exports = function(pHomebridge) {
   if (pHomebridge && !homebridge) {
     homebridge = pHomebridge;
@@ -17,13 +18,14 @@ module.exports = function(pHomebridge) {
   }
 
   class NoiseCharacteristic extends Characteristic {
-    constructor(accessory) {
+    constructor() {
       super('Noise Level', NOISE_LEVEL_CTYPE_ID);
       this.setProps({
         format: Formats.UINT8,
         unit: 'dB',
         minValue: 0,
         maxValue: 200,
+
         minStep: 1,
         perms: [
           Perms.READ,
@@ -52,7 +54,7 @@ module.exports = function(pHomebridge) {
     }
 
     getNoise(callback) {
-      this.accessory.refreshData((err, data) => {
+      this.accessory.refreshData((err) => {
         callback(err, this.accessory.noise);
       });
     }
