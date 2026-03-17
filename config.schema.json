@@ -65,23 +65,25 @@
       "auth": {
         "title": "Netatmo credentials",
         "type": "object",
+        "required": [
+          "client_id",
+          "client_secret",
+          "grant_type"
+        ],
         "properties": {
           "client_id": {
             "title": "Client ID",
             "type": "string",
-            "required": true,
             "description": "Create this at https://dev.netatmo.com/"
           },
           "client_secret": {
             "title": "Client secret",
             "type": "string",
-            "required": true,
             "description": "Create this at https://dev.netatmo.com/"
           },
           "grant_type": {
             "title": "grant_type",
             "type": "string",
-            "required": true,
             "default": "refresh_token",
             "oneOf": [
               {
@@ -102,19 +104,16 @@
           "refresh_token": {
             "title": "Refresh Token",
             "type": "string",
-            "required": false,
             "description": "Necessary, if you use grant_type='refresh_token'. A valid Netatmo refreshToken. You can generate this on the page where you got the 'client_id' and 'client_secret' from"
           },
           "username": {
             "title": "Username",
             "type": "string",
-            "required": false,
             "description": "Necessary, if you use grant_type='password'. The email-address of your Netatmo account. Must be the same account as the developer app which the 'client_id' and 'client_secret' belong to"
           },
           "password": {
             "title": "Password",
             "type": "string",
-            "required": false,
             "description": "Necessary, if you use grant_type='password'. The password of your Netatmo account. Must be the same account as the developer app which the 'client_id' and 'client_secret' belong to"
           }
         }
