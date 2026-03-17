@@ -16,6 +16,7 @@ class EveatmoPlatform {
   constructor(log, config) {
     this.log = log;
     this.config = config || {};
+    this.config.auth = this.config.auth || {};
     this.foundAccessories = [];
 
     this.config.weatherstation = typeof config.weatherstation !== 'undefined' ? Boolean(config.weatherstation) : true;
@@ -26,6 +27,11 @@ class EveatmoPlatform {
     this.config.module_suffix = typeof config.module_suffix !== 'undefined' ? config.module_suffix : '';
     this.config.log_info_msg = typeof config.log_info_msg !== 'undefined' ? Boolean(config.log_info_msg) : true;
 
+    // Normalize grant_type: default to 'refresh_token' when unset
+    if (!this.config.auth.grant_type) {
+      this.config.auth.grant_type = 'refresh_token';
+    }
+
     // If this log message is not seen, most likely the config.js is not found.
     this.log.debug('Creating EveatmoPlatform');
 
@@ -35,30 +41,30 @@ class EveatmoPlatform {
       this.api = require('./lib/netatmo-api-mock')(config.mockapi);
     } else {
       var badConfig = false;
+      const auth = this.config.auth;
 
       if (!config.auth) {
         this.log.error('\'auth\' section missing in config');
         badConfig = true;
-        config.auth = { grant_type: '' };
-      } else if (!config.auth.client_id || !config.auth.client_secret) {
+      } else if (!auth.client_id || !auth.client_secret) {
         this.log.error('\'client_id\' and \'client_secret\' are mandatory in \'auth\' section');
         badConfig = true;
-      } else if (config.auth.grant_type && config.auth.grant_type !== 'refresh_token' && config.auth.grant_type !== 'password') {
+      } else if (auth.grant_type && auth.grant_type !== 'refresh_token' && auth.grant_type !== 'password') {
         this.log.error('Unsupported or missing grant_type. Please use \'password\' or \'refresh_token\'');
         badConfig = true;
-      } else if (this.config.auth.grant_type === 'refresh_token') {
+      } else if (auth.grant_type === 'refresh_token') {
         this.log.info('Authenticating using \'refresh_token\' grant');
 
-        if (config.auth.username || config.auth.password) {
+        if (auth.username || auth.password) {
           this.log.error('\'username\' and \'password\' are not used in grant_type \'refresh_token\'');
-        } else if (!config.auth.refresh_token) {
+        } else if (!auth.refresh_token) {
           this.log.error('\'refresh_token\' not set');
           badConfig = true;
         }
-      } else if (this.config.auth.grant_type === 'password') {
+      } else if (auth.grant_type === 'password') {
         this.log.info('Authenticating using \'password\' grant');
 
-        if (!config.auth.username || !config.auth.password) {
+        if (!auth.username || !auth.password) {
           this.log.error('\'username\' and \'password\' are mandatory when using grant_type \'password\'');
           badConfig = true;
         }
