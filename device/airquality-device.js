@@ -6,7 +6,7 @@ var NetatmoDevice = require('../lib/netatmo-device');
 var homebridge;
 var EveatmoRoomAccessory;
 
- 
+
 module.exports = function (pHomebridge) {
   if (pHomebridge && !homebridge) {
     homebridge = pHomebridge;
@@ -23,6 +23,11 @@ module.exports = function (pHomebridge) {
 
     loadDeviceData(callback) {
       this.api.getHealthyHomeCoachData((err, devices) => {
+        if (err) {
+          callback(err);
+          return;
+        }
+
         var deviceMap = {};
         devices.forEach((device) => {
           deviceMap[device._id] = device;

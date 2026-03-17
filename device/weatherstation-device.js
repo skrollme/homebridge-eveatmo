@@ -9,7 +9,7 @@ var EveatmoWeatherAccessory;
 var EveatmoRainAccessory;
 var EveatmoWindAccessory;
 
- 
+
 module.exports = function (pHomebridge) {
   if (pHomebridge && !homebridge) {
     homebridge = pHomebridge;
@@ -30,6 +30,11 @@ module.exports = function (pHomebridge) {
 
     loadDeviceData(callback) {
       this.api.getStationsData((err, devices) => {
+        if (err) {
+          callback(err);
+          return;
+        }
+
         var deviceMap = {};
         devices.forEach((device) => {
           deviceMap[device._id] = device;
