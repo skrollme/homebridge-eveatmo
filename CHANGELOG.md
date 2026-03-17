@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.3.1 - Config Schema Tweaks
+## 1.3.1 / 1.3.2 - Config Schema Tweaks
 
 - Adapt schema for better compatibility which Config UI
 

@@ -6,12 +6,14 @@
   "footerDisplay": "For a detailed description, see the [README](https://github.com/skrollme/homebridge-eveatmo#readme) file.",
   "schema": {
     "type": "object",
+    "required": [
+      "name"
+    ],
     "properties": {
       "name": {
         "title": "Name",
         "type": "string",
-        "default": "eveatmo platform",
-        "required": true
+        "default": "eveatmo platform"
       },
       "ttl": {
         "title": "TTL",
