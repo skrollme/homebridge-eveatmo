@@ -180,7 +180,7 @@ Like this and want to express your feelings? Please buy me a beer :beers: ...
 
 [![Donate](https://img.shields.io/badge/Donate-PayPal-blue.svg)](https://www.paypal.me/skroll)
 
-Cheers go to:
+Cheers and Thanks go to:
 
 - @DJay79 :beers: :beers:
 - s.k**********r@aon.at :beers:
@@ -189,3 +189,4 @@ Cheers go to:
 - C. Kowalczyk :beers:
 - A. Svensson :beers:
 - C. Lorenz 💰
+- C. Groeber 💰
