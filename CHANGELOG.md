@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.3 - Startup behaviour
+
+- Refactored startup logic to not crash homebridge on authentication errors
+
 ## 1.3.1 / 1.3.2 - Config Schema Tweaks
 
 - Adapt schema for better compatibility which Config UI

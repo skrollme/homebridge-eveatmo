@@ -16,6 +16,7 @@ class EveatmoPlatform {
   constructor(log, config) {
     this.log = log;
     this.config = config || {};
+    this.config.auth = this.config.auth || {};
     this.foundAccessories = [];
 
     this.config.weatherstation = typeof config.weatherstation !== 'undefined' ? Boolean(config.weatherstation) : true;
@@ -26,6 +27,11 @@ class EveatmoPlatform {
     this.config.module_suffix = typeof config.module_suffix !== 'undefined' ? config.module_suffix : '';
     this.config.log_info_msg = typeof config.log_info_msg !== 'undefined' ? Boolean(config.log_info_msg) : true;
 
+    // Normalize grant_type: default to 'refresh_token' when unset
+    if (!this.config.auth.grant_type) {
+      this.config.auth.grant_type = 'refresh_token';
+    }
+
     // If this log message is not seen, most likely the config.js is not found.
     this.log.debug('Creating EveatmoPlatform');
 
@@ -34,43 +40,59 @@ class EveatmoPlatform {
       /* eslint-disable-next-line @typescript-eslint/no-require-imports */
       this.api = require('./lib/netatmo-api-mock')(config.mockapi);
     } else {
-      this.config.auth.grant_type = typeof config.auth.grant_type !== 'undefined' ? config.auth.grant_type : 'refresh_token';
-
       var badConfig = false;
-      if (this.config.auth.grant_type === 'refresh_token') {
-        if (config.auth.username || config.auth.password) {
+      const auth = this.config.auth;
+
+      if (!config.auth) {
+        this.log.error('\'auth\' section missing in config');
+        badConfig = true;
+      } else if (!auth.client_id || !auth.client_secret) {
+        this.log.error('\'client_id\' and \'client_secret\' are mandatory in \'auth\' section');
+        badConfig = true;
+      } else if (auth.grant_type && auth.grant_type !== 'refresh_token' && auth.grant_type !== 'password') {
+        this.log.error('Unsupported or missing grant_type. Please use \'password\' or \'refresh_token\'');
+        badConfig = true;
+      } else if (auth.grant_type === 'refresh_token') {
+        this.log.info('Authenticating using \'refresh_token\' grant');
+
+        if (auth.username || auth.password) {
           this.log.error('\'username\' and \'password\' are not used in grant_type \'refresh_token\'');
-        } else if (!config.auth.refresh_token) {
+        } else if (!auth.refresh_token) {
           this.log.error('\'refresh_token\' not set');
           badConfig = true;
         }
-        this.log.info('Authenticating using \'refresh_token\' grant');
-      } else if (this.config.auth.grant_type === 'password') {
-        if (!config.auth.username || !config.auth.password) {
+      } else if (auth.grant_type === 'password') {
+        this.log.info('Authenticating using \'password\' grant');
+
+        if (!auth.username || !auth.password) {
           this.log.error('\'username\' and \'password\' are mandatory when using grant_type \'password\'');
           badConfig = true;
         }
-        this.log.info('Authenticating using \'password\' grant');
-      } else {
-        this.log.error('Unsupported grant_type. Please use \'password\' or \'refresh_token\'');
-        badConfig = true;
       }
 
       if (badConfig) {
-        throw new Error('Bad configuration. Please check the README and the sample config in the repository.');
+        this.log.error('Bad configuration. Please check the README and the sample config in the repository.');
+      } else {
+        this.api = new netatmo(this.config.auth, homebridge);
+
+        this.api.on('error', (error) => {
+          this.log.error('ERROR - Netatmo: ' + error);
+        });
+        this.api.on('warning', (error) => {
+          this.log.warn('WARN - Netatmo: ' + error);
+        });
       }
-      this.api = new netatmo(this.config.auth, homebridge);
     }
-    this.api.on('error', (error) => {
-      this.log.error('ERROR - Netatmo: ' + error);
-    });
-    this.api.on('warning', (error) => {
-      this.log.warn('WARN - Netatmo: ' + error);
-    });
   }
 
   accessories(callback) {
     this.log.debug('Loading accessories');
+
+    if (!this.api) {
+      this.log.error('No API instance available. Not loading any accessories.');
+      callback(this.foundAccessories);
+      return;
+    }
 
     var calls = this.loadDevices();
 
