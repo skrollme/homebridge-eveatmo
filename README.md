@@ -1,8 +1,9 @@
 # homebridge-eveatmo
 
-[![npm](https://img.shields.io/npm/v/homebridge-eveatmo.svg?style=plastic)](https://www.npmjs.com/package/homebridge-eveatmo)
-[![npm](https://img.shields.io/npm/dt/homebridge-eveatmo.svg?style=plastic)](https://www.npmjs.com/package/homebridge-eveatmo)
-[![GitHub last commit](https://img.shields.io/github/last-commit/skrollme/homebridge-eveatmo.svg?style=plastic)](https://github.com/skrollme/homebridge-eveatmo)
+[![npm](https://img.shields.io/npm/v/homebridge-eveatmo.svg?style=flat)](https://www.npmjs.com/package/homebridge-eveatmo)
+[![npm](https://img.shields.io/npm/dt/homebridge-eveatmo.svg?style=flat)](https://www.npmjs.com/package/homebridge-eveatmo)
+[![GitHub last commit](https://img.shields.io/github/last-commit/skrollme/homebridge-eveatmo.svg?style=flat)](https://github.com/skrollme/homebridge-eveatmo)
+[![verified-by-homebridge](https://img.shields.io/badge/homebridge-verified-blueviolet?color=%23491F59&style=flat)](https://github.com/homebridge/homebridge/wiki/Verified-Plugins)
 
 This is a [homebridge](https://github.com/nfarina/homebridge) plugin which lets you integrate your non-HomeKit Netatmo Weatherstation and Indoor Air Quality monitor into HomeKit.
 
