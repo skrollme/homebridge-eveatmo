@@ -88,11 +88,12 @@ class EveatmoPlatform {
   accessories(callback) {
     this.log.debug('Loading accessories');
 
-    if (!this.api) {
-      this.log.error('No API instance available. Not loading any accessories.');
-      callback(this.foundAccessories);
-      return;
-    }
+    // Suspected of deleting existing accessories when there are problems with the API during startup.
+    // if (!this.api) {
+    //   this.log.error('No API instance available. Not loading any accessories.');
+    //   callback(this.foundAccessories);
+    //   return;
+    // }
 
     var calls = this.loadDevices();
 
