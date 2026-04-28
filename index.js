@@ -97,16 +97,31 @@ class EveatmoPlatform {
 
     var calls = this.loadDevices();
 
-    async.parallel(calls, (err, result) => {
-      if (err) {
-        this.log('Error: ' + err);
-      } else {
-        for (var i = 0; i < result.length; i++) {
-          for (var j = 0; j < result[i].length; j++) {
-            this.foundAccessories.push(result[i][j]);
-          }
+    const collectResult = (result) => {
+      for (var i = 0; i < result.length; i++) {
+        for (var j = 0; j < result[i].length; j++) {
+          this.foundAccessories.push(result[i][j]);
         }
       }
+    };
+
+    async.parallel(calls, (err, result) => {
+      if (err) {
+        this.log.warn('Error loading accessories, retrying in 30s: ' + err);
+        setTimeout(() => {
+          var retryCalls = this.loadDevices();
+          async.parallel(retryCalls, (err2, result2) => {
+            if (err2) {
+              this.log.error('Retry also failed. No accessories loaded: ' + err2);
+            } else {
+              collectResult(result2);
+            }
+            callback(this.foundAccessories);
+          });
+        }, 30000);
+        return;
+      }
+      collectResult(result);
       callback(this.foundAccessories);
     });
   }
