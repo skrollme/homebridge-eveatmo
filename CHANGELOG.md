@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.3.5-beta1 - Bugfixing
+
+- Researching and tackling with the "moving accessories" problem
+
+## 1.3.4 - Startup behaviour again
+
+- Disabling "not loading accessories" logic because this may cause loss of existing devices during boot
+
 ## 1.3.3 - Startup behaviour
 
 - Refactored startup logic to not crash homebridge on authentication errors
