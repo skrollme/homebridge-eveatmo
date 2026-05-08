@@ -5,7 +5,7 @@ var Characteristic;
 var Perms;
 var Formats;
 
- 
+
 module.exports = function (pHomebridge) {
   if (pHomebridge && !homebridge) {
     homebridge = pHomebridge;
@@ -18,13 +18,13 @@ module.exports = function (pHomebridge) {
     constructor() {
       super('Atmospheric Pressure', 'E863F10F-079E-48FF-8F27-9C2605A29F52');
       this.setProps({
-        format: Formats.DATA,
+        format: Formats.UINT16,
         unit: 'hPA',
-        minValue: 500,
-        maxValue: 2000,
-        minStep: 0.1,
+        minValue: 5000,
+        maxValue: 20000,
+        minStep: 1,
         perms: [
-          Perms.READ,
+          Perms.PAIRED_READ,
           Perms.NOTIFY,
         ],
       });
@@ -37,8 +37,8 @@ module.exports = function (pHomebridge) {
       this.setProps({
         format: Formats.DATA,
         perms: [
-          Perms.READ,
-          Perms.WRITE,
+          Perms.PAIRED_READ,
+          Perms.PAIRED_WRITE,
           Perms.HIDDEN,
         ],
       });
@@ -51,8 +51,8 @@ module.exports = function (pHomebridge) {
       this.setProps({
         format: Formats.DATA,
         perms: [
-          Perms.READ,
-          Perms.WRITE,
+          Perms.PAIRED_READ,
+          Perms.PAIRED_WRITE,
           Perms.HIDDEN,
         ],
       });
@@ -68,7 +68,8 @@ module.exports = function (pHomebridge) {
         .setProps({
           minValue: -100,
           perms: [
-            Perms.READ,
+            Perms.PAIRED_READ,
+            Perms.NOTIFY,
             Perms.HIDDEN,
           ],
         })
@@ -78,7 +79,8 @@ module.exports = function (pHomebridge) {
       this.addCharacteristic(Characteristic.CurrentRelativeHumidity)
         .setProps({
           perms: [
-            Perms.READ,
+            Perms.PAIRED_READ,
+            Perms.NOTIFY,
             Perms.HIDDEN,
           ],
         })
@@ -99,17 +101,7 @@ module.exports = function (pHomebridge) {
     }
 
     hexToBase64(val) {
-       
       return Buffer.from(('' + val).replace(/[^0-9A-F]/ig, ''), 'hex').toString('base64');
-    }
-
-    swap16(val) {
-      return ((val & 0xFF) << 8) |
-        ((val >> 8) & 0xFF);
-    }
-
-    hPAtoHex(val) {
-      return this.swap16(Math.round(val)).toString(16);
     }
 
     updateCharacteristics() {
@@ -120,7 +112,7 @@ module.exports = function (pHomebridge) {
         .updateValue(this.accessory.humidity);
 
       this.getCharacteristic(AtmosphericPressureCharacteristic)
-        .updateValue(this.hexToBase64(this.hPAtoHex(parseInt(this.accessory.pressure * 10))));
+        .updateValue(Math.round(this.accessory.pressure * 10));
 
       this.getCharacteristic(S1T1Characteristic)
         .updateValue(this.hexToBase64(''));
@@ -143,7 +135,7 @@ module.exports = function (pHomebridge) {
 
     getAtmosphericPressure(callback) {
       this.accessory.refreshData((err) => {
-        callback(err, this.hexToBase64(this.hPAtoHex(parseInt(this.accessory.pressure * 10))));
+        callback(err, Math.round(this.accessory.pressure * 10));
       });
     }
 

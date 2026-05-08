@@ -20,7 +20,7 @@ module.exports = function (pHomebridge) {
       this.getCharacteristic(Characteristic.BatteryLevel)
         .setProps({
           perms: [
-            Perms.READ,
+            Perms.PAIRED_READ,
             Perms.HIDDEN,
           ],
         })
@@ -29,7 +29,7 @@ module.exports = function (pHomebridge) {
       this.getCharacteristic(Characteristic.StatusLowBattery)
         .setProps({
           perms: [
-            Perms.READ,
+            Perms.PAIRED_READ,
             Perms.HIDDEN,
           ],
         })
@@ -38,7 +38,7 @@ module.exports = function (pHomebridge) {
       this.getCharacteristic(Characteristic.ChargingState)
         .setProps({
           perms: [
-            Perms.READ,
+            Perms.PAIRED_READ,
             Perms.HIDDEN,
           ],
         })

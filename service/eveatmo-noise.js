@@ -28,7 +28,7 @@ module.exports = function(pHomebridge) {
 
         minStep: 1,
         perms: [
-          Perms.READ,
+          Perms.PAIRED_READ,
           Perms.NOTIFY,
         ],
       });

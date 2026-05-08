@@ -29,7 +29,7 @@ module.exports = function (pHomebridge) {
         maxValue: 1000,
         minStep: 0.001,
         perms: [
-          Perms.READ,
+          Perms.PAIRED_READ,
           Perms.NOTIFY,
         ],
       });
@@ -47,7 +47,7 @@ module.exports = function (pHomebridge) {
         maxValue: 1000,
         minStep: 0.001,
         perms: [
-          Perms.READ,
+          Perms.PAIRED_READ,
           Perms.NOTIFY,
         ],
       });
@@ -65,7 +65,7 @@ module.exports = function (pHomebridge) {
         maxValue: 1000,
         minStep: 0.001,
         perms: [
-          Perms.READ,
+          Perms.PAIRED_READ,
           Perms.NOTIFY,
         ],
       });

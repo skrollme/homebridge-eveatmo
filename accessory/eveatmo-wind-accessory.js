@@ -60,7 +60,9 @@ module.exports = function (pHomebridge) {
 
     notifyUpdate(deviceData, force) {
       var accessoryData = this.extractAccessoryData(deviceData);
-      if (!accessoryData) return;
+      if (!accessoryData) {
+        return;
+      }
       if (!accessoryData.reachable && !force) {
         return;
       }

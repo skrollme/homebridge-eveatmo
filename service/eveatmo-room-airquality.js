@@ -20,7 +20,7 @@ module.exports = function (pHomebridge) {
       this.setProps({
         format: Formats.UINT16,
         perms: [
-          Perms.READ,
+          Perms.PAIRED_READ,
           Perms.HIDDEN,
         ],
       });
@@ -33,7 +33,7 @@ module.exports = function (pHomebridge) {
       this.setProps({
         format: Formats.DATA,
         perms: [
-          Perms.READ,
+          Perms.PAIRED_READ,
           Perms.HIDDEN,
         ],
       });
