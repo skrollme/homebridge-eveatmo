@@ -1,12 +1,9 @@
 # Changelog
 
-## 1.3.5-beta2 - Homebridge 2 compatibility
+## 1.3.5 - Bugfixes and Homebridge 2 compatibility
 
 - Homebridge 2 compatibility fixes
-
-## 1.3.5-beta1 - Bugfixing
-
-- Researching and tackling with the "moving accessories" problem
+- Bugfixing ("moving accessories" problem)
 
 ## 1.3.4 - Startup behaviour again
 
