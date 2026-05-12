@@ -10,11 +10,7 @@ This is a [homebridge](https://github.com/nfarina/homebridge) plugin which lets 
 Whilst the original [homebridge-netatmo](https://github.com/planetk/homebridge-netatmo)-plugin goes a mostly HomeKit-standard approach (predefined services, characteristics, ...), this plugin tries to mimic the Elgato Eve devices as close as possible.
 
 ## :rotating_light: Warning
-
-Since Netatmo announced a change to their authentication policies it was also necessary to update this plugin's authentication-mechanism.
-**From 1.0.0 it is not recommended to use username/password auth anymore although it is technically still supported in the latest release (1.1.0).**
-
-You need to generate an OAuth _refresh_token_ on your app's page at [dev.netatmo.com](https://dev.netatmo.com/apps/) instead. For more details see the instructions below or take a look at this issue: <https://github.com/skrollme/homebridge-eveatmo/issues/62>. Since some users have still unidentified problems with the new authentication-mechanism you can keep using the username/password auth, but it can be shut down by netatmo at any time.
+When you see logs about "invalid characters" in your accessory-names, try to use the "Module Suffix" config. In this case, the netatmo station name - which can contain invalid characters - is not used for naming the accessories.
 
 ## Configuration
 
@@ -111,14 +107,12 @@ This is because the plugin always gets a short-lived token to fetch data for som
 2. Add the _client_id_, the _client_secret_ and the _refresh_token_ to the config's _auth_-section
 3. The plugin will use the _refresh_token_ from the config to retrieve and refresh _auth_tokens_. It will also store newly retrieved tokens in a file (_netatmo-token.js_) in your homebridge config directory. If you delete the _netatmo-token.js_ file, you may have to regenerate a new _refresh_token_ like in step 5) if your initial _refresh_token_ (from the _config.json_) already has expired
 
-### "password" grant
+### ~~"password" grant (deprecated, do not use)~~
 
-This one is my preferred method, because in a single-user scenario and a most likely "at home and self-hosted"-setup it is totally fine for me. Netatmo deprecated this method but it is usable in cases where the user (here: homebridge) and the account (where the weatherstation is linked to) are the same.
-Since this is the normal use-case for this homebridge-plugin I use this as long it is possible.
+~~This one is my preferred method, because in a single-user scenario and a most likely "at home and self-hosted"-setup it is totally fine for me. Netatmo deprecated this method but it is usable in cases where the user (here: homebridge) and the account (where the weatherstation is linked to) are the same.~~
+~~Since this is the normal use-case for this homebridge-plugin I use this as long it is possible.~~
 
-1. Add the _client_id_, the _client_secret_, the _username_ (your account email) and the _password_ (your account password) to the config's _auth_-section
-
-### Retrieve _client_id_, _client_secret_ and _refresh_token_
+~~1. Add the _client_id_, the _client_secret_, the _username_ (your account email) and the _password_ (your account password) to the config's _auth_-section~~
 
 ## Siri Voice Commands
 

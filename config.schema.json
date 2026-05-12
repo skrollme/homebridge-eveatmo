@@ -56,7 +56,7 @@
       "module_suffix": {
         "title": "Name suffix",
         "type": "string",
-        "description": "Suffix to the module name. Deletes the prepended Netatmo device name"
+        "description": "Do not use the station name anymore for naming but use this suffix after the module name instead. Use this if you experience problems with incompatible characters in the station name."
       },
       "log_info_msg": {
         "title": "Log info messages",
