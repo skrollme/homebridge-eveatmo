@@ -8,44 +8,16 @@ const { stubFakegatoHistory } = require('../../test-helpers/stub-fakegato-histor
 stubFakegatoHistory();
 
 const { homebridge, hap } = require('../../test-helpers/hap');
-const { createLog } = require('../../test-helpers/log');
+const { buildDeviceDataMap, findModuleByType } = require('../../test-helpers/weatherstation-fixture');
+const { createNetatmoDeviceStub } = require('../../test-helpers/netatmo-device-stub');
 const { Service, Characteristic } = hap;
 
 const EveatmoWeatherAccessory = require('../../accessory/eveatmo-weather-accessory')(homebridge);
-
-const fixture = require('../../mockapi_calls/getstationsdata-eveatmo.json');
 /* eslint-enable @typescript-eslint/no-require-imports */
-
-function buildDeviceDataMap() {
-  const station = JSON.parse(JSON.stringify(fixture.body.devices[0]));
-  station._name = station.station_name + ' ' + station.module_name;
-  const map = { [station._id]: station };
-  station.modules.forEach((module) => {
-    module._name = station.station_name + ' ' + module.module_name;
-    map[module._id] = module;
-  });
-  return map;
-}
-
-function findOutdoorModule(deviceDataMap) {
-  return Object.values(deviceDataMap).find((device) => device.type === 'NAModule1');
-}
-
-function createNetatmoDeviceStub(deviceDataMap) {
-  return {
-    deviceData: deviceDataMap,
-    log: createLog(),
-    config: {},
-    deviceType: 'weatherstation',
-    refreshDeviceData(callback) {
-      callback(null, this.deviceData);
-    },
-  };
-}
 
 function buildAccessory() {
   const deviceDataMap = buildDeviceDataMap();
-  const outdoorModule = findOutdoorModule(deviceDataMap);
+  const outdoorModule = findModuleByType(deviceDataMap, 'NAModule1');
   const netatmoDevice = createNetatmoDeviceStub(deviceDataMap);
   const accessory = new EveatmoWeatherAccessory(outdoorModule, netatmoDevice);
   return { accessory, deviceDataMap, outdoorModule };

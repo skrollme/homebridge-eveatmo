@@ -9,42 +9,36 @@ stubFakegatoHistory();
 
 const { homebridge } = require('../../test-helpers/hap');
 const { createLog } = require('../../test-helpers/log');
+const { runBuild } = require('../../test-helpers/run-build');
 
 const NetatmoAPIMock = require('../../lib/netatmo-api-mock');
 const WeatherstationDeviceType = require('../../device/weatherstation-device')(homebridge);
 /* eslint-enable @typescript-eslint/no-require-imports */
 
+const MAIN_STATION_ID = '70:00:00:01:23:45';
 const OUTDOOR_MODULE_ID = '02:00:00:01:23:45';
-
-function runBuild(device, methodName) {
-  return new Promise((resolve, reject) => {
-    device[methodName]((err, accessories) => {
-      /* eslint-disable-next-line no-undef */
-      clearInterval(device.runCheckInterval);
-      if (err) {
-        reject(err);
-        return;
-      }
-      resolve(accessories);
-    });
-  });
-}
+const WIND_MODULE_ID = '10:00:00:00:00:05';
+const INDOOR_MODULE_ID = '03:00:00:01:23:45';
+const RAIN_MODULE_ID = '05:00:00:01:23:45';
 
 function buildAccessoriesForDevices(config) {
   const device = new WeatherstationDeviceType(createLog(), NetatmoAPIMock('eveatmo'), config);
   return runBuild(device, 'buildAccessoriesForDevices');
 }
 
-test('maps the outdoor (NAModule1) device to a weather accessory', async () => {
-  const accessories = await buildAccessoriesForDevices({
-    ttl: 300,
-    module_suffix: '',
-    whitelist: [OUTDOOR_MODULE_ID],
+test('maps every known Netatmo module type to its matching accessory class', async () => {
+  const accessories = await buildAccessoriesForDevices({ ttl: 300, module_suffix: '' });
+
+  const accessoryClassById = {};
+  accessories.forEach((accessory) => {
+    accessoryClassById[accessory.id] = accessory.constructor.name;
   });
 
-  assert.equal(accessories.length, 1);
-  assert.equal(accessories[0].constructor.name, 'EveatmoWeatherAccessory');
-  assert.equal(accessories[0].id, OUTDOOR_MODULE_ID);
+  assert.equal(accessoryClassById[MAIN_STATION_ID], 'EveatmoRoomAccessory');
+  assert.equal(accessoryClassById[INDOOR_MODULE_ID], 'EveatmoRoomAccessory');
+  assert.equal(accessoryClassById[OUTDOOR_MODULE_ID], 'EveatmoWeatherAccessory');
+  assert.equal(accessoryClassById[WIND_MODULE_ID], 'EveatmoWindAccessory');
+  assert.equal(accessoryClassById[RAIN_MODULE_ID], 'EveatmoRainAccessory');
 });
 
 function buildAccessoriesFromDeviceMap(config, deviceMap) {
