@@ -39,10 +39,12 @@
 	"homepage": "https://github.com/skrollme/homebridge-eveatmo#readme",
 	"scripts": {
 		"lint": "eslint . --max-warnings=0",
-		"fix": "eslint . --max-warnings=0 --fix"
+		"fix": "eslint . --max-warnings=0 --fix",
+		"test": "node --test"
 	},
 	"devDependencies": {
 		"@eslint/js": "^9.14.0",
+		"@homebridge/hap-nodejs": "2.1.0",
 		"@types/eslint__js": "^8.42.3",
 		"@types/node": "^22.8.6",
 		"eslint": "^10.0.2",
