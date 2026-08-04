@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.3.6 - Misc updates, Added Test Suite
+
+- Misc npm updates, manual and via Dependabot PRs
+- Added a Test Suit which also runs in CI
+
 ## 1.3.5 - Bugfixes and Homebridge 2 compatibility
 
 - Homebridge 2 compatibility fixes
