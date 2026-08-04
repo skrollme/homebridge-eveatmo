@@ -16,7 +16,12 @@ npm run fix      # eslint . --max-warnings=0 --fix
 npm test         # node --test
 ```
 
-There is no build step. Tests use Node's built-in `node:test` runner against the real `@homebridge/hap-nodejs` (no hand-built HAP stub) — see `test/` (mirrors `device/`/`accessory/` source layout) and `test-helpers/` (shared bootstrap; deliberately kept outside any directory named `test`, since `node --test`'s default discovery recursively treats every `.js` file under a `test/`-named directory as a test file). CI (`.github/workflows/build.yml`) runs `npm install` + `npm run lint` + `npm test` on Node 20.x/22.x/24.x for pushes to `master`/`develop` and PRs.
+There is no build step. Tests use Node's built-in `node:test` runner — see `test/` (mirrors the source layout: `device/`, `accessory/`, `lib/`, plus `index.test.js` at the root) and `test-helpers/` (shared bootstrap; deliberately kept outside any directory named `test`, since `node --test`'s default discovery recursively treats every `.js` file under a `test/`-named directory as a test file). Two distinct mocking styles are used depending on the layer:
+
+- `device/`/`accessory/` tests (which exercise `service/*.js` indirectly, through the accessories that build them) run against the real `@homebridge/hap-nodejs` (no hand-built HAP stub), with `fakegato-history` neutralized via a `require.cache` substitution (`test-helpers/stub-fakegato-history.js`) since it touches real disk/timers even at construction time.
+- `lib/netatmo-api.js` tests stub `axios` the same way (`test-helpers/stub-axios.js`) rather than hitting real HTTP — that module's public methods and its module-level (not per-instance!) auth state make it necessary to keep each auth scenario in its own test file, one process per file.
+
+`index.js`'s `EveatmoPlatform` class isn't exported directly — capture it via a fake `homebridge.registerPlatform` (`test-helpers/load-platform.js`). Note: `EveatmoPlatform.accessories()` is not covered end-to-end, because the device instances it builds internally start an un-`unref()`'d poll `setInterval` with no way to reach in and clear it from outside — calling it in a test hangs the process. CI (`.github/workflows/build.yml`) runs `npm install` + `npm run lint` + `npm test` on Node 20.x/22.x/24.x for pushes to `master`/`develop` and PRs.
 
 To manually exercise the plugin without a real Netatmo account, set `"mockapi": "eveatmo"` in the platform config — this routes API calls to `lib/netatmo-api-mock.js`, which reads fixture JSON from `mockapi_calls/*-<mockapi value>.json` (falls back to `*-default.json` if the named fixture is missing).
 
